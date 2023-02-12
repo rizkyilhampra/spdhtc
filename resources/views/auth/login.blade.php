@@ -51,13 +51,13 @@
                         </div>
                     </form>
                 </div>
+                <div class="card-footer text-muted text-center">
+                    Don't have an account? <a href="{{ route('register') }}">Create One</a>
+                </div>
             </div>
-            <div class="mt-5 text-muted text-center">
-                Don't have an account? <a href="{{ route('register') }}">Create One</a>
-            </div>
-            <div class="simple-footer">
-                Copyright &copy; Stisla 2018
-            </div>
-        </div>
+        @section('footer')
+            @parent
+        @endsection
     </div>
+</div>
 @endsection
