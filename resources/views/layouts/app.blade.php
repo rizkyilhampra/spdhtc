@@ -58,6 +58,7 @@
     <script src="../assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
+    @yield('jsCustom')
 </body>
 
 </html>

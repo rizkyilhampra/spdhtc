@@ -215,9 +215,22 @@
                 <i class="fas fa-cog"></i> Settings
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item has-icon text-danger">
+            <a href="" id="buttonLogout" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
+            <form action="{{ route('logout') }}" method="post" id="formLogout" hidden style="display: none">
+                @csrf
+            </form>
         </div>
     </li>
 </ul>
+
+@section('jsCustom')
+    <script>
+        var buttonLogout = document.getElementById('buttonLogout');
+        buttonLogout.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('formLogout').submit();
+        });
+    </script>
+@endsection
