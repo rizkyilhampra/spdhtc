@@ -18,10 +18,10 @@ class UserSeeder extends Seeder
         User::factory()->count(10)->create();
 
         User::factory()->create([
-            'name' => 'Rizky Ilham',
-            'email' => 'rizkyilhamp16@gmail.com',
+            'name' => 'admin',
+            'email' => 'admin@example.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('123'),
+            'password' => bcrypt('12345678'),
         ]);
     }
 }
