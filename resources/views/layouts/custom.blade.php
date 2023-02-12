@@ -13,6 +13,7 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- CSS Libraries -->
+    @yield('cssLibraries')
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="../assets/css/style.css">
@@ -24,6 +25,13 @@
         <section class="section">
             <div class="container mt-5">
                 @yield('content')
+                @section('footer')
+                    <div class="simple-footer">
+                        Copyright &copy;
+                        <a href="https://rizkyilhampra.my.id" target="_blank">Rizky Ilham Pratama</a>
+                        <span>{{ date('Y') }}</span>
+                    </div>
+                @show
             </div>
         </section>
     </div>
@@ -41,12 +49,15 @@
     <script src="../assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    @yield('jsLibraries')
 
     <!-- Template JS File -->
     <script src="../assets/js/scripts.js"></script>
     <script src="../assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
+    @yield('jsPage')
+    @yield('jsCustom')
 </body>
 
 </html>

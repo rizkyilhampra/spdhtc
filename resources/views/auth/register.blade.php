@@ -1,4 +1,5 @@
 @extends('layouts.custom')
+@section('title', 'Register')
 @section('content')
     <div class="row">
         <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
@@ -12,42 +13,54 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST">
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label for="first_name">First Name</label>
-                                <input id="first_name" type="text" class="form-control" name="first_name" autofocus>
-                            </div>
-                            <div class="form-group col-6">
-                                <label for="last_name">Last Name</label>
-                                <input id="last_name" type="text" class="form-control" name="last_name">
-                            </div>
+                    <form action="{{ route('register') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                                value="{{ old('name') }}" name="name" autofocus>
+                            @error('name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
-
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input id="email" type="email" class="form-control" name="email">
-                            <div class="invalid-feedback">
-                            </div>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                value="{{ old('email') }}" name="email">
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="password" class="d-block">Password</label>
-                                <input id="password" type="password" class="form-control pwstrength"
+                                <input id="password" type="password"
+                                    class="form-control pwstrength @error('password') is-invalid @enderror"
                                     data-indicator="pwindicator" name="password">
                                 <div id="pwindicator" class="pwindicator">
                                     <div class="bar"></div>
                                     <div class="label"></div>
                                 </div>
+                                @if ($errors->has('password'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('password') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="form-group col-6">
-                                <label for="password2" class="d-block">Password Confirmation</label>
-                                <input id="password2" type="password" class="form-control" name="password-confirm">
+                                <label for="password_confirmation" class="d-block">Password Confirmation</label>
+                                <input id="password_confirmation" type="password"
+                                    class="form-control @if ($errors->has('password')) is-invalid @endif"
+                                    name="password_confirmation">
                             </div>
                         </div>
 
-                        <div class="form-divider">
+                        {{-- <div class="form-divider">
                             Your Home
                         </div>
                         <div class="row">
@@ -78,7 +91,7 @@
                                 <label>Postal Code</label>
                                 <input type="text" class="form-control">
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
@@ -96,9 +109,45 @@
                     </form>
                 </div>
             </div>
-            <div class="simple-footer">
-                Copyright &copy; Stisla 2018
-            </div>
-        </div>
+        @section('footer')
+            @parent
+        @endsection
     </div>
+</div>
 @endsection
+
+@section('jsCustom')
+<script>
+    var agreeCheckbox = document.getElementById('agree');
+    var registerButton = document.querySelector('button[type="submit"]');
+    registerButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        register().then(function(result) {
+            if (result) {
+                document.querySelector('form').submit();
+            }
+        });
+    });
+    async function register() {
+        if (agreeCheckbox.checked) {
+            return true;
+        } else {
+            alert('You must agree with the terms and conditions');
+            return false;
+        }
+    }
+</script>
+@endsection
+
+@section('jsPage')
+<script src="../assets/js/page/auth-register.js"></script>
+@endsection
+
+@section('jsLibraries')
+<script src="{{ asset('spesifiedAssets/jquery.pwstrength.min.js') }}"></script>
+{{-- <script src="{{ asset('spesifiedAssets/jquery.selectric.min.js') }}"></script> --}}
+@endsection
+
+{{-- @section('cssLibraries')
+<link rel="stylesheet" href="{{ asset('spesifiedAssets/selectric.css') }}">
+@endsection --}}
