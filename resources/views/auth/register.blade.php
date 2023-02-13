@@ -109,6 +109,9 @@
                     </form>
                 </div>
             </div>
+            <div class="mt-3 text-muted text-center">
+                Already have an account? <a href="{{ route('login') }}">Login</a>
+            </div>
         @section('footer')
             @parent
         @endsection
@@ -132,7 +135,7 @@
         if (agreeCheckbox.checked) {
             return true;
         } else {
-            alert('You must agree with the terms and conditions');
+            toastr().error('You must agree with the terms and conditions');
             return false;
         }
     }
