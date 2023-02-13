@@ -96,8 +96,9 @@
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" name="agree" class="custom-control-input" id="agree">
-                                <label class="custom-control-label" for="agree">I agree with the terms and
-                                    conditions</label>
+                                <label class="custom-control-label" for="agree">
+                                    I agree with the terms and conditions
+                                </label>
                             </div>
                         </div>
 
@@ -109,8 +110,13 @@
                     </form>
                 </div>
             </div>
-            <div class="mt-3 text-muted text-center">
-                Already have an account? <a href="{{ route('login') }}">Login</a>
+            <div class="row-auto d-flex justify-content-between">
+                <div class=" text-muted">
+                    Already have an account? <a href="{{ route('login') }}">Login</a>
+                </div>
+                <div class=" text-muted">
+                    <a href="https://rizkyilhampra.my.id" target="_blank">Terms & Conditions</a>
+                </div>
             </div>
         @section('footer')
             @parent
@@ -118,6 +124,7 @@
     </div>
 </div>
 @endsection
+
 
 @section('jsCustom')
 <script>
@@ -135,7 +142,11 @@
         if (agreeCheckbox.checked) {
             return true;
         } else {
-            toastr().error('You must agree with the terms and conditions');
+            // Create an instance of Notyf
+            var notyf = new Notyf();
+
+            // Display an error notification
+            notyf.error('Tolong, setujui persyaratan dan ketentuan kami!');
             return false;
         }
     }

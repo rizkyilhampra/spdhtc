@@ -13,6 +13,7 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     @yield('cssLibraries')
 
     <!-- Template CSS -->
@@ -49,6 +50,7 @@
     <script src="../assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     @yield('jsLibraries')
 
     <!-- Template JS File -->
