@@ -13,27 +13,31 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('register') }}" method="POST">
+                    <form action="{{ route('register') }}" class="needs-validation" novalidate="" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                value="{{ old('name') }}" name="name" autofocus>
-                            @error('name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                                value="{{ old('name') }}" name="name" required autofocus>
+                            <div class="invalid-feedback">
+                                @if ($errors->has('name'))
+                                    {{ $errors->first('name') }}
+                                @else
+                                    Please fill in your name
+                                @endif
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}" name="email">
-                            @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                                value="{{ old('email') }}" required name="email">
+                            <div class="invalid-feedback">
+                                @if ($errors->has('email'))
+                                    {{ $errors->first('email') }}
+                                @else
+                                    Please fill in your email
+                                @endif
+                            </div>
                         </div>
 
                         <div class="row">
@@ -41,21 +45,24 @@
                                 <label for="password" class="d-block">Password</label>
                                 <input id="password" type="password"
                                     class="form-control pwstrength @error('password') is-invalid @enderror"
-                                    data-indicator="pwindicator" name="password">
+                                    data-indicator="pwindicator" required name="password">
                                 <div id="pwindicator" class="pwindicator">
                                     <div class="bar"></div>
                                     <div class="label"></div>
                                 </div>
-                                @if ($errors->has('password'))
-                                    <div class="invalid-feedback">
+                                <div class="invalid-feedback">
+                                    @if ($errors->has('password') || $errors->has('password_confirmation'))
                                         {{ $errors->first('password') }}
-                                    </div>
-                                @endif
+                                    @else
+                                        Please fill in your password
+                                    @endif
+                                </div>
                             </div>
                             <div class="form-group col-6">
                                 <label for="password_confirmation" class="d-block">Password Confirmation</label>
-                                <input id="password_confirmation" type="password"
-                                    class="form-control @if ($errors->has('password')) is-invalid @endif"
+                                <input id="password_confirmation" required type="password"
+                                    class="form-control
+                                    @if ($errors->has('password') || $errors->has('password_confirmation')) is-invalid @endif"
                                     name="password_confirmation">
                             </div>
                         </div>
@@ -95,7 +102,7 @@
 
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="agree" class="custom-control-input" id="agree">
+                                <input type="checkbox" name="agree" class="custom-control-input" required id="agree">
                                 <label class="custom-control-label" for="agree">
                                     I agree with the terms and conditions
                                 </label>
@@ -130,24 +137,23 @@
 <script>
     var agreeCheckbox = document.getElementById('agree');
     var registerButton = document.querySelector('button[type="submit"]');
-    registerButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        register().then(function(result) {
-            if (result) {
-                document.querySelector('form').submit();
-            }
-        });
+    registerButton.addEventListener('click', () => {
+        register();
     });
-    async function register() {
-        if (agreeCheckbox.checked) {
-            return true;
-        } else {
+
+    function register() {
+        if (!agreeCheckbox.checked) {
             // Create an instance of Notyf
-            var notyf = new Notyf();
+            var notyf = new Notyf({
+                position: {
+                    x: 'right',
+                    y: 'top',
+                },
+                dismissible: true
+            });
 
             // Display an error notification
             notyf.error('Tolong, setujui persyaratan dan ketentuan kami!');
-            return false;
         }
     }
 </script>

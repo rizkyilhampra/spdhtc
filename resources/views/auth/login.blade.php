@@ -19,12 +19,14 @@
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}" name="email" tabindex="1" autofocus>
-                            @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                                value="{{ old('email') }}" name="email" tabindex="1" required autofocus>
+                            <div class="invalid-feedback">
+                                @if ($errors->has('email'))
+                                    {{ $errors->first('email') }}
+                                @else
+                                    Please fill in your email
+                                @endif
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -37,12 +39,15 @@
                                 </div>
                             </div>
                             <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" tabindex="2">
-                            @error('password')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                                class="form-control @error('password') is-invalid @enderror" name="password" required
+                                tabindex="2">
+                            <div class="invalid-feedback">
+                                @if ($errors->has('password'))
+                                    {{ $errors->first('password') }}
+                                @else
+                                    Please fill in your password
+                                @endif
+                            </div>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
