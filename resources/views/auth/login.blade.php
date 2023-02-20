@@ -66,3 +66,18 @@
     </div>
 </div>
 @endsection
+@section('jsCustom')
+<script>
+    var notyf = new Notyf({
+        position: {
+            x: 'right',
+            y: 'top',
+        },
+        dismissible: true
+    });
+    let status = '{{ session('status') }}';
+    if (status) {
+        notyf.success(status);
+    }
+</script>
+@endsection

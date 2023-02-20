@@ -51,18 +51,18 @@
                                     <div class="label"></div>
                                 </div>
                                 <div class="invalid-feedback">
-                                    @if ($errors->has('password') || $errors->has('password_confirmation'))
-                                        {{ $errors->first('password') }}
+                                    @error('password')
+                                        {{ $message }}
                                     @else
                                         Please fill in your password
-                                    @endif
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group col-6">
                                 <label for="password_confirmation" class="d-block">Password Confirmation</label>
                                 <input id="password_confirmation" required type="password"
                                     class="form-control
-                                    @if ($errors->has('password') || $errors->has('password_confirmation')) is-invalid @endif"
+                                    @error('password') is-invalid @enderror"
                                     name="password_confirmation">
                             </div>
                         </div>
