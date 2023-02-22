@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SocialAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard.index');
     })->name('dashboard');
 });
+
+Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
+Route::get('/auth/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('google.callback');

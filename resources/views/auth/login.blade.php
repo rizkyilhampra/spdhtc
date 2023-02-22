@@ -57,8 +57,13 @@
                     </form>
                 </div>
             </div>
-            <div class="mt-3 text-muted text-center">
-                Don't have an account? <a href="{{ route('register') }}">Create One</a>
+            <div class="row-auto d-flex justify-content-between">
+                <div class="mt-3 text-muted">
+                    Don't have an account? <a href="{{ route('register') }}">Create One</a>
+                </div>
+                <div class="mt-3 text-muted">
+                    Or with google account? <a href="{{ route('google') }}">Google</a>
+                </div>
             </div>
         @section('footer')
             @parent
