@@ -55,15 +55,20 @@
                             </button>
                         </div>
                     </form>
+                    <div class="text-center mt-4 mb-3">
+                        <div class="text-job text-muted">Or Login With Social</div>
+                    </div>
+                    <div class="row sm-gutters">
+                        <div class="col-12">
+                            <a class="btn btn-block btn-social btn-google" href="{{ route('google') }}">
+                                <span class="fab fa-google"></span> Google
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row-auto d-flex justify-content-between">
-                <div class="mt-3 text-muted">
-                    Don't have an account? <a href="{{ route('register') }}">Create One</a>
-                </div>
-                <div class="mt-3 text-muted">
-                    Or with google account? <a href="{{ route('google') }}">Google</a>
-                </div>
+            <div class="mt-3 text-muted text-center">
+                Don't have an account? <a href="{{ route('register') }}">Create One</a>
             </div>
         @section('footer')
             @parent
@@ -85,4 +90,7 @@
         notyf.success(status);
     }
 </script>
+@endsection
+@section('cssLibraries')
+<link rel="stylesheet" href="../spesifiedAssets/bootstrap-social.css">
 @endsection

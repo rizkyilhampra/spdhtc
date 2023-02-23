@@ -122,9 +122,6 @@
                     Already have an account? <a href="{{ route('login') }}">Login</a>
                 </div>
                 <div class=" text-muted">
-                    Or with google account? <a href="{{ route('google') }}">Google</a>
-                </div>
-                <div class=" text-muted">
                     <a href="https://rizkyilhampra.my.id" target="_blank">Terms & Conditions</a>
                 </div>
             </div>
