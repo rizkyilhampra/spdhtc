@@ -1,5 +1,5 @@
 @extends('layouts.custom')
-@section('title', 'Reset Password')
+@section('title', 'Reset Kata Sandi')
 @section('content')
     <div class="row">
         <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
@@ -9,7 +9,7 @@
 
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>Reset Password</h4>
+                    <h4>Reset Kata Sandi</h4>
                 </div>
 
                 <div class="card-body">
@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password">New Password</label>
+                            <label for="password">Kata Sandi Baru</label>
                             <input id="password" type="password"
                                 class="form-control pwstrength @error('password') is-invalid @enderror"
                                 data-indicator="pwindicator" name="password" tabindex="2" autofocus required>
@@ -39,19 +39,19 @@
                                 @error('password')
                                     {{ $message }}
                                 @else
-                                    Please fill in your password
+                                    Tolong isi password anda
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password_confirmation">Confirm Password</label>
+                            <label for="password_confirmation">Konfirmasi Kata Sandi</label>
                             <input id="password_confirmation" type="password"
                                 class="form-control @error('password') is-invalid @enderror" name="password_confirmation"
                                 tabindex="2" required>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                                Reset Password
+                                Reset Kata Sandi
                             </button>
                         </div>
                     </form>

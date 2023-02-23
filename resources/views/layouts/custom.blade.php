@@ -29,7 +29,7 @@
                 @section('footer')
                     <div class="simple-footer">
                         Copyright &copy;
-                        <a href="https://rizkyilhampra.my.id" target="_blank">Rizky Ilham Pratama</a>
+                        <a href="https://github.com/rizkyilhampra/spdhtc" target="_blank">SPDHTC</a>
                         <span>{{ date('Y') }}</span>
                     </div>
                 @show

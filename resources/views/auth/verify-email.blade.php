@@ -1,6 +1,6 @@
 @extends('layouts.custom')
 
-@section('title', 'Email Verification')
+@section('title', 'Email Verifikasi')
 @section('content')
     <div class="row">
         <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
@@ -10,13 +10,13 @@
 
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>Email Verify</h4>
+                    <h4>Verifikasi Email</h4>
                 </div>
 
                 <div class="card-body">
                     <p id="textStatusEmail">
-                        {{ __('Before proceeding, please check your email for a verification link.') }}
-                        {{ __('If you did not receive the email') }},
+                        {{ __('Sebelum memproses, tolong cek email anda untuk mendapatkan link verifikasi.') }}
+                        {{ __('Jika anda tidak mendapatkan email') }},
                     </p>
                     <form method="POST" id="verifEmail" action="{{ route('verification.send') }}" class="needs-validation"
                         novalidate="">
@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <button type="submit" id="resendVerifEmail" class="btn btn-primary btn-lg btn-block"
                                 tabindex="4">
-                                Resend Verification Email
+                                Kirim Ulang Email Verifikasi
                             </button>
                         </div>
                     </form>
@@ -54,7 +54,7 @@
             let resendVerifEmail = document.getElementById('resendVerifEmail');
             resendVerifEmail.remove();
             textStatusEmail.innerHTML = 'Email verifikasi telah dikirim ke email anda!\n';
-            textStatusEmail.innerHTML += 'Please check your email and click on the link to verify your account.';
+            textStatusEmail.innerHTML += 'Tolong cek email anda dan klik link untuk memverifikasi akun anda';
             return notyf.success('Email verifikasi telah dikirim ke email anda!');
         }
     }
