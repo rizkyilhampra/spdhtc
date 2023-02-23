@@ -9,21 +9,21 @@
 
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>Register</h4>
+                    <h4>Daftar</h4>
                 </div>
 
                 <div class="card-body">
                     <form action="{{ route('register') }}" class="needs-validation" novalidate="" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Nama</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
                                 value="{{ old('name') }}" name="name" required autofocus>
                             <div class="invalid-feedback">
                                 @if ($errors->has('name'))
                                     {{ $errors->first('name') }}
                                 @else
-                                    Please fill in your name
+                                    Tolong isi nama anda
                                 @endif
                             </div>
                         </div>
@@ -35,14 +35,14 @@
                                 @if ($errors->has('email'))
                                     {{ $errors->first('email') }}
                                 @else
-                                    Please fill in your email
+                                    Tolong isi email anda
                                 @endif
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-6">
-                                <label for="password" class="d-block">Password</label>
+                                <label for="password" class="d-block">Kata Sandi</label>
                                 <input id="password" type="password"
                                     class="form-control pwstrength @error('password') is-invalid @enderror"
                                     data-indicator="pwindicator" required name="password">
@@ -54,12 +54,12 @@
                                     @error('password')
                                         {{ $message }}
                                     @else
-                                        Please fill in your password
+                                        Tolong isi password anda
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group col-6">
-                                <label for="password_confirmation" class="d-block">Password Confirmation</label>
+                                <label for="password_confirmation" class="d-block">Konfirmasi Password</label>
                                 <input id="password_confirmation" required type="password"
                                     class="form-control
                                     @error('password') is-invalid @enderror"
@@ -104,30 +104,24 @@
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" name="agree" class="custom-control-input" required id="agree">
                                 <label class="custom-control-label" for="agree">
-                                    I agree with the terms and conditions
+                                    Saya setuju dengan <a href="https://rizkyilhampra.my.id" target="_blank">persyaratan dan
+                                        ketentuan</a>
                                 </label>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                Register
+                                Daftar
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="row-auto d-flex justify-content-between">
-                <div class=" text-muted">
-                    Already have an account? <a href="{{ route('login') }}">Login</a>
-                </div>
-                <div class=" text-muted">
-                    Or with google account? <a href="{{ route('google') }}">Google</a>
-                </div>
-                <div class=" text-muted">
-                    <a href="https://rizkyilhampra.my.id" target="_blank">Terms & Conditions</a>
-                </div>
+            <div class="mt-3 text-muted text-center">
+                Sudah punya akun? <a href="{{ route('login') }}">Masuk</a>
             </div>
+
         @section('footer')
             @parent
         @endsection
