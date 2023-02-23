@@ -28,9 +28,8 @@ class SocialAuthController extends Controller
             Auth::login($user);
             return redirect()->route('dashboard');
         } else {
-            $user = User::updateOrCreate([
+            $user = User::create([
                 'email' => $user->email,
-            ], [
                 'google_id' => $user->id,
                 'name' => $user->name,
                 'google_token' => $user->token,
