@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Models\GoogleAuth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Fortify\Fortify;
@@ -19,27 +20,33 @@ class SocialAuthController extends Controller
 
     public function handleProviderCallback(Request $request)
     {
-        //get $user from google
-        $user = Socialite::driver('google')->user();
-
-        //check user exists in database
-        $userFromModel = User::where('email', $user->email)->first();
-        if ($user->email == $userFromModel) {
-            Auth::login($user);
+        //get user from google
+        $userFromGoogle = Socialite::driver('google')->user();
+        //check if user_id exists in users_google_auth table
+        $usersGoogleAuth = GoogleAuth::where('google_id', $userFromGoogle->id)->first();
+        if ($usersGoogleAuth) {
+            //if user_id exists, get user from users table then login
+            $users = User::where('id', $usersGoogleAuth->user_id)->first();
+            Auth::login($users);
             return redirect()->route('dashboard');
         } else {
-            $user = User::create([
-                'email' => $user->email,
-                'google_id' => $user->id,
-                'name' => $user->name,
-                'google_token' => $user->token,
-                'google_refresh_token' => $user->refreshToken,
+            //if user_id does not exist, create new user in users table then login
+            $users = new User([
+                'email' => $userFromGoogle->email,
+                'name' => $userFromGoogle->name,
                 'email_verified_at' => now(),
-                'password' => bcrypt($user->id),
+                'password' => bcrypt($userFromGoogle->id),
             ]);
-            $user->markEmailAsVerified();
-
-            Auth::login($user);
+            $users->save();
+            //create new user_id in users_google_auth table
+            $userGoogleAuth = new GoogleAuth([
+                'user_id' => $users->id,
+                'google_id' => $userFromGoogle->id,
+                'avatar' => $userFromGoogle->avatar ?? '',
+            ]);
+            $users->googleAuth()->save($userGoogleAuth);
+            $users->markEmailAsVerified();
+            Auth::login($users);
             return redirect()->route('dashboard');
         }
     }
