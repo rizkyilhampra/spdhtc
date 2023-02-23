@@ -56,7 +56,7 @@
                         </div>
                     </form>
                     <div class="text-center mt-4 mb-3">
-                        <div class="text-job text-muted">Atau dengan media sosial</div>
+                        <div class="text-job text-muted">Atau masuk dan daftar melalui</div>
                     </div>
                     <div class="row sm-gutters">
                         <div class="col-12">
