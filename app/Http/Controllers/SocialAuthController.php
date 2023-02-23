@@ -19,15 +19,15 @@ class SocialAuthController extends Controller
 
     public function handleProviderCallback(Request $request)
     {
+        //get $user from google
         $user = Socialite::driver('google')->user();
 
-        //check if user exists
-        $user = User::where('email', $user->email)->first();
-        if ($user) {
+        //check user exists in database
+        $userFromModel = User::where('email', $user->email)->first();
+        if ($user->email == $userFromModel) {
             Auth::login($user);
             return redirect()->route('dashboard');
         } else {
-            $user = Socialite::driver('google')->user();
             $user = User::updateOrCreate([
                 'email' => $user->email,
             ], [
@@ -38,7 +38,6 @@ class SocialAuthController extends Controller
                 'email_verified_at' => now(),
                 'password' => bcrypt($user->id),
             ]);
-            //turn off email verification
             $user->markEmailAsVerified();
 
             Auth::login($user);
