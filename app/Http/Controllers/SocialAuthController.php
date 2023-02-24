@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Fortify\CreateNewUser;
+use App\Models\AuthGroupUser;
 use App\Models\GoogleAuth;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class SocialAuthController extends Controller
             //if user_id exists, get user from users table then login
             $users = User::where('id', $usersGoogleAuth->user_id)->first();
             Auth::login($users);
-            return redirect()->route('dashboard');
+            return redirect()->intended(Fortify::redirects('home', 'home-user'));
         } else {
             //if user_id does not exist, create new user in users table then login
             $users = new User([
@@ -45,9 +46,14 @@ class SocialAuthController extends Controller
                 'avatar' => $userFromGoogle->avatar ?? '',
             ]);
             $users->googleAuth()->save($userGoogleAuth);
+
+            //create new user_id in auth_group_user table
+            $authGroupUser = new AuthGroupUser();
+            $authGroupUser->fromGoogleAccount($userGoogleAuth);
+
             $users->markEmailAsVerified();
             Auth::login($users);
-            return redirect()->route('dashboard');
+            return redirect()->intended(Fortify::redirects('home', 'home-user'));
         }
     }
 }

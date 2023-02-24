@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             UserCustomSeeder::class,
+            AuthGroupSeeder::class,
+            AuthGroupUserSeeder::class,
         ]);
     }
 }
