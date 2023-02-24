@@ -46,4 +46,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(GoogleAuth::class);
     }
+
+    //return avatar if user has google avatar, else return default avatar
+    public function getAvatarAttribute()
+    {
+        return $this->googleAuth->avatar ?? 'https://ui-avatars.com/api/?name=' . $this->name;
+    }
 }
