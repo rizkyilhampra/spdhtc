@@ -52,4 +52,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->googleAuth->avatar ?? 'https://ui-avatars.com/api/?name=' . $this->name;
     }
+
+    public function groups()
+    {
+        return $this->belongsToMany(AuthGroup::class, 'auth_group_user', 'user_id', 'group_id');
+    }
 }

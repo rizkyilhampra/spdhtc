@@ -22,6 +22,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', function () {
         return view('dashboard.index');
     })->name('dashboard');
+    Route::get('home-user', function () {
+        return view('dashboard.user.index');
+    })->name('dashboard.user');
 });
 
 Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
