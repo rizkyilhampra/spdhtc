@@ -21,10 +21,10 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', function () {
         return view('dashboard.index');
-    })->name('dashboard');
+    })->name('dashboard')->middleware('can:asAdmin');
     Route::get('home-user', function () {
         return view('dashboard.user.index');
-    })->name('dashboard.user');
+    })->name('dashboard.user')->middleware('can:asUser');
 });
 
 Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
