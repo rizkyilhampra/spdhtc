@@ -21,5 +21,11 @@ class AuthGroupUserSeeder extends Seeder
                 'group_id' => 2,
             ]);
         }
+
+        //create if user_id is admin update group_id to 1
+        \App\Models\AuthGroupUser::where(
+            'user_id',
+            User::where('name', 'admin')->first()->id
+        )->update(['group_id' => 1]);
     }
 }
