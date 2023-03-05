@@ -3,10 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class AuthGroupUserSeeder extends Seeder
+class UserProfileSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,17 +16,16 @@ class AuthGroupUserSeeder extends Seeder
      */
     public function run()
     {
+        $profession = ['Developer', 'Designer', 'Manager', 'Architect'];
+
         for ($i = 1; $i <= User::count(); $i++) {
-            \App\Models\AuthGroupUser::create([
+            \App\Models\UserProfile::create([
                 'user_id' => $i,
-                'group_id' => 2,
+                'address' => Factory::create()->address,
+                'city' => 'Anytown',
+                'province' => 'BC',
+                'profession' => $profession[rand(0, 3)],
             ]);
         }
-
-        //create if user_id is admin update group_id to 1
-        \App\Models\AuthGroupUser::where(
-            'user_id',
-            User::where('name', 'admin')->first()->id
-        )->update(['group_id' => 1]);
     }
 }
