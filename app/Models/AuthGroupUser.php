@@ -32,4 +32,18 @@ class AuthGroupUser extends Model
         $this->group_id = AuthGroup::where('name', 'User')->first()->id;
         $this->save();
     }
+
+    public function fromUser($user)
+    {
+        $this->user_id = $user->id;
+        $this->group_id = AuthGroup::where('name', 'User')->first()->id;
+        $this->save();
+    }
+
+    public function fromAdmin($user)
+    {
+        $this->user_id = $user->id;
+        $this->group_id = AuthGroup::where('name', 'Admin')->first()->id;
+        $this->save();
+    }
 }
