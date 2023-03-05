@@ -25,7 +25,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home-user', function () {
         return view('dashboard.user.index');
     })->name('dashboard.user')->middleware('can:asUser');
-});
 
-Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
-Route::get('/auth/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('google.callback');
+    //route to edit-profile
+    Route::get('edit-profile', [App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
+    Route::get('edit-profile/lokasi/kota/{id}', [App\Http\Controllers\KotaProvinsiController::class, 'indexCity'])->name('kota');
+    //route to auth google
+    Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
+    Route::get('/auth/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('google.callback');
+});
