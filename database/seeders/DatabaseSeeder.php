@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             UserCustomSeeder::class,
             AuthGroupSeeder::class,
             AuthGroupUserSeeder::class,
+            UserProfileSeeder::class,
         ]);
     }
 }
