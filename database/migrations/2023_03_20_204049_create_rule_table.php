@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('auth_group_user', function (Blueprint $table) {
+        Schema::create('rule', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
-            $table->unsignedSmallInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedSmallInteger('group_id');
-            $table->foreign('group_id')->references('id')->on('auth_group')->onDelete('cascade');
+            $table->unsignedSmallInteger('penyakit_id');
+            $table->foreign('penyakit_id')->references('id')->on('penyakit');
+            $table->unsignedSmallInteger('gejala_id');
+            $table->foreign('gejala_id')->references('id')->on('gejala');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auth_group');
+        Schema::dropIfExists('rule');
     }
 };
