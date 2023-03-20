@@ -14,16 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_profile', function (Blueprint $table) {
-            $table->id();
-            //foreign key to user table
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            //adresss
+            $table->smallInteger('id', true, true);
+            $table->unsignedSmallInteger('user_id')->constrained('users')->onDelete('cascade');
             $table->string('address')->nullable();
-            //city
             $table->string('city')->nullable();
-            //state
             $table->string('province')->nullable();
-            //profession
             $table->string('profession')->nullable();
             $table->timestamps();
         });
