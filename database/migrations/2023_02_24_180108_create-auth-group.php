@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('auth_group', function (Blueprint $table) {
-            $table->id();
+            $table->smallInteger('id', true, true);
             $table->string('name', 100)->unique();
             $table->string('description', 255)->nullable();
             $table->timestamps();
