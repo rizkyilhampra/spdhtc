@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('auth_group', function (Blueprint $table) {
+        Schema::create('gejala', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
-            $table->string('name', 100)->unique();
-            $table->string('description', 255)->nullable();
+            $table->char('prefix', '1')->default('G');
+            $table->string('name', '255');
+            $table->string('image', '255')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auth_group');
+        Schema::dropIfExists('gejala');
     }
 };

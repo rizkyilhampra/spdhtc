@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             AuthGroupSeeder::class,
             AuthGroupUserSeeder::class,
             UserProfileSeeder::class,
+            Penyakit::class,
+            Gejala::class,
+            Rule::class,
         ]);
     }
 }

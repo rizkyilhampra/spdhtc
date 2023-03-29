@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('auth_group', function (Blueprint $table) {
+        Schema::create('penyakit', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
-            $table->string('name', 100)->unique();
-            $table->string('description', 255)->nullable();
+            $table->char('prefix', '1')->default('P');
+            $table->string('name', '255');
+            $table->text('reason');
+            $table->text('solution');
+            $table->string('image', '255')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auth_group');
+        Schema::dropIfExists('penyakit');
     }
 };
