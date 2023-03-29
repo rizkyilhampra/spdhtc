@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('layouts.user.app');
 });
+// });Route::get('/', function () {
+//     return view('auth.login');
+// });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', function () {
@@ -33,3 +36,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
     Route::get('/auth/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('google.callback');
 });
+
+// Route::get('beranda', function () {
+//     return view('');
+// });
+// Route::get('diagnosis', function () {
+//     return view('user.diagnosis');
+// });
+// Route::get('diagnosis/diagnosis-gejala', function () {
+//     return view('user.diagnosis-gejala');
+// });
+// Route::get('informasi-penyakit', function () {
+//     return view('user.informasi-penyakit');
+// });
+// Route::get('kontak', function () {
+//     return view('user.kontak');
+// });
