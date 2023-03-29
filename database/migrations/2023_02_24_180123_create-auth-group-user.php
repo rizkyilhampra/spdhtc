@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('auth_group_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('group_id')->constrained('auth_group')->onDelete('cascade');
+            $table->smallInteger('id', true, true);
+            $table->unsignedSmallInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedSmallInteger('group_id');
+            $table->foreign('group_id')->references('id')->on('auth_group')->onDelete('cascade');
             $table->timestamps();
         });
     }

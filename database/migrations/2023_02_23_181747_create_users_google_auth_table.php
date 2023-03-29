@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users_google_auth', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->smallInteger('id', true, true);
+            $table->unsignedSmallInteger('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('google_id');
             $table->string('avatar')->nullable();

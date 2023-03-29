@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('auth_group', function (Blueprint $table) {
+        Schema::create('rule', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
-            $table->string('name', 100)->unique();
-            $table->string('description', 255)->nullable();
+            $table->unsignedSmallInteger('penyakit_id');
+            $table->foreign('penyakit_id')->references('id')->on('penyakit');
+            $table->unsignedSmallInteger('gejala_id');
+            $table->foreign('gejala_id')->references('id')->on('gejala');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auth_group');
+        Schema::dropIfExists('rule');
     }
 };
