@@ -6,7 +6,7 @@
         <div class="col-12 col-sm-7 pb-4">
             <div class="card shadow">
                 <div class="card-body">
-                    <h4 class="font-medium pb-2 card-title">
+                    <h4 class="font-semibold pb-2 card-title">
                         Pengembang
                     </h4>
                     <div class="row">

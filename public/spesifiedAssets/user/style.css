@@ -1,44 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap");
 
-/* @font-face {
-    font-family: Flix;
-    src: url("/assets/fonts/Flix-Normal.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "SerialB";
-    src: url("/assets/fonts/Serial-Bold.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "Peace-Sans";
-    src: url("/assets/fonts/Peace-Sans.otf") format("opentype");
-} */
 
 * {
     font-family: "Poppins", sans-serif;
+
 }
 
-/* .f-montsterrat {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 700;
-} */
-
-/* .f-flix {
-    font-family: "Flix", sans-serif;
-    letter-spacing: 3px;
+body {
+    visibility: hidden;
+    scroll-behavior: smooth;
 }
-
-.f-serialb {
-    font-family: "SerialB", sans-serif;
-}
-
-.f-peace-sans {
-    font-family: "Peace-Sans", sans-serif;
-    text-transform: uppercase;
-    color: #090806;
-    letter-spacing: 3px;
-} */
 
 .font-normal {
     font-weight: 400 !important;
@@ -76,6 +47,8 @@ a {
 
 #beranda {
     padding-top: 3rem;
+
+    background-image: linear-gradient(to bottom, rgba(98, 126, 66, 0.5) 0%, #fcfcfd 100%) !important;
 }
 
 #diagnosis,
@@ -95,7 +68,7 @@ footer {
 }
 
 .color-sage {
-    background-color: rgb(187, 186, 113);
+    background-color: #bbba71;
 }
 
 .color-bistre {
@@ -119,13 +92,13 @@ footer {
 }
 
 .btn-custom1 {
-    background-color: #bbba71 !important;
-    color: #090806 !important;
+    background-color: #A09E4D !important;
+    color: #fff !important;
 }
 
 .btn-custom1:hover {
-    background-color: #AFAE5A !important;
-    color: #090806 !important;
+    background-color: #919046 !important;
+    color: #fff !important;
 }
 
 .cambridge-blue {
@@ -133,8 +106,7 @@ footer {
 }
 
 .nav-pills {
-    --bs-nav-pills-link-active-color: #090806 !important;
-    --bs-nav-pills-link-active-bg: #bbba71 !important;
+    --bs-nav-pills-link-active-bg: #A09E4D !important;
 }
 
 .nav {
@@ -142,27 +114,56 @@ footer {
     --bs-nav-link-hover-color: #090806cb !important;
 }
 
-/* .card-header {
-    background-color: #a0b195 !important;
-} */
+#upScroll {
 
-/* .bg-cabai-blur>* {
-    position: relative;
-    z-index: 1;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    /* Hidden by default */
+    position: fixed;
+    /* Fixed/sticky position */
+    bottom: 20px;
+    /* Place the button at the bottom of the page */
+    right: 30px;
+    /* Place the button 30px from the right */
+    z-index: 99;
+    /* Make sure it does not overlap */
+    /* border: none; */
+    /* Remove borders */
+    outline: none;
+    /* Remove outline */
+    background-color: #627e42;
+    /* Set a background color */
+    color: white;
+    /* Text color */
+    cursor: pointer;
+    /* Add a mouse pointer on hover */
+    /* Some padding */
+    width: 50px;
+    height: 50px;
+    /* border-radius: 50%; */
+    /* Rounded corners */
+    font-size: 18px;
+    /* Increase font size */
 }
 
-.bg-cabai-blur::before {
-    content: "";
-    z-index: 0;
+#upScroll:hover {
+    background-color: #4e6434;
+    /* Add a dark-grey background on hover */
+}
+
+#upScroll.show {
+    visibility: visible;
+    opacity: 1;
+    /* Add a transition effect (when scrolling - show the button) */
+    transition: opacity 0.5s ease-in-out;
+}
+
+#upScroll i {
+    display: block;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(../../assets/img/gambar-cabai.jpg) !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    filter: blur(8px);
-    opacity: 0.05;
-} */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+}
