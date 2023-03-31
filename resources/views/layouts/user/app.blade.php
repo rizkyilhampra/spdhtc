@@ -16,6 +16,7 @@
     <main>
         <section>
             @include('layouts.user.navbar')
+
             <div class="container-fluid">
                 @include('user.beranda')
                 @include('user.diagnosis')
@@ -25,7 +26,9 @@
         </section>
     </main>
     @include('layouts.user.footer')
-
+    <div class="rounded-circle" id="upScroll">
+        <i class="fas fa-chevron-up fa-lg"></i>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
     </script>
@@ -34,7 +37,97 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js"></script>
+
     <script>
+        $(document).ready(function() {
+            $('body').css('visibility', 'visible');
+
+            $('.navbar-nav li a').first().addClass('active');
+
+            let navbarActive = false;
+            $('.navbar').on('show.bs.collapse', () => {
+                applyNavbarClassesDark();
+                navbarActive = true;
+            });
+            $('.navbar').on('hide.bs.collapse', () => {
+                navbarActive = false;
+                applyNavbarClassesLight();
+                if ($(this).scrollTop() > 5) {
+                    applyNavbarClassesDark();
+                }
+            });
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 5) {
+                    applyNavbarClassesDark();
+                    buttonToTop(true);
+                } else {
+                    applyNavbarClassesLight();
+                    if (navbarActive) {
+                        applyNavbarClassesDark();
+                    }
+                    buttonToTop(false);
+                }
+                var scrollPosition = $(this).scrollTop();
+                $('div.section').each(function() {
+                    var sectionTop = $(this).offset().top - 50;
+                    var sectionBottom = sectionTop + $(this).outerHeight();
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        $('.navbar-nav li a').removeClass('active');
+                        $('.navbar-nav li a[href="#' + $(this).attr('id') + '"]').addClass(
+                            'active');
+                    }
+                });
+            });
+
+            const myCarousel = document.getElementById('carouselExample');
+            myCarousel.addEventListener('slide.bs.carousel', event => {
+                const id = event.relatedTarget.id;
+                if (id == 'people2') {
+                    $('#descPeople1 ').addClass('d-none');
+                    $('#descPeople2').removeClass('d-none');
+                } else if (id == 'people1') {
+                    $('#descPeople2').addClass('d-none');
+                    $('#descPeople1').removeClass('d-none');
+                }
+            })
+
+            let buttonScrollTop = document.getElementById('upScroll');
+            buttonScrollTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+
+        const gambarCabai = document.getElementById('gambar-cabai');
+        const parallax = new simpleParallax(gambarCabai, {
+            delay: 1,
+            transition: 'cubic-bezier(0,0,0,1)'
+        });
+
+        const promise = new Promise((resolve, reject) => {
+            resolve(() => {
+                window.addEventListener('load', () => {
+                    $('.simpleParallax').addClass('rounded-4').addClass('shadow-lg');
+                })
+            })
+        });
+
+        promise.then((resolve) => resolve());
+
+
+        function buttonToTop(top) {
+            let button = $('#upScroll');
+            if (top) {
+                return button.addClass('show');
+            } else {
+                return button.removeClass('show');
+            }
+        }
+
         function applyNavbarClassesDark() {
             return $('.navbar')
                 .removeClass('bg-body-transparent')
@@ -70,54 +163,6 @@
                     'transition': 'all .5s ease-in-out'
                 })
         }
-
-        $(document).ready(function() {
-            $('.navbar-nav li a').first().addClass('active');
-
-            let navbarActive = false;
-            $('.navbar').on('show.bs.collapse', () => {
-                applyNavbarClassesDark();
-                navbarActive = true;
-            });
-            $('.navbar').on('hide.bs.collapse', () => {
-                navbarActive = false;
-                applyNavbarClassesLight();
-                if ($(this).scrollTop() > 5) {
-                    applyNavbarClassesDark();
-                }
-            });
-            $(window).scroll(function() {
-                if ($(this).scrollTop() > 5) {
-                    applyNavbarClassesDark();
-                } else {
-                    applyNavbarClassesLight();
-                    if (navbarActive) {
-                        applyNavbarClassesDark();
-                    }
-                }
-                var scrollPosition = $(this).scrollTop();
-                $('div.section').each(function() {
-                    var sectionTop = $(this).offset().top - 50;
-                    var sectionBottom = sectionTop + $(this).outerHeight();
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                        $('.navbar-nav li a').removeClass('active');
-                        $('.navbar-nav li a[href="#' + $(this).attr('id') + '"]').addClass(
-                            'active');
-                    }
-                });
-            });
-            const myCarousel = document.getElementById('carouselExample')
-            myCarousel.addEventListener('slide.bs.carousel', event => {
-                const id = event.relatedTarget.id;
-                if (id == 'people2') {
-                    $('#descPeople1 ').addClass('d-none');
-                    $('#descPeople2').removeClass('d-none');
-                } else if (id == 'people1') {
-                    $('#descPeople2').addClass('d-none');
-                    $('#descPeople1').removeClass('d-none');
-                }
-            })
-        });
     </script>
 </body>
 

@@ -32,25 +32,25 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row-auto pb-3">
-                                <h5 class="card-title">
+                                <h6 class="card-title font-medium">
                                     Nama Penyakit
-                                </h5>
+                                </h6>
                                 <p class="card-text">
                                     Penyakit A
                                 </p>
                             </div>
                             <div class="row-auto pb-3">
-                                <h5 class="card-title">
+                                <h6 class="card-title font-medium">
                                     Penyebab Penyakit
-                                </h5>
+                                </h6>
                                 <p class="card-text">
                                     Penyakit A
                                 </p>
                             </div>
                             <div class="row-auto pb-3">
-                                <h5 class="card-title">
+                                <h6 class="card-title font-medium">
                                     Solusi Penyakit
-                                </h5>
+                                </h6>
                                 <p class="card-text">
                                     Penyakit A
                                 </p>
