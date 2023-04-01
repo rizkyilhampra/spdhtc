@@ -7,8 +7,8 @@
 }
 
 body {
-    visibility: hidden;
-    scroll-behavior: smooth;
+    /* visibility: hidden; */
+    /* scroll-behavior: smooth; */
 }
 
 .font-normal {
