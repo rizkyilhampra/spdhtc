@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.user.app');
-});
+Route::get('/', [UserController::class, 'index']);
+
+
 // });Route::get('/', function () {
 //     return view('auth.login');
 // });

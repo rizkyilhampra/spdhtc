@@ -39,11 +39,11 @@
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js"></script>
 
+    @yield('scriptPerPage')
+
     <script>
         $(document).ready(function() {
-            $('body').css('visibility', 'visible');
-
-            $('.navbar-nav li a').first().addClass('active');
+            // $('body').css('visibility', 'visible');
 
             let navbarActive = false;
             $('.navbar').on('show.bs.collapse', () => {
