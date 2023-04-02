@@ -92,5 +92,5 @@
 </script>
 @endsection
 @section('cssLibraries')
-<link rel="stylesheet" href="../spesifiedAssets/bootstrap-social.css">
+<link rel="stylesheet" href="../spesified-assets/bootstrap-social.css">
 @endsection

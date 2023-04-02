@@ -68,8 +68,8 @@
 @endsection
 
 @section('jsLibraries')
-<script src="{{ asset('spesifiedAssets/jquery.pwstrength.min.js') }}"></script>
-{{-- <script src="{{ asset('spesifiedAssets/jquery.selectric.min.js') }}"></script> --}}
+<script src="{{ asset('spesified-assets/jquery.pwstrength.min.js') }}"></script>
+{{-- <script src="{{ asset('spesified-assets/jquery.selectric.min.js') }}"></script> --}}
 @endsection
 @section('jsCustom')
 <script>

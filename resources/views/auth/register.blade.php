@@ -161,10 +161,10 @@
 @endsection
 
 @section('jsLibraries')
-<script src="{{ asset('spesifiedAssets/jquery.pwstrength.min.js') }}"></script>
-{{-- <script src="{{ asset('spesifiedAssets/jquery.selectric.min.js') }}"></script> --}}
+<script src="{{ asset('spesified-assets/jquery.pwstrength.min.js') }}"></script>
+{{-- <script src="{{ asset('spesified-assets/jquery.selectric.min.js') }}"></script> --}}
 @endsection
 
 {{-- @section('cssLibraries')
-<link rel="stylesheet" href="{{ asset('spesifiedAssets/selectric.css') }}">
+<link rel="stylesheet" href="{{ asset('spesified-assets/selectric.css') }}">
 @endsection --}}
