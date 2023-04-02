@@ -1,4 +1,4 @@
-<div id="penyakit" class="row section">
+<div id="penyakit" class="row section" data-aos="fade-up">
     <div class="col-12">
         <h2 class="fw-semibold">
             Daftar Penyakit Tanaman Cabai
