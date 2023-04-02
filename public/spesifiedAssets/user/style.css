@@ -3,12 +3,14 @@
 
 * {
     font-family: "Poppins", sans-serif;
-
 }
 
+
+html,
 body {
     /* visibility: hidden; */
-    /* scroll-behavior: smooth; */
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 .font-normal {
@@ -63,7 +65,7 @@ footer {
 
 @media (max-width: 992px) {
     #beranda {
-        min-height: auto !important;
+        min-height: 85vh !important;
     }
 }
 
@@ -166,4 +168,8 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.5rem;
+}
+
+.shadow-custom {
+    filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.3));
 }
