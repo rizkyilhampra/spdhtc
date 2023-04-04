@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\SocialAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,12 +23,20 @@ Route::get('/', function () {
 // });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('home', function () {
-        return view('dashboard.index');
-    })->name('dashboard')->middleware('can:asAdmin');
+    Route::get('home', [App\Http\Controllers\Controller::class, 'authenticated'])->name('home');
+    // Route::get('admin', function () {
+    //     return view('admin.dashboard');
+    // })->name('dashboard')->middleware('can:asAdmin');
+
+    Route::prefix('admin')->middleware('can:asAdmin')->group(function () {
+        Route::get('dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');
+    });
+
     Route::get('home-user', function () {
-        return view('dashboard.user.index');
+        echo "home-user";
     })->name('dashboard.user')->middleware('can:asUser');
+
+    // Route::get('home', [App\Http\Controllers\AdminController::class, 'index'])->name('home');
 
     //route to edit-profile
     Route::get('edit-profile', [App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
