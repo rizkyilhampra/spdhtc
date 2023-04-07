@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\App;
@@ -24,33 +25,25 @@ Route::get('/', [UserController::class, 'index']);
 // });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('home', function () {
-        return view('dashboard.index');
-    })->name('dashboard')->middleware('can:asAdmin');
+    Route::get('home', [App\Http\Controllers\Controller::class, 'authenticated'])->name('home');
+
+    Route::prefix('admin')->middleware('can:asAdmin')->group(function () {
+        Route::get('beranda', [App\Http\Controllers\AdminController::class, 'beranda'])->name('admin.beranda');
+        Route::get('histori-diagnosis', [App\Http\Controllers\AdminController::class, 'diagnosis'])->name('admin.diagnosis');
+        Route::get('penyakit', [App\Http\Controllers\AdminController::class, 'penyakit'])->name('admin.penyakit');
+        Route::get('gejala', [App\Http\Controllers\AdminController::class, 'gejala'])->name('admin.gejala');
+        Route::get('rule', [App\Http\Controllers\AdminController::class, 'rule'])->name('admin.rule');
+    });
+
+    Route::prefix('user')->middleware('can:asUser')->group(function () {
+        Route::get('edit-profile', [App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
+        Route::get('edit-profile/lokasi/kota/{id}', [App\Http\Controllers\KotaProvinsiController::class, 'indexCity'])->name('kota');
+    });
+
     Route::get('home-user', function () {
-        return view('dashboard.user.index');
+        echo "home-user";
     })->name('dashboard.user')->middleware('can:asUser');
-
-    //route to edit-profile
-    Route::get('edit-profile', [App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
-    Route::get('edit-profile/lokasi/kota/{id}', [App\Http\Controllers\KotaProvinsiController::class, 'indexCity'])->name('kota');
-    //route to auth google
-    Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
-    Route::get('/auth/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('google.callback');
 });
-
-// Route::get('beranda', function () {
-//     return view('');
-// });
-// Route::get('diagnosis', function () {
-//     return view('user.diagnosis');
-// });
-// Route::get('diagnosis/diagnosis-gejala', function () {
-//     return view('user.diagnosis-gejala');
-// });
-// Route::get('informasi-penyakit', function () {
-//     return view('user.informasi-penyakit');
-// });
-// Route::get('kontak', function () {
-//     return view('user.kontak');
-// });
+Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
+Route::get('/auth/google/callback', [SocialAuthController::class, 'handleProviderCallback'])
+    ->name('google.callback');
