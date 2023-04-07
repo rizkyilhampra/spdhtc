@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-lg bg-body-transparent" data-bs-theme="">
+<nav class="navbar fixed-top navbar-expand-lg bg-body-transparent" data-aos="fade-down" data-aos-anchor="body">
     <div class="container-fluid">
         <a class="navbar-brand font-semibold" href="#">
             {{-- <svg class="d-inline-block align-text-top" width="30" height="24" xmlns="http://www.w3.org/2000/svg"

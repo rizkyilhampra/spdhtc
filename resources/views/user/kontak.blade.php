@@ -1,12 +1,12 @@
-<div id="kontak" class="section">
+<div id="kontak" class="section" data-aos="fade-up">
     <h2 class="fw-semibold pb-3">
         Kontak
     </h2>
     <div class="row">
-        <div class="col-12 col-sm-7 pb-4">
+        <div class="col-12 col-sm-7 pb-4" data-aos="fade-right">
             <div class="card shadow">
                 <div class="card-body">
-                    <h4 class="font-medium pb-2 card-title">
+                    <h4 class="font-semibold pb-2 card-title">
                         Pengembang
                     </h4>
                     <div class="row">
@@ -83,7 +83,7 @@
             </div>
 
         </div>
-        <div class="col-12 col-sm-5">
+        <div class="col-12 col-sm-5" data-aos="fade-left">
             <div class="card shadow">
                 <div class="card-body">
                     <h4 class="font-semibold pb-2 card-title">
