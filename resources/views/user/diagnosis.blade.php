@@ -1,4 +1,4 @@
-<div id="diagnosis" class="section">
+<div id="diagnosis" class="section" data-aos="fade-up" data-aos-offset="">
     <h2 class="font-semibold pb-3">
         Diagnosis
     </h2>
@@ -17,8 +17,5 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
 </div>

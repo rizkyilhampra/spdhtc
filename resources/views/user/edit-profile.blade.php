@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="{{ asset('/spesifiedAssets/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/spesified-assets/bootstrap.min.css') }}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
     <link rel="stylesheet"
@@ -102,7 +102,7 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
-    <script src="{{ asset('/spesifiedAssets/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('/spesified-assets/bootstrap.bundle.min.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
