@@ -1,21 +1,18 @@
-<div id="diagnosis" class="section" data-aos="fade-up" data-aos-offset="">
-    <h2 class="font-semibold pb-3">
-        Diagnosis
-    </h2>
-    <div class="row ">
-        <div class="col-12 ">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="card-text">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto aliquam sint et tempora saepe
-                        incidunt modi, repellendus cupiditate optio cumque tenetur sed rerum, esse, asperiores nostrum
-                        excepturi laborum eveniet enim.
-                    </div>
-                    <div class="d-grid pt-3">
-                        <a href="#" class="btn btn-custom1">Mulai Diagnosis Penyakit</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+@extends('layouts.user.app')
+@section('content')
+    <div id="diagnosis" class="row min-vh-100 align-content-center section">
+        diagnosis
     </div>
-</div>
+@endsection
+
+@push('scriptPerPage')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.diagnosis').addClass('active');
+            let navLink = document.querySelector('ul.navbar-nav').querySelectorAll('li a');
+            for (let i = 0; i < navLink.length; i++) {
+                navLink[i].setAttribute('href', '{{ route('index') }}');
+            }
+        });
+    </script>
+@endpush
