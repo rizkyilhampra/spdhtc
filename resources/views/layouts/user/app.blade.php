@@ -8,9 +8,9 @@
     <title>SPDHTC</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('/spesified-assets/aos.css') }}" />
     <link rel="stylesheet" href="{{ asset('/spesified-assets/user/style.css') }}">
-    <script src="https://kit.fontawesome.com/06b8a1e79b.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/06b8a1e79b.js" type="text/javascript" crossorigin="anonymous"></script>
+    @stack('stylePerPage')
 </head>
 
 <body class="bg-light-subtle">
@@ -18,11 +18,8 @@
         <section>
             @include('layouts.user.navbar')
 
-            <div class="container-fluid">
-                @include('user.beranda')
-                @include('user.diagnosis')
-                @include('user.penyakit')
-                @include('user.kontak')
+            <div class="container-fluid" id="containerContent">
+                @yield('content')
             </div>
         </section>
     </main>
@@ -38,20 +35,8 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js"></script>
-    <script src="{{ asset('/spesified-assets/aos.js') }}"></script>
-    @yield('scriptPerPage')
 
-    <script>
-        function buttonToTop(top) {
-            let button = $('#upScroll');
-            if (top) {
-                return button.addClass('show');
-            } else {
-                return button.removeClass('show');
-            }
-        }
-
+    <script type="text/javascript">
         function applyNavbarClassesDark() {
             return $('.navbar')
                 .removeClass('bg-body-transparent')
@@ -86,25 +71,7 @@
                 })
         }
 
-
-
         $(document).ready(function() {
-
-
-            const bodyVisible = new Promise((resolve, reject) => {
-                $('body').css('visibility', 'visible').animate({
-                    opacity: 1
-                }, 500);
-                resolve();
-            });
-
-
-            bodyVisible.then(() => {
-                AOS.init({
-                    duration: 800,
-                });
-            });
-
             let navbarActive = false;
             $('.navbar').on('show.bs.collapse', () => {
                 applyNavbarClassesDark();
@@ -117,82 +84,9 @@
                     applyNavbarClassesDark();
                 }
             });
-
-            const section = $('div.section');
-
-            $(window).scroll(function() {
-
-                if ($(this).scrollTop() > 5) {
-                    applyNavbarClassesDark();
-                    buttonToTop(true);
-                } else {
-                    applyNavbarClassesLight();
-                    if (navbarActive) {
-                        applyNavbarClassesDark();
-                    }
-                    buttonToTop(false);
-                }
-                let scrollPosition = $(this).scrollTop();
-                section.each(function() {
-                    let sectionTop = $(this).offset().top - 50;
-                    let sectionBottom = sectionTop + $(this).outerHeight();
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                        $('.navbar-nav li a').removeClass('active');
-                        $('.navbar-nav li a[href="#' + $(this).attr('id') + '"]').addClass(
-                            'active');
-                    }
-                });
-            });
-
-            const myCarousel = document.getElementById('carouselExample');
-            myCarousel.addEventListener(
-                'slide.bs.carousel', event => {
-                    const id = event.relatedTarget.id;
-                    if (id == 'people2') {
-                        $('#descPeople1 ').addClass('d-none');
-                        $('#descPeople2').removeClass('d-none');
-                    } else if (id == 'people1') {
-                        $('#descPeople2').addClass('d-none');
-                        $('#descPeople1').removeClass('d-none');
-                    }
-                })
-
-            let buttonScrollTop = document.getElementById('upScroll');
-            buttonScrollTop.addEventListener(
-                'click', () => {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-
-            const gambarCabai = document.getElementById('gambar-cabai');
-            const parallax = new simpleParallax(gambarCabai, {
-                delay: 1,
-                transition: 'cubic-bezier(0,0,0,1)'
-            });
-
-            const addClassOnLoadSimpleParallax = new Promise((resolve, reject) => {
-                resolve(() => {
-                    $('.simpleParallax').addClass('rounded-4').addClass('shadow-custom');
-                })
-            });
-
-            addClassOnLoadSimpleParallax.then((resolve) => resolve());
-
-
-            // const diagnosisOnAos = document.querySelectorAll('#diagnosis');
-            // if (window.innerWidth > 568) {
-            //     diagnosisOnAos.forEach((el) => {
-            //         el.setAttribute('data-aos-offset', '');
-            //     });
-            // } else {
-            //     diagnosisOnAos.forEach((el) => {
-            //         el.setAttribute('data-aos-offset', '200');
-            //     });
-            // }
         });
     </script>
+    @stack('scriptPerPage')
 </body>
 
 </html>

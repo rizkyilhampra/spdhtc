@@ -15,12 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [UserController::class, 'index']);
-
-
-// });Route::get('/', function () {
-//     return view('auth.login');
-// });
+Route::get('/', [UserController::class, 'index'])->name('index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', [\App\Http\Controllers\Controller::class, 'authenticated'])->name('home');
@@ -33,15 +28,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('rule', [\App\Http\Controllers\AdminController::class, 'rule'])->name('admin.rule');
     });
 
-    Route::prefix('user')->middleware('can:asUser')->group(function () {
+    Route::middleware('can:asUser')->group(function () {
+        Route::get('diagnosis', [\App\Http\Controllers\UserController::class, 'diagnosis'])->name('user.diagnosis');
         Route::get('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
         Route::get('edit-profile/lokasi/kota/{id}', [\App\Http\Controllers\KotaProvinsiController::class, 'indexCity'])->name('kota');
     });
-
-    Route::get('home-user', function () {
-        echo "home-user";
-    })->name('dashboard.user')->middleware('can:asUser');
 });
+
 Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
 Route::get('/auth/google/callback', [SocialAuthController::class, 'handleProviderCallback'])
     ->name('google.callback');

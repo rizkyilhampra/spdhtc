@@ -36,28 +36,43 @@
                     <a class="nav-link kontak" href="#kontak">Kontak</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-auto ">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <div class="d-grid">
-                            <button class="btn btn-outline-dark font-medium text-start">
-                                <i class="fa-solid fa-user pe-2"></i>
-                                Profil
-                            </button>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <div class="d-grid">
-                            <button class="btn btn-outline-dark font-medium text-start">
-                                <i class="fa-solid fa-right-from-bracket pe-2"></i>
-                                Keluar
-                            </button>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+            @can('asUser')
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                        <a href="{{ route('edit-profile') }}" class="nav-link">
+                            <div class="d-grid">
+                                <button class="btn btn-outline-dark font-medium text-start">
+                                    <i class="fa-solid fa-user pe-2"></i>
+                                    Profil
+                                </button>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('logout') }}" class="nav-link">
+                            <div class="d-grid">
+                                <button class="btn btn-outline-dark font-medium text-start">
+                                    <i class="fa-solid fa-right-from-bracket pe-2"></i>
+                                    Keluar
+                                </button>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            @else
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="nav-link">
+                            <div class="d-grid">
+                                <button class="btn btn-outline-dark font-medium text-start">
+                                    <i class="fa-solid fa-right-to-bracket pe-2"></i>
+                                    Masuk/Daftar
+                                </button>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            @endcan
         </div>
     </div>
 </nav>
