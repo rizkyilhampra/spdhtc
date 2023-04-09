@@ -37,9 +37,9 @@
                 </li>
             </ul>
             @can('asUser')
-                <ul class="navbar-nav ms-auto ">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="{{ route('edit-profile') }}" class="nav-link">
+                        <a href="{{ route('edit-profile') }}" class="nav-link" id="btnNavLinkProfile">
                             <div class="d-grid">
                                 <button class="btn btn-outline-dark font-medium text-start">
                                     <i class="fa-solid fa-user pe-2"></i>
@@ -49,7 +49,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('logout') }}" class="nav-link">
+                        <a href="" id="btnLogout" class="nav-link">
                             <div class="d-grid">
                                 <button class="btn btn-outline-dark font-medium text-start">
                                     <i class="fa-solid fa-right-from-bracket pe-2"></i>
@@ -57,8 +57,21 @@
                                 </button>
                             </div>
                         </a>
+                        <form action="{{ route('logout') }}" method="POST" id="formLogout" hidden style="display: none">
+                            @csrf
+                        </form>
                     </li>
+
                 </ul>
+                @push('scriptPerPage')
+                    <script type="text/javascript">
+                        const buttonLogout = document.getElementById('btnLogout');
+                        buttonLogout.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            document.getElementById('formLogout').submit();
+                        });
+                    </script>
+                @endpush
             @else
                 <ul class="navbar-nav ms-auto ">
                     <li class="nav-item">

@@ -70,21 +70,6 @@
                     'transition': 'all .5s ease-in-out'
                 })
         }
-
-        $(document).ready(function() {
-            let navbarActive = false;
-            $('.navbar').on('show.bs.collapse', () => {
-                applyNavbarClassesDark();
-                navbarActive = true;
-            });
-            $('.navbar').on('hide.bs.collapse', () => {
-                navbarActive = false;
-                applyNavbarClassesLight();
-                if ($(this).scrollTop() > 5) {
-                    applyNavbarClassesDark();
-                }
-            });
-        });
     </script>
     @stack('scriptPerPage')
 </body>

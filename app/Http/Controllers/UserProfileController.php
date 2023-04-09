@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
-use Termwind\Components\Dd;
+use Illuminate\Support\Facades\Log;
 
 class UserProfileController extends Controller
 {
     public function index()
     {
-
         //get index method from KotaProvinsiController
         $kotaProvinsi = new KotaProvinsiController();
         $provinces = $kotaProvinsi->indexProvince();
@@ -24,9 +24,9 @@ class UserProfileController extends Controller
         return view('user.edit-profile', $data);
     }
 
-    public function update()
+    public function updateUser(Request $request)
     {
-        $data = request()->validate([
+        $data = $request->validate([
             'name' => 'required',
             'email' => 'required',
             'address' => 'required',
@@ -35,17 +35,24 @@ class UserProfileController extends Controller
             'profession' => 'required',
         ]);
 
-        $user = User::find(auth()->user()->id);
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->save();
+        //try catch example
+        try {
+            $user = User::find(auth()->user()->id);
+            $user->name = $data['name'];
+            $user->email = $data['email'];
+            $user->save();
 
-        $user->userProfile->address = $data['address'];
-        $user->userProfile->city = $data['city'];
-        $user->userProfile->province = $data['province'];
-        $user->userProfile->profession = $data['profession'];
-        $user->userProfile->save();
-
-        return redirect()->route('dashboard.user')->with('success', 'Profile updated successfully');
+            $userProfile = new UserProfile();
+            $userProfile->user_id = $user->id;
+            $userProfile->address = $data['address'];
+            $userProfile->city = $data['city'];
+            $userProfile->province = $data['province'];
+            $userProfile->profession = $data['profession'];
+            $userProfile->save();
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return redirect()->route('edit-profile')->with('error', 'Profile failed to update');
+        }
+        return redirect()->route('edit-profile')->with('success', 'Profile updated successfully');
     }
 }
