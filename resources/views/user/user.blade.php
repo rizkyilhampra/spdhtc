@@ -34,9 +34,9 @@
                             excepturi laborum eveniet enim.
                         </div>
                         <div class="d-grid pt-3">
-                            <a href="{{ route('user.diagnosis') }}" id="btn-diagnosis" class="btn btn-custom1">Mulai
-                                Diagnosis
-                                Penyakit
+                            <a href="{{ route('user.diagnosis') }}" id="btn-diagnosis"
+                                class="btn btn-custom1 fs-5 font-medium">
+                                Mulai Diagnosis Penyakit
                             </a>
                         </div>
                     </div>
@@ -204,9 +204,11 @@
 @push('stylePerPage')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" href="{{ asset('/spesified-assets/aos.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 @endpush
 
 @push('scriptPerPage')
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js" type="text/javascript">
     </script>
     <script src="{{ asset('/spesified-assets/aos.js') }}" type="text/javascript"></script>
@@ -219,9 +221,19 @@
                 return button.removeClass('show');
             }
         }
-
         $(document).ready(function() {
-
+            let navbarActive = false;
+            $('.navbar').on('show.bs.collapse', () => {
+                applyNavbarClassesDark();
+                navbarActive = true;
+            });
+            $('.navbar').on('hide.bs.collapse', () => {
+                navbarActive = false;
+                applyNavbarClassesLight();
+                if ($(this).scrollTop() > 5) {
+                    applyNavbarClassesDark();
+                }
+            });
             const bodyVisible = new Promise((resolve, reject) => {
                 $('body').css('visibility', 'visible').animate({
                     opacity: 1
@@ -320,9 +332,11 @@
             $('#pills-1').addClass('show active');
 
             const asUser = @json(Auth::check());
-            if (!asUser) {
-                btnDiagnosis.addEventListener('click', function(e) {
-                    e.preventDefault();
+            let btnDiagnosis2 = document.querySelector('#btn-diagnosis')
+
+            btnDiagnosis2.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!asUser) {
                     Swal.fire({
                         title: 'Anda belum login',
                         text: 'Silahkan login terlebih dahulu untuk melakukan diagnosis',
@@ -337,11 +351,26 @@
                             window.location.href = "{{ route('login') }}";
                         }
                     })
-                })
+                }
+                window.location.href = "{{ route('user.diagnosis') }}";
+            })
+
+            if (asUser) {
+                const notyf = new Notyf({
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                    dismissible: true,
+                });
+                let login = @json(session('success'));
+                if (login && !localStorage.getItem('notyfshown')) {
+                    notyf.success(login);
+                    localStorage.setItem('notyfshown', true);
+                } else {
+                    localStorage.removeItem('notyfshown');
+                }
             }
-            // else if (!'gateUserProfile') {
-            //     return window.href = "{{ route('profile') }}";
-            // }
         });
     </script>
 @endpush

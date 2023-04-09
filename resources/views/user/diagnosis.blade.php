@@ -1,7 +1,8 @@
 @extends('layouts.user.app')
 @section('content')
     <div id="diagnosis" class="row min-vh-100 align-content-center section">
-        diagnosis
+        Content
+        {{-- ISI CONTENT DISINI --}}
     </div>
 @endsection
 

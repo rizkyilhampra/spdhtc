@@ -23,13 +23,16 @@
                             <h3>Edit Profile</h3>
                         </div>
                         <div class="card-body">
-                            @error('name', 'updateProfileInformation')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                            @error('email', 'updateProfileInformation')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                            <form action="{{ route('user-profile-information.update') }}" method="POST">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    {{ $errors->first() }}
+                                </div>
+                            @elseif (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            <form action="{{ route('update-profile') }}" method="POST">
                                 @method('PUT')
                                 @csrf
                                 <div class="mb-3">
@@ -44,7 +47,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="address" class="form-label">Alamat</label>
-                                    <textarea type="text" rows="3" name="address" class="form-control" id="exampleFormControlInput1">{{ old('address', $user->profile->address) }}</textarea>
+                                    <textarea rows="3" name="address" class="form-control" id="exampleFormControlInput1">{{ old('address', $user->profile->address ?? null) }}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
@@ -54,7 +57,7 @@
                                                 aria-label="Default select example">
                                                 <option selected disabled>Pilih Provinsi</option>
                                                 @foreach ($provinsi as $p)
-                                                    @if ($p->province_id == old('province', $user->profile->province))
+                                                    @if ($p->province_id == old('province', $user->profile->province ?? null))
                                                         <option value="{{ $p->province_id }}" selected>
                                                             {{ $p->province }}</option>
                                                     @else
@@ -80,7 +83,7 @@
                                         aria-label="Default select example">
                                         <option disabled>Pilih Profesi</option>
                                         @foreach ($profesi as $pi => $value)
-                                            @if ($value == old('profession', $user->profile->profession))
+                                            @if ($value == old('profession', $user->profile->profession ?? null))
                                                 <option value="{{ $value }}" selected>{{ $value }}
                                                 </option>
                                             @else
@@ -126,7 +129,8 @@
                             $('#kota').append('<option disabled selected value="">Pilih Kota</option>');
                             $('#kota').prop('disabled', false);
                             $.each(data, function(key, value) {
-                                if (value.city_id == {{ old('city', $user->profile->city) }}) {
+                                if (value.city_id ==
+                                    '{{ old('city', $user->profile->city ?? null) }}') {
                                     $('#kota').append('<option value="' + value.city_id +
                                         '" selected>' + value.city_name + '</option>');
                                 } else {
@@ -179,13 +183,6 @@
                 }
             });
         });
-
-        //console log error message form validation
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                console.log('{{ $error }}');
-            @endforeach
-        @endif
     </script>
 </body>
 

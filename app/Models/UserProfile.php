@@ -28,6 +28,4 @@ class UserProfile extends Model
     {
         return ucwords($value);
     }
-
-
 }

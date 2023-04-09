@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\Models\AuthGroup;
 use App\Models\AuthGroupUser;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -43,6 +44,10 @@ class AuthServiceProvider extends ServiceProvider
                 ->whereHas('group', function ($query) {
                     $query->where('name', 'User');
                 })->exists();
+        });
+
+        Gate::define('hasUserProfile', function (User $user) {
+            return UserProfile::where('user_id', $user->id)->exists();
         });
     }
 }

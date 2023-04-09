@@ -15,6 +15,7 @@ class KotaProvinsiController extends Controller
         $response = $client->request('GET', 'https://api.rajaongkir.com/starter/province', [
             'headers' => [
                 'key' => env('RAJAONGKIR_API_KEY'),
+                'content-type' => 'application/x-www-form-urlencoded'
             ],
         ]);
         return json_decode($response->getBody())->rajaongkir->results;
