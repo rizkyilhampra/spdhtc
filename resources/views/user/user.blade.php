@@ -363,7 +363,7 @@
                     },
                     dismissible: true,
                 });
-                let login = @json(session('success'));
+                let login = @json(session('success') ?? false);
                 if (login && !localStorage.getItem('notyfshown')) {
                     notyf.success(login);
                     localStorage.setItem('notyfshown', true);
