@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::middleware('can:asUser')->group(function () {
-        Route::get('diagnosis', [\App\Http\Controllers\UserController::class, 'diagnosis'])->name('user.diagnosis');
+        Route::get('diagnosis', [\App\Http\Controllers\UserController::class, 'diagnosis'])->middleware('can:hasUserProfile')->name('user.diagnosis');
         Route::get('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
         Route::put('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'updateUser'])->name('update-profile');
         Route::get('provinsi', [\App\Http\Controllers\KotaProvinsiController::class, 'indexProvince'])->name('provinsi');
