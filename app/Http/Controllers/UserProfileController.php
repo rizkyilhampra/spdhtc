@@ -14,7 +14,10 @@ class UserProfileController extends Controller
         //get index method from KotaProvinsiController
         $kotaProvinsi = new KotaProvinsiController();
         $provinces = $kotaProvinsi->indexProvince();
-        $profession = ['Developer', 'Designer', 'Manager', 'Architect'];
+        $profession = [
+            'Petani',
+            'Lainnya',
+        ];
 
         $data = [
             'user' => User::where('id', auth()->user()->id)->with('profile')->first(),
@@ -38,17 +41,25 @@ class UserProfileController extends Controller
         //try catch example
         try {
             $user = User::find(auth()->user()->id);
+
+            // Update user data
             $user->name = $data['name'];
             $user->email = $data['email'];
             $user->save();
 
-            $userProfile = new UserProfile();
-            $userProfile->user_id = $user->id;
-            $userProfile->address = $data['address'];
-            $userProfile->city = $data['city'];
-            $userProfile->province = $data['province'];
-            $userProfile->profession = $data['profession'];
-            $userProfile->save();
+            // Update or create user profile
+            if (!$user->profile) {
+                $profile = new UserProfile();
+                $profile->user_id = $user->id;
+            } else {
+                $profile = $user->profile;
+            }
+
+            $profile->address = $data['address'];
+            $profile->city = $data['city'];
+            $profile->province = $data['province'];
+            $profile->profession = $data['profession'];
+            $profile->save();
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
             return redirect()->route('edit-profile')->with('error', 'Profile failed to update');

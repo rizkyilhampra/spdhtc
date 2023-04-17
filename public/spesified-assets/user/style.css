@@ -5,13 +5,23 @@
     font-family: "Poppins", sans-serif;
 }
 
-
-html,
 body {
     /* visibility: hidden; */
     scroll-behavior: smooth;
+}
+
+.ov-y-hidden:not(img) {
+    overflow-y: hidden;
+
+}
+
+.ov-x-hidden:not(img) {
     overflow-x: hidden;
 }
+
+/* [data-aos] {
+    overflow-x: hidden;
+} */
 
 .font-normal {
     font-weight: 400 !important;
@@ -42,10 +52,10 @@ body {
     overflow: hidden !important;
 }
 
-a {
+/* a {
     color: inherit;
     text-decoration: none;
-}
+} */
 
 #beranda {
     padding-top: 3rem;
@@ -172,4 +182,8 @@ footer {
 
 .shadow-custom {
     filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.3));
+}
+
+#exampleModal {
+    z-index: 9999;
 }

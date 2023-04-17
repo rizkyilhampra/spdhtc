@@ -1,17 +1,15 @@
 @extends('layouts.user.app')
+@section('title', 'SPDHTC')
 @section('content')
     <div id="beranda" class="row min-vh-100 align-content-center section">
-        <div class="col-12 col-md-6 py-5 " data-aos="fade-right" data-aos-anchor="body" id="col1">
+        <div class="col-12 col-md-6 py-5 " data-aos="fade-right" id="col1">
             <img class="img-fluid bg-body-tertiary rounded" id="gambar-cabai" src="{{ asset('assets/img/gambar-cabai.jpg') }}"
                 alt="Gambar Cabai https://fumida.co.id/wp-content/uploads/2021/03/67.-membasmi-hama-cabai.jpg">
         </div>
         <div class="col-12 col-md-6 align-self-center px-3 px-sm-5" data-aos="fade-left" data-aos-anchor="body"
             id="col2">
-            <h1 class="text-start font-bold ">
-                Sistem Pakar
-                Diagnosa
-                Penyakit
-                Tanaman Cabai
+            <h1 class="text-center text-sm-start font-bold ">
+                Sistem Pakar Diagnosa Penyakit Tanaman Cabai
             </h1>
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas debitis quidem nostrum sed
@@ -34,10 +32,13 @@
                             excepturi laborum eveniet enim.
                         </div>
                         <div class="d-grid pt-3">
-                            <a href="{{ route('user.diagnosis') }}" id="btn-diagnosis"
+                            <button id="btn-diagnosis" class="btn btn-custom1 fs-5 font-medium">
+                                Mulai Diagnosis Penyakit
+                            </button>
+                            {{-- <a href="{{ route('user.diagnosis') }}" id="btn-diagnosis"
                                 class="btn btn-custom1 fs-5 font-medium">
                                 Mulai Diagnosis Penyakit
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
@@ -104,8 +105,8 @@
             Kontak
         </h2>
         <div class="row">
-            <div class="col-12 col-sm-7 pb-4">
-                <div class="card shadow" data-aos="fade-right" data-aos-delay="150">
+            <div class="col-12 col-md-7 pb-4" data-aos="fade-right" data-aos-delay="150">
+                <div class="card shadow">
                     <div class="card-body">
                         <h4 class="font-semibold pb-2 card-title">
                             Pengembang
@@ -183,8 +184,8 @@
                 </div>
 
             </div>
-            <div class="col-12 col-sm-5">
-                <div class="card shadow" data-aos="fade-left" data-aos-delay="150">
+            <div class="col-12 col-md-5" data-aos="fade-left" data-aos-delay="150">
+                <div class="card shadow">
                     <div class="card-body">
                         <h4 class="font-semibold pb-2 card-title">
                             Tentang Kami
@@ -199,12 +200,14 @@
             </div>
         </div>
     </div>
+    @if (Auth::check())
+        @include('user.diagnosis-modal');
+    @endif
 @endsection
 
 @push('stylePerPage')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" href="{{ asset('/spesified-assets/aos.css') }}" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 @endpush
 
 @push('scriptPerPage')
@@ -332,6 +335,7 @@
             $('#pills-1').addClass('show active');
 
             const asUser = @json(Auth::check());
+            const hasUserProfile = @json(Auth::user()->profile->id ?? false);
             let btnDiagnosis2 = document.querySelector('#btn-diagnosis')
 
             btnDiagnosis2.addEventListener('click', function(e) {
@@ -351,18 +355,31 @@
                             window.location.href = "{{ route('login') }}";
                         }
                     })
+                } else if (!hasUserProfile) {
+                    Swal.fire({
+                        title: 'Anda belum melengkapi profil',
+                        text: 'Silahkan lengkapi profil terlebih dahulu untuk melakukan diagnosis',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Lengkapi Profil',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "{{ route('edit-profile') }}";
+                        }
+                    });
+                } else {
+                    let modal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                        keyboard: false
+                    });
+
+                    modal.show();
                 }
-                window.location.href = "{{ route('user.diagnosis') }}";
-            })
+            });
 
             if (asUser) {
-                const notyf = new Notyf({
-                    position: {
-                        x: 'right',
-                        y: 'top',
-                    },
-                    dismissible: true,
-                });
                 let login = @json(session('success') ?? false);
                 if (login && !localStorage.getItem('notyfshown')) {
                     notyf.success(login);
@@ -370,6 +387,19 @@
                 } else {
                     localStorage.removeItem('notyfshown');
                 }
+            }
+
+            /* workaround -> aos library fade-left and fade-right at mobile device with bootstrap modal */
+            const [html, body] = [document.querySelector('html'), document.querySelector('body')];
+            [html, body].forEach(e => e.classList.add('ov-x-hidden'));
+            try {
+                modal = document.getElementById('exampleModal');
+                ['show.bs.modal', 'hide.bs.modal'].forEach(event =>
+                    modal.addEventListener(event, () => [html, body].forEach(e => e.classList.toggle(
+                        'ov-x-hidden')))
+                );
+            } catch (error) {
+                modal = error;
             }
         });
     </script>

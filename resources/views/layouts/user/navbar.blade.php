@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-lg bg-body-transparent" data-aos="fade-down" data-aos-anchor="body">
+<nav class="navbar fixed-top navbar-expand-lg bg-body-transparent" data-aos="fade-down">
     <div class="container-fluid">
         <a class="navbar-brand font-semibold" href="#">
             {{-- <svg class="d-inline-block align-text-top" width="30" height="24" xmlns="http://www.w3.org/2000/svg"
@@ -61,17 +61,16 @@
                             @csrf
                         </form>
                     </li>
-
+                    @push('scriptPerPage')
+                        <script type="text/javascript">
+                            const buttonLogout = document.getElementById('btnLogout');
+                            buttonLogout.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                document.getElementById('formLogout').submit();
+                            });
+                        </script>
+                    @endpush
                 </ul>
-                @push('scriptPerPage')
-                    <script type="text/javascript">
-                        const buttonLogout = document.getElementById('btnLogout');
-                        buttonLogout.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            document.getElementById('formLogout').submit();
-                        });
-                    </script>
-                @endpush
             @else
                 <ul class="navbar-nav ms-auto ">
                     <li class="nav-item">
