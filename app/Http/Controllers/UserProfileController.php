@@ -24,7 +24,7 @@ class UserProfileController extends Controller
             'provinsi' => $provinces,
             'profesi' => $profession,
         ];
-        return view('user.edit-profile', $data);
+        return response()->json($data);
     }
 
     public function updateUser(Request $request)
@@ -38,7 +38,6 @@ class UserProfileController extends Controller
             'profession' => 'required',
         ]);
 
-        //try catch example
         try {
             $user = User::find(auth()->user()->id);
 
@@ -62,8 +61,14 @@ class UserProfileController extends Controller
             $profile->save();
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
-            return redirect()->route('edit-profile')->with('error', 'Profile failed to update');
+            return response()->json([
+                'message' => 'Profile failed to update',
+                'error' => $th->getMessage(),
+            ], 500);
         }
-        return redirect()->route('edit-profile')->with('success', 'Profile updated successfully');
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+        ], 200);
     }
 }

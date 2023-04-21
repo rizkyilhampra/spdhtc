@@ -35,10 +35,6 @@
                             <button id="btn-diagnosis" class="btn btn-custom1 fs-5 font-medium">
                                 Mulai Diagnosis Penyakit
                             </button>
-                            {{-- <a href="{{ route('user.diagnosis') }}" id="btn-diagnosis"
-                                class="btn btn-custom1 fs-5 font-medium">
-                                Mulai Diagnosis Penyakit
-                            </a> --}}
                         </div>
                     </div>
                 </div>
@@ -182,7 +178,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-12 col-md-5" data-aos="fade-left" data-aos-delay="150">
                 <div class="card shadow">
@@ -201,7 +196,8 @@
         </div>
     </div>
     @if (Auth::check())
-        @include('user.diagnosis-modal');
+        @include('user.diagnosis-modal')
+        @include('user.profile-modal')
     @endif
 @endsection
 
@@ -379,6 +375,7 @@
                 }
             });
 
+
             if (asUser) {
                 let login = @json(session('success') ?? false);
                 if (login && !localStorage.getItem('notyfshown')) {
@@ -398,9 +395,19 @@
                     modal.addEventListener(event, () => [html, body].forEach(e => e.classList.toggle(
                         'ov-x-hidden')))
                 );
+
+                const editProfileModal = document.getElementById('editProfileModal');
+                ['show.bs.modal', 'hide.bs.modal'].forEach(event =>
+                    editProfileModal.addEventListener(event, () => [html, body].forEach(e => e.classList.toggle(
+                        'ov-x-hidden')))
+                );
             } catch (error) {
-                modal = error;
+                return modal = null;
             }
+
+
         });
     </script>
+
+    @stack('scriptSpecific')
 @endpush
