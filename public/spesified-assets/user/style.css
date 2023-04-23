@@ -6,31 +6,8 @@
 }
 
 body {
-    /* visibility: hidden; */
     scroll-behavior: smooth;
 }
-
-body.modal-open {
-    padding-right: 0 !important;
-}
-
-.modal-open .navbar {
-    padding-right: 0 !important;
-}
-
-
-.ov-y-hidden:not(img) {
-    overflow-y: hidden;
-
-}
-
-.ov-x-hidden:not(img) {
-    overflow-x: hidden;
-}
-
-/* [data-aos] {
-    overflow-x: hidden;
-} */
 
 .font-normal {
     font-weight: 400 !important;

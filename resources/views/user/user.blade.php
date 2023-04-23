@@ -101,7 +101,7 @@
             Kontak
         </h2>
         <div class="row">
-            <div class="col-12 col-md-7 pb-4" data-aos="fade-right" data-aos-delay="150">
+            <div class="col-12 col-md-7 pb-4" data-aos="fade-right" data-bs-anchor="#kontak">
                 <div class="card shadow">
                     <div class="card-body">
                         <h4 class="font-semibold pb-2 card-title">
@@ -113,12 +113,12 @@
                                     <div id="carouselExample" class="carousel slide">
                                         <div class="carousel-inner">
                                             <div class="carousel-item active" id="people1">
-                                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                                                <img src="https://images.unsplash.com/photo-1570158268183-d296b2892211?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
                                                     class="img-fluid" alt="...">
                                             </div>
                                             <div class="carousel-item" id="people2">
                                                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-                                                    class="img-fluid" alt="...">
+                                                    class="img-fluid " alt="...">
                                             </div>
                                         </div>
                                         <button class="carousel-control-prev button-slide" type="button"
@@ -179,7 +179,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-5" data-aos="fade-left" data-aos-delay="150">
+            <div class="col-12 col-md-5" data-aos="fade-left" data-bs-anchor="#kontak">
                 <div class="card shadow">
                     <div class="card-body">
                         <h4 class="font-semibold pb-2 card-title">
@@ -385,27 +385,6 @@
                     localStorage.removeItem('notyfshown');
                 }
             }
-
-            /* workaround -> aos library fade-left and fade-right at mobile device with bootstrap modal */
-            const [html, body] = [document.querySelector('html'), document.querySelector('body')];
-            [html, body].forEach(e => e.classList.add('ov-x-hidden'));
-            try {
-                modal = document.getElementById('exampleModal');
-                ['show.bs.modal', 'hide.bs.modal'].forEach(event =>
-                    modal.addEventListener(event, () => [html, body].forEach(e => e.classList.toggle(
-                        'ov-x-hidden')))
-                );
-
-                const editProfileModal = document.getElementById('editProfileModal');
-                ['show.bs.modal', 'hide.bs.modal'].forEach(event =>
-                    editProfileModal.addEventListener(event, () => [html, body].forEach(e => e.classList.toggle(
-                        'ov-x-hidden')))
-                );
-            } catch (error) {
-                return modal = null;
-            }
-
-
         });
     </script>
 

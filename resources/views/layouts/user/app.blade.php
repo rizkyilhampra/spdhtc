@@ -18,7 +18,7 @@
     <main>
         <section>
             @include('layouts.user.navbar')
-            <div class="container-fluid" id="containerContent">
+            <div class="container-fluid overflow-x-hidden" id="containerContent">
                 @yield('content')
             </div>
         </section>
