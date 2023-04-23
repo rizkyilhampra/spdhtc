@@ -3,30 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
-use Termwind\Components\Dd;
+use Illuminate\Support\Facades\Log;
 
 class UserProfileController extends Controller
 {
     public function index()
     {
-
         //get index method from KotaProvinsiController
         $kotaProvinsi = new KotaProvinsiController();
         $provinces = $kotaProvinsi->indexProvince();
-        $profession = ['Developer', 'Designer', 'Manager', 'Architect'];
+        $profession = [
+            'Petani',
+            'Lainnya',
+        ];
 
         $data = [
             'user' => User::where('id', auth()->user()->id)->with('profile')->first(),
             'provinsi' => $provinces,
             'profesi' => $profession,
         ];
-        return view('user.edit-profile', $data);
+        return response()->json($data);
     }
 
-    public function update()
+    public function updateUser(Request $request)
     {
-        $data = request()->validate([
+        $data = $request->validate([
             'name' => 'required',
             'email' => 'required',
             'address' => 'required',
@@ -35,17 +38,37 @@ class UserProfileController extends Controller
             'profession' => 'required',
         ]);
 
-        $user = User::find(auth()->user()->id);
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->save();
+        try {
+            $user = User::find(auth()->user()->id);
 
-        $user->userProfile->address = $data['address'];
-        $user->userProfile->city = $data['city'];
-        $user->userProfile->province = $data['province'];
-        $user->userProfile->profession = $data['profession'];
-        $user->userProfile->save();
+            // Update user data
+            $user->name = $data['name'];
+            $user->email = $data['email'];
+            $user->save();
 
-        return redirect()->route('dashboard.user')->with('success', 'Profile updated successfully');
+            // Update or create user profile
+            if (!$user->profile) {
+                $profile = new UserProfile();
+                $profile->user_id = $user->id;
+            } else {
+                $profile = $user->profile;
+            }
+
+            $profile->address = $data['address'];
+            $profile->city = $data['city'];
+            $profile->province = $data['province'];
+            $profile->profession = $data['profession'];
+            $profile->save();
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return response()->json([
+                'message' => 'Profile failed to update',
+                'error' => $th->getMessage(),
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+        ], 200);
     }
 }

@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('user_profile', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
-            $table->unsignedSmallInteger('user_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedSmallInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();
