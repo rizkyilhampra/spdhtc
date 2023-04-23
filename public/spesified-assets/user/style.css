@@ -5,12 +5,8 @@
     font-family: "Poppins", sans-serif;
 }
 
-
-html,
 body {
-    /* visibility: hidden; */
     scroll-behavior: smooth;
-    overflow-x: hidden;
 }
 
 .font-normal {
@@ -42,10 +38,10 @@ body {
     overflow: hidden !important;
 }
 
-a {
+/* a {
     color: inherit;
     text-decoration: none;
-}
+} */
 
 #beranda {
     padding-top: 3rem;
@@ -172,4 +168,8 @@ footer {
 
 .shadow-custom {
     filter: drop-shadow(10px 10px 5px rgba(0, 0, 0, 0.3));
+}
+
+#exampleModal {
+    z-index: 9999;
 }
