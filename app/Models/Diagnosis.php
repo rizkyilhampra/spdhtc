@@ -5,16 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Diagnosa extends Model
+class Diagnosis extends Model
 {
     use HasFactory;
 
-    protected $table = 'diagnosa';
+    protected $table = 'diagnosis';
 
     protected $fillable = [
         'user_id',
         'penyakit_id',
         'answer_log',
+    ];
+
+    protected $casts = [
+        'answer_log' => 'json',
     ];
 
 

@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('diagnosa', function (Blueprint $table) {
+        Schema::create('diagnosis', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
             $table->unsignedSmallInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedSmallInteger('penyakit_id');
+            $table->unsignedSmallInteger('penyakit_id')->nullable();
             $table->foreign('penyakit_id')->references('id')->on('penyakit');
             $table->json('answer_log');
             $table->timestamps();

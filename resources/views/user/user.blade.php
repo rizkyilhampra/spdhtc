@@ -367,7 +367,7 @@
                         }
                     });
                 } else {
-                    let modal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                    let modal = new bootstrap.Modal(document.getElementById('diagnosisModal'), {
                         keyboard: false
                     });
 
