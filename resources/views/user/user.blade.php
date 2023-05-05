@@ -334,6 +334,96 @@
             const hasUserProfile = @json(Auth::user()->profile->id ?? false);
             let btnDiagnosis2 = document.querySelector('#btn-diagnosis')
 
+            // btnDiagnosis2.addEventListener('click', function(e) {
+            //     e.preventDefault();
+            //     // if (!asUser) {
+            //     //     Swal.fire({
+            //     //         title: 'Anda belum login',
+            //     //         text: 'Silahkan login terlebih dahulu untuk melakukan diagnosis',
+            //     //         icon: 'warning',
+            //     //         showCancelButton: true,
+            //     //         confirmButtonColor: '#3085d6',
+            //     //         cancelButtonColor: '#d33',
+            //     //         confirmButtonText: 'Login',
+            //     //         cancelButtonText: 'Batal'
+            //     //     }).then((result) => {
+            //     //         if (result.isConfirmed) {
+            //     //             window.location.href = "{{ route('login') }}";
+            //     //         }
+            //     //     })
+            //     // } else if (!hasUserProfile) {
+            //     //     Swal.fire({
+            //     //         title: 'Anda belum melengkapi profil',
+            //     //         text: 'Silahkan lengkapi profil terlebih dahulu untuk melakukan diagnosis',
+            //     //         icon: 'warning',
+            //     //         showCancelButton: true,
+            //     //         confirmButtonColor: '#3085d6',
+            //     //         cancelButtonColor: '#d33',
+            //     //         confirmButtonText: 'Lengkapi Profil',
+            //     //         cancelButtonText: 'Batal'
+            //     //     }).then((result) => {
+            //     //         if (result.isConfirmed) {
+            //     //             window.location.href = "{{ route('edit-profile') }}";
+            //     //         }
+            //     //     });
+            //     // } else {
+            //     const modals = document.querySelectorAll('[id^="diagnosisModal-"]');
+            //     const firstModal = modals[0];
+            //     const createFirstModal = new bootstrap.Modal(firstModal, {
+            //         keyboard: false
+            //     });
+            //     createFirstModal.show();
+            //     modals.forEach((modal, index_modal) => {
+            //         const buttonFalseModal = document.querySelectorAll('#buttonFalseModal');
+            //         const buttonTrueModal = document.querySelectorAll('#buttonTrueModal');
+
+            //         function ajaxRequestToDiagnosis(id, jawaban) {
+            //             return $.ajax({
+            //                 url: "{{ route('user.diagnosis') }}",
+            //                 type: "POST",
+            //                 data: {
+            //                     _token: '{{ csrf_token() }}',
+            //                     idgejala: id,
+            //                     value: jawaban
+            //                 },
+            //             });
+            //         }
+
+            //         const handleModalButtonClick = (button, index, jawaban) => {
+            //             button.addEventListener('click', async () => {
+            //                 try {
+            //                     console.log(index_modal);
+            //                     if (index == 0) {
+            //                         createFirstModal.hide();
+            //                     }
+            //                     const id = modals[index].getAttribute(
+            //                         'id-gejala');
+            //                     const response = await ajaxRequestToDiagnosis(
+            //                         id, jawaban);
+            //                     if (index < modals.length - 1) {
+            //                         const modalPerIdGejalaSelanjutnya = modals[
+            //                             index + 1];
+            //                         const createModalSelanjutnya = new bootstrap
+            //                             .Modal(modalPerIdGejalaSelanjutnya, {
+            //                                 keyboard: false
+            //                             });
+            //                         createModalSelanjutnya.show();
+            //                     } else {
+            //                         console.log(response);
+            //                     }
+            //                 } catch (error) {
+            //                     console.log(error);
+            //                 }
+            //             });
+            //         }
+
+            //         handleModalButtonClick(buttonFalseModal[index_modal], index_modal,
+            //             0);
+            //         handleModalButtonClick(buttonTrueModal[index_modal], index_modal, 1);
+            //     });
+            //     // }
+            // });
+
             btnDiagnosis2.addEventListener('click', function(e) {
                 e.preventDefault();
                 if (!asUser) {
@@ -367,14 +457,75 @@
                         }
                     });
                 } else {
-                    let modal = new bootstrap.Modal(document.getElementById('diagnosisModal'), {
-                        keyboard: false
-                    });
+                    const modals = document.querySelectorAll('[id^="diagnosisModal-"]');
+                    let currentModalIndex = 0;
 
-                    modal.show();
+                    function ajaxRequestToDiagnosis(id, jawaban) {
+                        return $.ajax({
+                            url: "{{ route('user.diagnosis') }}",
+                            type: "POST",
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                idgejala: id,
+                                value: jawaban
+                            },
+                        });
+                    }
+
+                    const handleModalButtonClick = async (button, jawaban) => {
+                        button.addEventListener('click', async () => {
+                            try {
+                                const currentModal = modals[currentModalIndex];
+                                const id = currentModal.getAttribute('id-gejala');
+                                const response = await ajaxRequestToDiagnosis(id,
+                                    jawaban);
+
+                                const nextModalIndex = currentModalIndex + 1;
+                                if (nextModalIndex < modals.length) {
+                                    const nextModal = modals[nextModalIndex];
+                                    const createNextModal = new bootstrap.Modal(
+                                        nextModal, {
+                                            keyboard: false,
+                                            backdrop: 'static'
+                                        });
+                                    createNextModal.show();
+
+                                    const falseButton = nextModal.querySelector(
+                                        '#buttonFalseModal');
+                                    const trueButton = nextModal.querySelector(
+                                        '#buttonTrueModal');
+
+                                    handleModalButtonClick(falseButton, 0);
+                                    handleModalButtonClick(trueButton, 1);
+                                } else {
+                                    console.log(response);
+                                }
+                                currentModalIndex = nextModalIndex;
+                                const prevModal = modals[currentModalIndex - 1];
+                                const prevModalInstance = bootstrap.Modal.getInstance(
+                                    prevModal);
+                                prevModalInstance.hide();
+                                console.log(response);
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        });
+                    };
+
+                    const firstModal = modals[currentModalIndex];
+                    const createFirstModal = new bootstrap.Modal(firstModal, {
+                        keyboard: false,
+                        backdrop: 'static'
+                    });
+                    createFirstModal.show();
+
+                    const falseButton = firstModal.querySelector('#buttonFalseModal');
+                    const trueButton = firstModal.querySelector('#buttonTrueModal');
+
+                    handleModalButtonClick(falseButton, 0);
+                    handleModalButtonClick(trueButton, 1);
                 }
             });
-
 
             if (asUser) {
                 let login = @json(session('success') ?? false);
@@ -385,6 +536,9 @@
                     localStorage.removeItem('notyfshown');
                 }
             }
+
+            // const aturan = @json($aturan);
+            // console.log(aturan);
         });
     </script>
 
