@@ -22,11 +22,28 @@ class DiagnosisController extends Controller
             $request->idgejala => filter_var($request->value, FILTER_VALIDATE_BOOLEAN)
         ];
 
-        $modelDiagnosis = Diagnosis::firstOrNew(['user_id' => auth()->user()->id]);
+
+        $diagnosisCheck = Diagnosis::where('user_id', auth()->user()->id)->get()->last();
+        $maxAnswerlog = max(array_keys(json_decode($diagnosisCheck->answer_log, true) ?? []));
+        if ($diagnosisCheck == null) {
+            $modelDiagnosis = new Diagnosis();
+            $modelDiagnosis->user_id = auth()->user()->id;
+        } else if ($diagnosisCheck->penyakit_id == null) {
+            if ($maxAnswerlog == $allGejala) {
+                $modelDiagnosis = new Diagnosis();
+                $modelDiagnosis->user_id = auth()->user()->id;
+            } else {
+                $modelDiagnosis = $diagnosisCheck;
+            }
+        } else if ($diagnosisCheck->penyakit_id != null) {
+            $modelDiagnosis = new Diagnosis();
+            $modelDiagnosis->user_id = auth()->user()->id;
+        }
         $decodeAnswerLog = json_decode($modelDiagnosis->answer_log, true) ?? [];
         $answerLog = $decodeAnswerLog + $requestFakta;
         $modelDiagnosis->answer_log = json_encode($answerLog);
         $modelDiagnosis->save();
+
 
         //Aturan
         $rule = Rule::get(['penyakit_id', 'gejala_id']);
@@ -61,19 +78,20 @@ class DiagnosisController extends Controller
         }
 
         // Tidak ada penyakit yang terdeteksi
-        if (!$terdeteksi) {
-            // echo "Tidak dapat mendeteksi penyakit yang dialami pasien<br>";
-            // return response()->json(['message' => 'Tidak ada penyakit yang cocok dengan gejala yang anda masukkan.']);
+        if (!$terdeteksi && $request->idgejala == $allGejala) {
+            return response()->json(['penyakitUndentified' => 'Tidak ada penyakit yang cocok dengan gejala yang anda masukkan.']);
         }
-
-        // if ($modelDiagnosis->penyakit_id != null) {
-        //     $penyakit = Penyakit::find($modelDiagnosis->penyakit_id);
-        //     return response()->json($penyakit->name);
-        // }
 
         return response()->json([
             $modelDiagnosis->answer_log,
             $penyakitName ?? null
         ]);
     }
+
+    // public function result()
+    // {
+    //     $diagnosisCheck = Diagnosis::where('user_id', auth()->user()->id)->get()->last();
+    //     $maxAnswerlog = max(array_keys(json_decode($diagnosisCheck->answer_log, true) ?? []));
+    //     dd($maxAnswerlog);
+    // }
 }
