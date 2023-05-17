@@ -1,13 +1,13 @@
 <div class="modal fade" id="editProfileModal">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Profil</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="" class="row justify-content-center ">
-                    <div class="col-12 col-sm-8 py-5">
+                <div id="" class="row justify-content-center">
+                    <div class="col-12 col-sm-10 py-5">
                         <div class="d-flex justify-content-between">
                             <h2 class="font-semibold pb-3">
                                 Edit Profil
@@ -72,14 +72,42 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 col-sm-8 py-5">
+                <div class="row justify-content-center" id="historiDiagnosis">
+                    <div class="col-12 col-sm-10 py-5">
                         <h2 class="font-semibold pb-3">
                             Histori Diagnosis
                         </h2>
                         <div class="card shadow">
                             <div class="card-body">
-                                hallo
+                                <table class="table table-striped text-nowrap" style="width: 100%;"
+                                    id="historiDiagnosisTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tanggal</th>
+                                            <th>Penyakit</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{-- @php
+                                            $no = 1;
+                                        @endphp
+                                        @foreach ($diagnosis as $d)
+                                            <tr>
+                                                <th scope="row">{{ $no++ }}</th>
+                                                <td>{{ $d->created_at }}</td>
+                                                <td>
+                                                    @foreach ($penyakit as $p)
+                                                        @if ($p->id == $d->penyakit_id)
+                                                            {{ $p->name }}
+                                                        @endif
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        @endforeach --}}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -88,210 +116,3 @@
         </div>
     </div>
 </div>
-
-@push('scriptSpecific')
-    <script>
-        $(document).ready(function() {
-            const btnNavLinkProfile = document.getElementById('btnNavLinkProfile');
-            btnNavLinkProfile.addEventListener('click', (e) => {
-                e.preventDefault();
-                const modalEditProfile = new bootstrap.Modal(document.getElementById(
-                    'editProfileModal'));
-                modalEditProfile.show();
-
-                $('input[name="name"]').attr({
-                    'value': 'Please wait...',
-                    'disabled': true
-                });
-
-                $('input[name="email"]').attr({
-                    'value': 'Please wait...',
-                    'disabled': true
-                });
-
-                $('textarea[name="address"]').attr({
-                    'disabled': true
-                }).val('Please wait...');
-
-                $('#provinsi').attr('disabled', true).val('Please wait...');
-
-                $('#profesi').attr('disabled', true);
-
-                var getUserCity = '';
-                $('#kota').empty();
-                $('#kota').append(
-                    '<option value="">Please wait...</option>');
-                $('#kota').prop('disabled', true);
-
-
-                $.ajax({
-                    url: "{{ route('edit-profile') }}",
-                    method: "GET",
-                    success: function(data) {
-
-                        $('input[name="name"]').attr({
-                            'value': data.user.name,
-                            'disabled': false
-                        });
-
-                        $('input[name="email"]').attr({
-                            'value': data.user.email,
-                            'disabled': false
-                        });
-
-                        $('textarea[name="address"]').attr({
-                            'disabled': false
-                        }).val(data.user.profile.address ?? '');
-
-                        $.each(data.provinsi, function(index, value) {
-                            if (value.province_id == data.user.profile.province) {
-                                $('#provinsi').append($('<option>').text(value.province)
-                                        .val(value.province_id).attr('selected', true))
-                                    .attr('disabled', false);
-                            } else {
-                                $('#provinsi').append($('<option>').text(value.province)
-                                    .val(value.province_id)).attr('disabled', false);
-                            }
-                        });
-
-                        $.each(data.profesi, function(index, value) {
-                            if (value == data.user.profile.profession) {
-                                $('#profesi').append($('<option>').text(value)
-                                        .val(value).attr('selected', true))
-                                    .attr('disabled', false);
-                            } else {
-                                $('#profesi').append($('<option>').text(value)
-                                    .val(value)).attr('disabled', false);
-                            }
-                        });
-
-                    },
-                    complete: function(data) {
-                        ajaxCityRequest(data.responseJSON
-                            .user
-                            .profile.province).then(function(city, error) {
-                            if (error == 'success') {
-                                $('#kota').empty();
-                                $('#kota').append(
-                                    '<option disabled selected value="">Pilih Kota</option>'
-                                );
-                                $('#kota').prop('disabled', false);
-                                $.each(city, function(key, value) {
-                                    if (value.city_id ==
-                                        data.responseJSON.user.profile.city) {
-                                        $('#kota').append(
-                                            '<option value="' +
-                                            value.city_id +
-                                            '" selected>' +
-                                            value
-                                            .city_name +
-                                            '</option>');
-                                    } else {
-                                        $('#kota').append(
-                                            '<option value="' +
-                                            value.city_id +
-                                            '">' + value
-                                            .city_name +
-                                            '</option>');
-                                    }
-                                });
-                            }
-                        });
-
-                        $('#provinsi').change(function() {
-                            $('#kota').empty();
-                            $('#kota').prop('disabled', true);
-                            $('#kota').append(
-                                '<option value="">Please wait...</option>');
-                            var provinsi_id = $(this).val();
-                            ajaxCityRequest(provinsi_id).then(function(city, error) {
-                                if (error == 'success') {
-                                    $('#kota').empty();
-                                    $('#kota').append(
-                                        '<option disabled selected value="">Pilih Kota</option>'
-                                    );
-                                    $('#kota').prop('disabled', false);
-                                    $.each(city, function(key, value) {
-                                        $('#kota').append(
-                                            '<option value="' +
-                                            value.city_id +
-                                            '">' + value
-                                            .city_name +
-                                            '</option>');
-                                    });
-                                }
-                                console.log(error);
-                            });
-                        });
-                    }
-                });
-            });
-
-            const btnSubmitEditProfile = document.getElementById('btnSubmitEditProfile');
-            btnSubmitEditProfile.addEventListener('click', (e) => {
-                e.preventDefault();
-                Swal.fire({
-                    title: 'Mohon tunggu',
-                    html: 'Sedang memproses data',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading()
-                    },
-                });
-
-                postEditProfile().then(function(respone) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: respone.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(function() {
-                        location.reload();
-                    });
-                }).catch(function(error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: error.responseJSON.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                });
-            });
-
-            function postEditProfile() {
-                return $.ajax({
-                    url: "{{ route('update-profile') }}",
-                    method: "POST",
-                    data: {
-                        _method: 'PUT',
-                        _token: "{{ csrf_token() }}",
-                        name: $('input[name="name"]').val(),
-                        email: $('input[name="email"]').val(),
-                        address: $('textarea[name="address"]').val(),
-                        province: $('#provinsi').val(),
-                        city: $('#kota').val(),
-                        profession: $('#profesi').val(),
-                    },
-                    success: (respone) => respone,
-                    error: (error) => error
-                });
-            }
-
-            function ajaxCityRequest(provinsi_id) {
-                return $.ajax({
-                    url: '/edit-profile/lokasi/kota/' + provinsi_id,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        return city = data;
-                    },
-                    error: function(error) {
-                        return error;
-                    }
-                });
-            }
-        });
-    </script>
-@endpush
