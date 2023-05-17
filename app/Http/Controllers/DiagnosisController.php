@@ -22,13 +22,12 @@ class DiagnosisController extends Controller
             $request->idgejala => filter_var($request->value, FILTER_VALIDATE_BOOLEAN)
         ];
 
-
         $diagnosisCheck = Diagnosis::where('user_id', auth()->user()->id)->get()->last();
-        $maxAnswerlog = max(array_keys(json_decode($diagnosisCheck->answer_log, true) ?? []));
         if ($diagnosisCheck == null) {
             $modelDiagnosis = new Diagnosis();
             $modelDiagnosis->user_id = auth()->user()->id;
         } else if ($diagnosisCheck->penyakit_id == null) {
+            $maxAnswerlog = max(array_keys(json_decode($diagnosisCheck->answer_log, true) ?? []));
             if ($maxAnswerlog == $allGejala) {
                 $modelDiagnosis = new Diagnosis();
                 $modelDiagnosis->user_id = auth()->user()->id;
@@ -43,7 +42,6 @@ class DiagnosisController extends Controller
         $answerLog = $decodeAnswerLog + $requestFakta;
         $modelDiagnosis->answer_log = json_encode($answerLog);
         $modelDiagnosis->save();
-
 
         //Aturan
         $rule = Rule::get(['penyakit_id', 'gejala_id']);
@@ -71,8 +69,7 @@ class DiagnosisController extends Controller
                     $modelDiagnosis->penyakit_id = $penyakitId;
                     $modelDiagnosis->save();
                 }
-                $penyakit = Penyakit::find($modelDiagnosis->penyakit_id);
-                $penyakitName = $penyakit->name;
+                $penyakit = Penyakit::find($modelDiagnosis->penyakit_id)->get(['name', 'reason', 'solution', 'image'])->first();
                 $terdeteksi = true;
             }
         }
@@ -84,7 +81,7 @@ class DiagnosisController extends Controller
 
         return response()->json([
             $modelDiagnosis->answer_log,
-            $penyakitName ?? null
+            $penyakit ?? null
         ]);
     }
 

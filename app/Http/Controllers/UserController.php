@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Diagnosis;
 use App\Models\Gejala;
 use App\Models\Penyakit;
 use App\Models\Rule;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate as FacadesGate;
@@ -19,27 +21,26 @@ class UserController extends Controller
         $penyakit = Penyakit::get(['id', 'name', 'reason', 'solution', 'image']);
         $gejala = Gejala::get(['id', 'name']);
 
-        //raw sql
-        // $query = DB::raw('SELECT penyakit_id, gejala_id FROM rule');
-        // $getQueryResult = DB::select($query);
-        // $aturan = [];
-        // foreach ($getQueryResult as $key => $value) {
-        //     $aturan[$value->penyakit_id][] = $value->gejala_id;
-        // }
-
-        //eloquent
-        $rule = Rule::get(['penyakit_id', 'gejala_id']);
-        $aturan = [];
-        foreach ($rule as $key => $value) {
-            $aturan[$value->penyakit_id][] = $value->gejala_id;
-        }
-
         $data = [
             'penyakit' => $penyakit,
             'gejala' => $gejala,
-            'aturan' => $aturan,
         ];
 
         return view('user.user', $data);
+    }
+
+    public function historiDiagnosis()
+    {
+        $user = auth()->user();
+
+        $historiDiagnosis = Diagnosis::where('user_id', $user->id ?? null)->get(['id', 'created_at', 'penyakit_id']);
+        $data = $historiDiagnosis->map(function ($item) {
+            $item->penyakit = Penyakit::find($item->penyakit_id, ['name']) ?? ['name' => 'Tidak Diketahui'];
+            return $item;
+        });
+
+        return response()->json([
+            'data' => $data,
+        ]);
     }
 }
