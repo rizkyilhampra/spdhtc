@@ -69,10 +69,11 @@ class DiagnosisController extends Controller
                     $modelDiagnosis->penyakit_id = $penyakitId;
                     $modelDiagnosis->save();
                 }
-                $penyakit = Penyakit::find($modelDiagnosis->penyakit_id)->get(['name', 'reason', 'solution', 'image'])->first();
+                $penyakit = Penyakit::where('id', $modelDiagnosis->penyakit_id)->first(['name', 'reason', 'solution', 'image']);
                 $terdeteksi = true;
             }
         }
+
 
         // Tidak ada penyakit yang terdeteksi
         if (!$terdeteksi && $request->idgejala == $allGejala) {

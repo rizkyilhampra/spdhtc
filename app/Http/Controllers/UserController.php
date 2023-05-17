@@ -29,8 +29,12 @@ class UserController extends Controller
         return view('user.user', $data);
     }
 
-    public function historiDiagnosis()
+    public function historiDiagnosis(Request $request)
     {
+        if (!$request->ajax()) {
+            abort(403, 'Forbidden');
+        }
+
         $user = auth()->user();
 
         $historiDiagnosis = Diagnosis::where('user_id', $user->id ?? null)->get(['id', 'created_at', 'penyakit_id']);
