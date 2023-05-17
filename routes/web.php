@@ -24,7 +24,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('admin')->middleware('can:asAdmin')->group(function () {
         Route::get('beranda', [\App\Http\Controllers\AdminController::class, 'beranda'])->name('admin.beranda');
         Route::get('histori-diagnosis', [\App\Http\Controllers\AdminController::class, 'diagnosis'])->name('admin.diagnosis');
-        Route::get('penyakit', [\App\Http\Controllers\AdminController::class, 'penyakit'])->name('admin.penyakit');
+        Route::get('penyakit', [\App\Http\Controllers\PenyakitController::class, 'index'])->name('admin.penyakit');
+        Route::get('penyakit/tambah', [\App\Http\Controllers\PenyakitController::class, 'create'])->name('admin.penyakit.tambah');
         Route::get('gejala', [\App\Http\Controllers\AdminController::class, 'gejala'])->name('admin.gejala');
         Route::get('rule', [\App\Http\Controllers\AdminController::class, 'rule'])->name('admin.rule');
     });
