@@ -252,6 +252,46 @@
             $('#historiDiagnosisTable').DataTable().draw();
         }
 
+        function deleteHistoriDiagnosis(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak dapat mengembalikan data yang telah dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('histori-diagnosis-user.delete') }}",
+                        method: "DELETE",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id
+                        },
+                        success: function(response) {
+                            Swal.fire(
+                                'Terhapus!',
+                                result.value.message,
+                                'success'
+                            );
+                            clearHistoriDiagnosisTable();
+                            drawHistoriDiagnosisTable();
+                        },
+                        error: function(response) {
+                            Swal.fire(
+                                'Gagal!',
+                                'Data gagal dihapus.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        }
+
         function clearHistoriDiagnosisTable() {
             $('#historiDiagnosisTable').DataTable().clear().draw();
         }
@@ -260,6 +300,38 @@
             return $.ajax({
                 url: "{{ route('histori-diagnosis-user') }}",
                 method: "GET"
+            });
+        }
+
+        function ajaxRequestEditProfile() {
+            return $.ajax({
+                url: "{{ route('edit-profile') }}",
+                method: "GET",
+            });
+        }
+
+        function ajaxPostEditProfile() {
+            return $.ajax({
+                url: "{{ route('update-profile') }}",
+                method: "POST",
+                data: {
+                    _method: 'PUT',
+                    _token: "{{ csrf_token() }}",
+                    name: $('input[name="name"]').val(),
+                    email: $('input[name="email"]').val(),
+                    address: $('textarea[name="address"]').val(),
+                    province: $('#provinsi').val(),
+                    city: $('#kota').val(),
+                    profession: $('#profesi').val(),
+                },
+            });
+        }
+
+        function ajaxCityRequest(provinsi_id) {
+            return $.ajax({
+                url: '/edit-profile/lokasi/kota/' + provinsi_id,
+                type: 'GET',
+                dataType: 'json',
             });
         }
 
@@ -380,12 +452,134 @@
             const modalEditProfile = document.getElementById('editProfileModal');
             const modalEditProfileInstance = bootstrap.Modal.getOrCreateInstance(modalEditProfile);
             modalEditProfile.addEventListener('shown.bs.modal', async () => {
+                const btnSubmitEditProfile = document.getElementById('btnSubmitEditProfile');
+                btnSubmitEditProfile.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: 'Mohon tunggu',
+                        html: 'Sedang memproses data',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                    try {
+                        const response = await ajaxPostEditProfile();
+                        return Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } catch (error) {
+                        return Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: error.responseJSON.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+
+                const setElementAttributes = (element, value, disabled = false) => {
+                    element.value = value;
+                    element.disabled = disabled;
+                };
+
+                const elements = {
+                    nameInput: document.querySelector('input[name="name"]'),
+                    emailInput: document.querySelector('input[name="email"]'),
+                    addressTextarea: document.querySelector('textarea[name="address"]'),
+                    provinsiSelect: document.querySelector('#provinsi'),
+                    profesiInput: document.querySelector('#profesi'),
+                    kotaSelect: document.querySelector('#kota')
+                };
+
+                setElementAttributes(elements.nameInput, 'Please wait...', true);
+                setElementAttributes(elements.emailInput, 'Please wait...', true);
+                setElementAttributes(elements.addressTextarea, 'Please wait...', true);
+
+                elements.kotaSelect.innerHTML = '<option value="">Please wait...</option>';
+                elements.profesiInput.innerHTML = '<option value="">Please wait...</option>';
+                elements.provinsiSelect.innerHTML = '<option value="">Please wait...</option>';
+                elements.provinsiSelect.disabled = true;
+                elements.profesiInput.disabled = true;
+                elements.kotaSelect.disabled = true;
+                try {
+                    const response = await ajaxRequestEditProfile();
+                    setElementAttributes(elements.nameInput, response.user.name);
+                    setElementAttributes(elements.emailInput, response.user.email);
+                    setElementAttributes(elements.addressTextarea, response.user.profile
+                        .address);
+                    setElementAttributes(elements.provinsiSelect, '', false);
+                    setElementAttributes(elements.profesiInput, '', false);
+                    response.provinsi.forEach(value => {
+                        if (value.province_id == response.user.profile.province) {
+                            elements.provinsiSelect.innerHTML +=
+                                `<option value="${value.province_id}" selected>${value.province}</option>`;
+                        } else {
+                            elements.provinsiSelect.innerHTML +=
+                                `<option value="${value.province_id}">${value.province}</option>`;
+                        }
+                    });
+                    response.profesi.forEach(value => {
+                        if (value == response.user.profile.profession) {
+                            elements.profesiInput.innerHTML +=
+                                `<option value="${value}" selected>${value}</option>`;
+                        } else {
+                            elements.profesiInput.innerHTML +=
+                                `<option value="${value}">${value}</option>`;
+                        }
+                    });
+
+                    try {
+                        const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
+                        elements.kotaSelect.innerHTML =
+                            '<option value="">Pilih provinsi terlebih dahulu</option>';
+                        elements.kotaSelect.disabled = true;
+                        response2.forEach(value => {
+                            if (value.city_id == response.user.profile.city) {
+                                elements.kotaSelect.innerHTML +=
+                                    `<option value="${value.city_id}" selected>${value.city_name}</option>`;
+                                elements.kotaSelect.disabled = false;
+
+                            } else {
+                                elements.kotaSelect.innerHTML +=
+                                    `<option value="${value.city_id}">${value.city_name}</option>`;
+                            }
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+
+                elements.provinsiSelect.addEventListener('change', async (e) => {
+                    elements.kotaSelect.innerHTML =
+                        '<option value="">Please wait...</option>';
+                    elements.kotaSelect.disabled = true;
+                    try {
+                        const response = await ajaxCityRequest(e.target.value);
+                        elements.kotaSelect.innerHTML =
+                            '<option value="">Pilih Kota</option>';
+                        elements.kotaSelect.disabled = false;
+                        response.forEach(value => {
+                            elements.kotaSelect.innerHTML +=
+                                `<option value="${value.city_id}">${value.city_name}</option>`;
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                });
+
                 await clearHistoriDiagnosisTable();
                 drawHistoriDiagnosisTable();
             });
             const gejala = @json($gejala ?? 0);
             const countGejala = gejala.length;
-
 
             btnDiagnosis2.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -495,17 +689,21 @@
                                 isClosed = true;
                                 break;
                             }
-                            const response = await ajaxRequestToDiagnosis(
-                                element.id, jawaban);
-                            if (response[1] != null) {
-                                await Swal.close();
-                                modalResult(response[1], true, 'Penyakit ditemukan !',
-                                    'Penyakit yang diderita adalah ' + response[1].name, 'success');
-                                break;
-                            } else if (response.penyakitUndentified) {
-                                modalResult(response.penyakitUndentified, false,
-                                    'Penyakit tidak ditemukan !',
-                                    'Penyakit yang di derita tidak ditemukan', 'error');
+                            try {
+                                const response = await ajaxRequestToDiagnosis(element.id, jawaban);
+                                if (response[1] != null) {
+                                    await Swal.close();
+                                    modalResult(response[1], true, 'Penyakit ditemukan !',
+                                        'Penyakit yang diderita adalah ' + response[1].name,
+                                        'success');
+                                    break;
+                                } else if (response.penyakitUndentified) {
+                                    modalResult(response.penyakitUndentified, false,
+                                        'Penyakit tidak ditemukan !',
+                                        'Penyakit yang di derita tidak ditemukan', 'error');
+                                }
+                            } catch (error) {
+                                console.log(error);
                             }
                         }
                     }
@@ -522,212 +720,15 @@
                     localStorage.removeItem('notyfshown');
                 }
             }
-            const btnNavLinkProfile = document.getElementById('btnNavLinkProfile') ?? null;
-            if (btnNavLinkProfile) {
-                btnNavLinkProfile.addEventListener('click', (e) => {
+
+            const btnNavLinkProfile = document.querySelector('#btnNavLinkProfile') ?? null;
+            if (btnNavLinkProfile != null) {
+                btnNavLinkProfile.addEventListener('click', async (e) => {
                     e.preventDefault();
                     modalEditProfileInstance.show();
-
-                    $('input[name="name"]').attr({
-                        'value': 'Please wait...',
-                        'disabled': true
-                    });
-
-                    $('input[name="email"]').attr({
-                        'value': 'Please wait...',
-                        'disabled': true
-                    });
-
-                    $('textarea[name="address"]').attr({
-                        'disabled': true
-                    }).val('Please wait...');
-
-                    $('#provinsi').attr('disabled', true).val('Please wait...');
-
-                    $('#profesi').attr('disabled', true);
-
-                    var getUserCity = '';
-                    $('#kota').empty();
-                    $('#kota').append(
-                        '<option value="">Please wait...</option>');
-                    $('#kota').prop('disabled', true);
-
-
-                    $.ajax({
-                        url: "{{ route('edit-profile') }}",
-                        method: "GET",
-                        success: function(data) {
-
-                            $('input[name="name"]').attr({
-                                'value': data.user.name,
-                                'disabled': false
-                            });
-
-                            $('input[name="email"]').attr({
-                                'value': data.user.email,
-                                'disabled': false
-                            });
-
-                            $('textarea[name="address"]').attr({
-                                'disabled': false
-                            }).val(data.user.profile.address ?? '');
-
-                            $.each(data.provinsi, function(index, value) {
-                                if (value.province_id == data.user.profile.province) {
-                                    $('#provinsi').append($('<option>').text(value
-                                                .province)
-                                            .val(value.province_id).attr('selected',
-                                                true))
-                                        .attr('disabled', false);
-                                } else {
-                                    $('#provinsi').append($('<option>').text(value
-                                            .province)
-                                        .val(value.province_id)).attr('disabled',
-                                        false);
-                                }
-                            });
-
-                            $.each(data.profesi, function(index, value) {
-                                if (value == data.user.profile.profession) {
-                                    $('#profesi').append($('<option>').text(value)
-                                            .val(value).attr('selected', true))
-                                        .attr('disabled', false);
-                                } else {
-                                    $('#profesi').append($('<option>').text(value)
-                                        .val(value)).attr('disabled', false);
-                                }
-                            });
-
-                        },
-                        complete: function(data) {
-                            ajaxCityRequest(data.responseJSON
-                                .user
-                                .profile.province).then(function(city, error) {
-                                if (error == 'success') {
-                                    $('#kota').empty();
-                                    $('#kota').append(
-                                        '<option disabled selected value="">Pilih Kota</option>'
-                                    );
-                                    $('#kota').prop('disabled', false);
-                                    $.each(city, function(key, value) {
-                                        if (value.city_id ==
-                                            data.responseJSON.user.profile.city
-                                        ) {
-                                            $('#kota').append(
-                                                '<option value="' +
-                                                value.city_id +
-                                                '" selected>' +
-                                                value
-                                                .city_name +
-                                                '</option>');
-                                        } else {
-                                            $('#kota').append(
-                                                '<option value="' +
-                                                value.city_id +
-                                                '">' + value
-                                                .city_name +
-                                                '</option>');
-                                        }
-                                    });
-                                }
-                            });
-
-                            $('#provinsi').change(function() {
-                                $('#kota').empty();
-                                $('#kota').prop('disabled', true);
-                                $('#kota').append(
-                                    '<option value="">Please wait...</option>');
-                                var provinsi_id = $(this).val();
-                                ajaxCityRequest(provinsi_id).then(function(city,
-                                    error) {
-                                    if (error == 'success') {
-                                        $('#kota').empty();
-                                        $('#kota').append(
-                                            '<option disabled selected value="">Pilih Kota</option>'
-                                        );
-                                        $('#kota').prop('disabled', false);
-                                        $.each(city, function(key, value) {
-                                            $('#kota').append(
-                                                '<option value="' +
-                                                value.city_id +
-                                                '">' + value
-                                                .city_name +
-                                                '</option>');
-                                        });
-                                    }
-                                });
-                            });
-                        }
-                    });
-                });
+                })
             }
 
-
-            const btnSubmitEditProfile = document.getElementById('btnSubmitEditProfile');
-            btnSubmitEditProfile.addEventListener('click', (e) => {
-                e.preventDefault();
-                Swal.fire({
-                    title: 'Mohon tunggu',
-                    html: 'Sedang memproses data',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading()
-                    },
-                });
-
-                postEditProfile().then(function(respone) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: respone.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(function() {
-                        location.reload();
-                    });
-                }).catch(function(error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: error.responseJSON.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                });
-            });
-
-            function postEditProfile() {
-                return $.ajax({
-                    url: "{{ route('update-profile') }}",
-                    method: "POST",
-                    data: {
-                        _method: 'PUT',
-                        _token: "{{ csrf_token() }}",
-                        name: $('input[name="name"]').val(),
-                        email: $('input[name="email"]').val(),
-                        address: $('textarea[name="address"]').val(),
-                        province: $('#provinsi').val(),
-                        city: $('#kota').val(),
-                        profession: $('#profesi').val(),
-                    },
-                    success: (respone) => respone,
-                    error: (error) => error
-                });
-            }
-
-            function ajaxCityRequest(provinsi_id) {
-                return $.ajax({
-                    url: '/edit-profile/lokasi/kota/' + provinsi_id,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        return city = data;
-                    },
-                    error: function(error) {
-                        return error;
-                    }
-                });
-            }
         });
     </script>
 

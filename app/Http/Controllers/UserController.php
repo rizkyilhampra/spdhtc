@@ -33,6 +33,12 @@ class UserController extends Controller
     {
         if (!$request->ajax()) {
             abort(403, 'Forbidden');
+        } else if ($request->isMethod('delete')) {
+            $diagnosis = Diagnosis::find($request->id);
+            $diagnosis->delete();
+            return response()->json([
+                'message' => 'Berhasil menghapus data',
+            ]);
         }
 
         $user = auth()->user();
