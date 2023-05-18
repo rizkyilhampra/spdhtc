@@ -9,8 +9,7 @@ class AdminController extends Controller
 {
     public function beranda()
     {
-        $lastLogin = auth()->user()->last_login_at;
-        $loginDuration = Carbon::parse($lastLogin)->diffInMinutes();
+        $loginDuration = $this->LoginDuration();
 
         return view('admin.beranda', compact('loginDuration'));
     }
