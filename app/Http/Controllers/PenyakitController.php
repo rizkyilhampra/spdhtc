@@ -112,11 +112,7 @@ class PenyakitController extends Controller
             'solution' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $form_data = array(
-            'name' => $request->name,
-            'reason' => $request->reason,
-            'solution' => $request->solution,
-        );
+
 
         if ($request->hasFile('image')) {
             $old_image = $penyakit->image;
@@ -130,6 +126,11 @@ class PenyakitController extends Controller
             $form_data['image'] = $new_name;
         }
 
+        $form_data = array(
+            'name' => $request->name,
+            'reason' => $request->reason,
+            'solution' => $request->solution,
+        );
 
         $penyakit->update($form_data);
 

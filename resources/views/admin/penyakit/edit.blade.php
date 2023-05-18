@@ -6,13 +6,14 @@
         </div>
         <div class="section-body">
             <div class="pb-4">
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('admin.penyakit') }}" class="btn btn-secondary">Kembali</a>
             </div>
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('admin.penyakit.update', ['id' => $penyakit->id]) }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label class="form-label">Nama Penyakit</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
