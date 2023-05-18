@@ -44,33 +44,54 @@
                                     <th>Nama</th>
                                     <th>Penyebab</th>
                                     <th>Solusi</th>
-                                    <th>Tanggal Dibuat</th>
+                                    <th>Tanggal Dibuat/Diubah</th>
                                     <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                {{-- <tr>
-                                    <td>
-
-                                    </td>
-                                    <td>Create a mobile app</td>
-                                    <td class="align-middle">
-                                        <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                                            <div class="progress-bar bg-success" data-width="100%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle"
-                                            width="35" data-toggle="tooltip" title="Wildan Ahdian">
-                                    </td>
-                                    <td>2018-01-20</td>
-                                    <td>
-                                        <div class="badge badge-success">Completed</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr> --}}
+                                @php
+                                    $no = 1;
+                                @endphp
+                                @foreach ($penyakit as $p)
+                                    <tr>
+                                        <td class="text-center">
+                                            {{ $no++ }}
+                                        </td>
+                                        <td>{{ $p->name }}</td>
+                                        <td>{{ $p->reason }}</td>
+                                        <td>{{ $p->solution }}</td>
+                                        <td>{{ $p->updated_at }}</td>
+                                        <td>
+                                            <img alt="image" src="{{ asset('storage/penyakit/' . $p->image) }}"
+                                                class="" width="200" data-toggle="tooltip"
+                                                title="{{ $p->name }}">
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    Aksi
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item btn btn-outline-warning"
+                                                        href="{{ route('admin.penyakit.edit', ['id' => $p->id]) }}">Edit</a>
+                                                    <a class="dropdown-item btn btn-outline-danger" id="btnHapus">Hapus</a>
+                                                    <form id="formHapus"
+                                                        action="{{ route('admin.penyakit.destroy', ['id' => $p->id]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            {{-- <a href="{{ route('admin.penyakit.edit', $p->id) }}"
+                                                class="btn btn-warning">Edit</a>
+                                            <a href="{{ route('admin.penyakit.hapus', $p->id) }}"
+                                                class="btn btn-danger">Hapus</a> --}}
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -79,3 +100,19 @@
         </div>
     </section>
 @endsection
+
+@push('jsCustom')
+    <script>
+        const btnhapus = document.querySelectorAll('#btnHapus');
+        const form = document.querySelectorAll('#formHapus');
+        btnhapus.forEach((element, index) => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                const konfirmasi = confirm('Apakah anda yakin ingin menghapus data ini?');
+                if (konfirmasi) {
+                    form[index].submit();
+                }
+            })
+        });
+    </script>
+@endpush
