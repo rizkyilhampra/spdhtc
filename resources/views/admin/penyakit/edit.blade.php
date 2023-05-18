@@ -1,9 +1,8 @@
 @extends('layouts.app')
-
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Tambah Penyakit Page</h1>
+            <h1>Edit Penyakit {{ $penyakit->name }}</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
@@ -11,12 +10,13 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.penyakit.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin.penyakit.update', ['id' => $penyakit->id]) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label class="form-label">Nama Penyakit</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                                id="name" value="{{ old('name') }}">
+                                id="name" value="{{ old('name', $penyakit->name) }}">
                             @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -26,7 +26,7 @@
                         <div class="form-group">
                             <label class="form-label">Penyebab</label>
                             <input type="text" class="form-control @error('reason') is-invalid @enderror" name="reason"
-                                id="reason" value="{{ old('reason') }}">
+                                id="reason" value="{{ old('reason', $penyakit->reason) }}">
                             @error('reason')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -35,14 +35,14 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Solusi</label>
-                            <input type="text" class="form-control" name="solution" id="solution"
-                                value="{{ old('solution') }}">
+                            <textarea name="solution" class="form-control" id="solution" style="height: 200px">{{ old('solution', $penyakit->solution) }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="image" class="form-label">Gambar</label>
                             <input type="file" class="form-control" name="image" id="image">
                             <div class="card card-body mt-3">
-                                <img class="img-fluid" width="300" id="imagePreview" src="">
+                                <img class="img-fluid" width="300" id="imagePreview"
+                                    src="{{ asset('storage/penyakit/' . $penyakit->image) }}">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>

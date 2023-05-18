@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Penyakit;
 use Illuminate\Http\Request;
 
 class PenyakitController extends Controller
 {
+    //construct
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,8 +20,13 @@ class PenyakitController extends Controller
      */
     public function index()
     {
-        $loginDuration = $this->LoginDuration();
-        return view('admin.penyakit.penyakit', compact('loginDuration'));
+        $penyakit = Penyakit::get(['id', 'name', 'reason', 'solution', 'image', 'updated_at']);
+
+        $data = [
+            'penyakit' => $penyakit,
+            'loginDuration' =>  $this->LoginDuration()
+        ];
+        return view('admin.penyakit.penyakit', $data);
     }
 
     /**
@@ -36,7 +48,28 @@ class PenyakitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'reason' => 'required',
+            'solution' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        //upload image
+        $image = $request->file('image');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $image->storeAs('public/penyakit', $new_name);
+
+        $form_data = array(
+            'name' => $request->name,
+            'reason' => $request->reason,
+            'solution' => $request->solution,
+            'image' => $new_name
+        );
+
+        Penyakit::create($form_data);
+
+        return redirect(route('admin.penyakit'))->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -58,7 +91,9 @@ class PenyakitController extends Controller
      */
     public function edit($id)
     {
-        //
+        $penyakit = Penyakit::findOrFail($id);
+        $loginDuration = $this->LoginDuration();
+        return view('admin.penyakit.edit', compact('penyakit', 'loginDuration'));
     }
 
     /**
@@ -70,7 +105,35 @@ class PenyakitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $penyakit = Penyakit::findOrFail($id);
+        $this->validate($request, [
+            'name' => 'required',
+            'reason' => 'required',
+            'solution' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $form_data = array(
+            'name' => $request->name,
+            'reason' => $request->reason,
+            'solution' => $request->solution,
+        );
+
+        if ($request->hasFile('image')) {
+            $old_image = $penyakit->image;
+            $image_path = "public/penyakit/" . $old_image;
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
+            $image = $request->file('image');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/penyakit', $new_name);
+            $form_data['image'] = $new_name;
+        }
+
+
+        $penyakit->update($form_data);
+
+        return redirect(route('admin.penyakit'))->with('success', 'Data berhasil diubah!');
     }
 
     /**
@@ -81,6 +144,13 @@ class PenyakitController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $penyakit = Penyakit::findOrFail($id);
+        $old_image = $penyakit->image;
+        $image_path = "public/penyakit/" . $old_image;
+        if (file_exists($image_path)) {
+            unlink($image_path);
+        }
+        $penyakit->delete();
+        return redirect(route('admin.penyakit'))->with('success', 'Data berhasil dihapus!');
     }
 }
