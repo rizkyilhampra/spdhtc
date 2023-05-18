@@ -32,7 +32,7 @@
 </ul>
 
 
-@section('jsCustom')
+@push('jsCustom')
     <script>
         var buttonLogout = document.getElementById('buttonLogout');
         buttonLogout.addEventListener('click', function(e) {
@@ -40,4 +40,4 @@
             document.getElementById('formLogout').submit();
         });
     </script>
-@endsection
+@endpush

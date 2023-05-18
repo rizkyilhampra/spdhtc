@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\Log;
 
 class UserProfileController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->ajax()) {
+            abort(403, 'Forbidden');
+        }
+
         //get index method from KotaProvinsiController
         $kotaProvinsi = new KotaProvinsiController();
         $provinces = $kotaProvinsi->indexProvince();
@@ -29,6 +33,10 @@ class UserProfileController extends Controller
 
     public function updateUser(Request $request)
     {
+        if (!$request->ajax()) {
+            abort(403, 'Forbidden');
+        }
+
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -29,5 +30,10 @@ class Controller extends BaseController
         } else {
             return redirect('/');
         }
+    }
+    public function LoginDuration()
+    {
+        $lastLogin = auth()->user()->last_login_at;
+        return $loginDuration = Carbon::parse($lastLogin)->diffInMinutes();
     }
 }
