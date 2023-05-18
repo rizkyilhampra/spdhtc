@@ -82,13 +82,10 @@
                                                         action="{{ route('admin.penyakit.destroy', ['id' => $p->id]) }}"
                                                         method="post">
                                                         @csrf
+                                                        @method('delete')
                                                     </form>
                                                 </div>
                                             </div>
-                                            {{-- <a href="{{ route('admin.penyakit.edit', $p->id) }}"
-                                                class="btn btn-warning">Edit</a>
-                                            <a href="{{ route('admin.penyakit.hapus', $p->id) }}"
-                                                class="btn btn-danger">Hapus</a> --}}
                                         </td>
                                     </tr>
                                 @endforeach
