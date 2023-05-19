@@ -221,35 +221,50 @@
             }
         }
 
-        async function drawHistoriDiagnosisTable() {
-            const response = await ajaxRequestToHistoriDiagnosis();
-            const data = response.data;
-            let no = 1;
-            data.forEach(element => {
-                const date = new Date(element.created_at);
-                const formattedDateTime = ("0" + date.getDate()).slice(-2) + "/" +
-                    ("0" + (date.getMonth() + 1)).slice(-2) + "/" +
-                    date.getFullYear() + " " +
-                    ("0" + date.getHours()).slice(-2) + ":" +
-                    ("0" + date.getMinutes()).slice(-2) + ":" +
-                    ("0" + date.getSeconds()).slice(-2);
-                $('#historiDiagnosisTable').DataTable({
-                    destroy: true,
-                    scrollX: true,
-                    order: [
-                        [1, 'desc']
-                    ],
-                }).row.add([
-                    no++,
-                    formattedDateTime,
-                    element.penyakit.name,
-                    `<button class="btn btn-outline-danger" onclick="deleteHistoriDiagnosis(${element.id})">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>`
-                ]);
-            });
 
-            $('#historiDiagnosisTable').DataTable().draw();
+        async function drawHistoriDiagnosisTable() {
+            $('#historiDiagnosisTable').DataTable({
+                scrollX: true,
+                serverSide: true,
+                processing: true,
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5,
+                ajax: {
+                    url: "{{ route('histori-diagnosis-user') }}",
+                    type: "GET",
+                    data: function(data) { // Menggunakan "data" sebagai argumen
+                        return data; // Mengembalikan "data" yang diterima
+                    },
+                },
+                columns: [{
+                        data: 'no',
+                    },
+                    {
+                        data: 'created_at',
+                        render: function(data, type, row, meta) {
+                            const date = new Date(data);
+                            const formattedDateTime = ("0" + date.getDate()).slice(-2) + "/" +
+                                ("0" + (date.getMonth() + 1)).slice(-2) + "/" +
+                                date.getFullYear() + " " +
+                                ("0" + date.getHours()).slice(-2) + ":" +
+                                ("0" + date.getMinutes()).slice(-2) + ":" +
+                                ("0" + date.getSeconds()).slice(-2);
+                            return formattedDateTime;
+                        }
+                    },
+                    {
+                        data: 'penyakit.name'
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            return `<button class="btn btn-outline-danger" onclick="deleteHistoriDiagnosis(${data})">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>`;
+                        }
+                    },
+                ]
+            });
         }
 
         function deleteHistoriDiagnosis(id) {
@@ -271,14 +286,13 @@
                             _token: "{{ csrf_token() }}",
                             id: id
                         },
-                        success: function(response) {
+                        success: async function(response) {
                             Swal.fire(
                                 'Terhapus!',
                                 result.value.message,
                                 'success'
                             );
-                            clearHistoriDiagnosisTable();
-                            drawHistoriDiagnosisTable();
+                            await clearHistoriDiagnosisTable();
                         },
                         error: function(response) {
                             Swal.fire(
@@ -574,9 +588,7 @@
                         console.log(error);
                     }
                 });
-
-                await clearHistoriDiagnosisTable();
-                drawHistoriDiagnosisTable();
+                await drawHistoriDiagnosisTable();
             });
             const gejala = @json($gejala ?? 0);
             const countGejala = gejala.length;
