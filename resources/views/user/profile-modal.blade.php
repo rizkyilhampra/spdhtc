@@ -91,22 +91,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @php
-                                            $no = 1;
-                                        @endphp
-                                        @foreach ($diagnosis as $d)
-                                            <tr>
-                                                <th scope="row">{{ $no++ }}</th>
-                                                <td>{{ $d->created_at }}</td>
-                                                <td>
-                                                    @foreach ($penyakit as $p)
-                                                        @if ($p->id == $d->penyakit_id)
-                                                            {{ $p->name }}
-                                                        @endif
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
