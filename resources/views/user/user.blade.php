@@ -84,7 +84,7 @@
                                             Solusi Penyakit
                                         </h6>
                                         <p class="card-text">
-                                            {{ $p->solution }}
+                                            {!! $p->solution = str_replace("\r\n", '<br/>', $p->solution) !!}
                                         </p>
                                     </div>
                                 </div>
@@ -221,9 +221,9 @@
             }
         }
 
-
         async function drawHistoriDiagnosisTable() {
             $('#historiDiagnosisTable').DataTable({
+                destroy: true,
                 scrollX: true,
                 serverSide: true,
                 processing: true,
@@ -258,9 +258,12 @@
                     {
                         data: 'id',
                         render: function(data, type, row, meta) {
-                            return `<button class="btn btn-outline-danger" onclick="deleteHistoriDiagnosis(${data})">
+                            return `<button class="btn btn-outline-primary me-1" onclick="detailHistoriDiagnosis(${data}, ${row.no})">
+                                <i class="fa-solid fa-eye"></i>
+                            <button class="btn btn-outline-danger" onclick="deleteHistoriDiagnosis(${data})">
                                 <i class="fa-solid fa-trash"></i>
-                            </button>`;
+                            </button>
+                            `;
                         }
                     },
                 ]
@@ -292,7 +295,7 @@
                                 result.value.message,
                                 'success'
                             );
-                            await clearHistoriDiagnosisTable();
+                            $('#historiDiagnosisTable').DataTable().clear().draw();
                         },
                         error: function(response) {
                             Swal.fire(
@@ -306,8 +309,52 @@
             });
         }
 
-        function clearHistoriDiagnosisTable() {
-            $('#historiDiagnosisTable').DataTable().clear().draw();
+        async function detailHistoriDiagnosis(id, no) {
+            const detailHistoriDiagnosis = document.getElementById('detailHistoriDiagnosis');
+            const table = detailHistoriDiagnosis.querySelector('table');
+            const tableBody = table.querySelector('tbody');
+            const sectionHeading = detailHistoriDiagnosis.querySelector('h2');
+            //remove all child element in table body
+            while (tableBody.firstChild) {
+                tableBody.removeChild(tableBody.firstChild);
+            }
+            sectionHeading.innerHTML = "";
+
+            function ajaxRequestToHistoriDiagnosisDetail() {
+                return $.ajax({
+                    url: "{{ route('histori-diagnosis-user.detail') }}",
+                    method: "GET",
+                    data: {
+                        id: id,
+                        no: no
+                    }
+                });
+            }
+            try {
+                const response = await ajaxRequestToHistoriDiagnosisDetail();
+                response.answerLog.forEach((item, index) => {
+                    sectionHeading.innerHTML = `Detail Diagnosis No.${item.no}`;
+                    const tableRow = document.createElement('tr');
+                    const tableData = document.createElement('td');
+                    const tableData2 = document.createElement('td');
+                    const tableData3 = document.createElement('td');
+                    let number = index + 1;
+                    tableData.innerHTML = number;
+                    tableData2.innerHTML = item.name;
+                    tableData3.innerHTML = item.answer;
+                    tableRow.appendChild(tableData);
+                    tableRow.appendChild(tableData2);
+                    tableRow.appendChild(tableData3);
+                    tableBody.appendChild(tableRow);
+                });
+
+                await detailHistoriDiagnosis.classList.remove('d-none');
+                detailHistoriDiagnosis.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
 
         function ajaxRequestToHistoriDiagnosis() {
@@ -403,12 +450,13 @@
                 });
             });
 
-            const btnBeranda = document.querySelector('.beranda');
-            const btnDiagnosis = document.querySelector('.diagnosis');
-            const btnPenyakit = document.querySelector('.penyakit');
-            const btnKontak = document.querySelector('.kontak');
-            const allBtn = [btnBeranda, btnDiagnosis, btnPenyakit, btnKontak];
-            allBtn.forEach((btn) => {
+            const btnNavbar = [
+                btnBeranda = document.querySelector('.beranda'),
+                btnDiagnosis = document.querySelector('.diagnosis'),
+                btnPenyakit = document.querySelector('.penyakit'),
+                btnKontak = document.querySelector('.kontak')
+            ];
+            btnNavbar.forEach((btn) => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
                     const href = btn.getAttribute('href');
@@ -444,6 +492,7 @@
                 });
 
             const gambarCabai = document.getElementById('gambar-cabai');
+
             const parallax = new simpleParallax(gambarCabai, {
                 delay: 1,
                 transition: 'cubic-bezier(0,0,0,1)'
@@ -511,13 +560,13 @@
                     kotaSelect: document.querySelector('#kota')
                 };
 
-                setElementAttributes(elements.nameInput, 'Please wait...', true);
-                setElementAttributes(elements.emailInput, 'Please wait...', true);
-                setElementAttributes(elements.addressTextarea, 'Please wait...', true);
+                setElementAttributes(elements.nameInput, 'Mohon Tunggu...', true);
+                setElementAttributes(elements.emailInput, 'Mohon Tunggu...', true);
+                setElementAttributes(elements.addressTextarea, 'Mohon Tunggu...', true);
 
-                elements.kotaSelect.innerHTML = '<option value="">Please wait...</option>';
-                elements.profesiInput.innerHTML = '<option value="">Please wait...</option>';
-                elements.provinsiSelect.innerHTML = '<option value="">Please wait...</option>';
+                elements.kotaSelect.innerHTML = '<option value="">Mohon Tunggu...</option>';
+                elements.profesiInput.innerHTML = '<option value="">Mohon Tunggu...</option>';
+                elements.provinsiSelect.innerHTML = '<option value="">Mohon Tunggu...</option>';
                 elements.provinsiSelect.disabled = true;
                 elements.profesiInput.disabled = true;
                 elements.kotaSelect.disabled = true;
@@ -529,6 +578,18 @@
                         .address);
                     setElementAttributes(elements.provinsiSelect, '', false);
                     setElementAttributes(elements.profesiInput, '', false);
+
+                    if (!response.user.profile.province) {
+                        elements.kotaSelect.innerHTML =
+                            '<option value="">Pilih Provinsi Terlebih Dahulu</option>';
+                    } else {
+                        elements.kotaSelect.innerHTML =
+                            '<option disabled selected value="">Pilih Kota</option>';
+                    }
+                    elements.provinsiSelect.innerHTML =
+                        '<option disabled selected value="">Pilih Provinsi</option>';
+                    elements.profesiInput.innerHTML =
+                        '<option disabled selected value="">Pilih Profesi</option>';
                     response.provinsi.forEach(value => {
                         if (value.province_id == response.user.profile.province) {
                             elements.provinsiSelect.innerHTML +=
@@ -547,12 +608,8 @@
                                 `<option value="${value}">${value}</option>`;
                         }
                     });
-
                     try {
                         const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
-                        elements.kotaSelect.innerHTML =
-                            '<option value="">Pilih provinsi terlebih dahulu</option>';
-                        elements.kotaSelect.disabled = true;
                         response2.forEach(value => {
                             if (value.city_id == response.user.profile.city) {
                                 elements.kotaSelect.innerHTML +=
@@ -573,12 +630,12 @@
 
                 elements.provinsiSelect.addEventListener('change', async (e) => {
                     elements.kotaSelect.innerHTML =
-                        '<option value="">Please wait...</option>';
+                        '<option value="">Mohon Tunggu...</option>';
                     elements.kotaSelect.disabled = true;
                     try {
                         const response = await ajaxCityRequest(e.target.value);
                         elements.kotaSelect.innerHTML =
-                            '<option value="">Pilih Kota</option>';
+                            '<option disabled selected value="">Pilih Kota</option>';
                         elements.kotaSelect.disabled = false;
                         response.forEach(value => {
                             elements.kotaSelect.innerHTML +=
@@ -658,7 +715,8 @@
                             await new Promise((resolve) => {
                                 // Memeriksa setiap 100ms apakah swal telah dihancurkan
                                 const interval = setInterval(() => {
-                                    if (!document.querySelector('.swal2-container')) {
+                                    if (!document.querySelector(
+                                            '.swal2-container')) {
                                         clearInterval(interval);
                                         resolve();
                                     }
