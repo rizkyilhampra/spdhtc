@@ -41,7 +41,6 @@
                                                 <label for="provinsi" class="form-label font-medium">Provinsi</label>
                                                 <select class="form-select select-custom" name="province" id="provinsi"
                                                     aria-label="Default select example">
-                                                    <option selected disabled>Pilih Provinsi</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -86,13 +85,36 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tanggal</th>
-                                            <th>Penyakit</th>
+                                            <th>Diagnosis Penyakit</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center d-none" id="detailHistoriDiagnosis">
+                    <div class="col-12 col-sm-10 py-5">
+                        <h2 class="font-semibold pb-3">
+                        </h2>
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped  " id="detailHistoriDiagnosisTable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Gejala</th>
+                                                <th scope="col">Bobot</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
