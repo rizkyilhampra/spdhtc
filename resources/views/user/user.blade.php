@@ -647,8 +647,23 @@
                 });
                 await drawHistoriDiagnosisTable();
             });
-            const gejala = @json($gejala ?? 0);
-            const countGejala = gejala.length;
+
+            function ajaxGetGejala() {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: "{{ route('get-gejala') }}",
+                        type: "GET",
+                        dataType: "json",
+                        success: function(response) {
+                            resolve(response);
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            reject(xhr.responseJSON);
+                        }
+                    });
+                });
+            }
+
 
             btnDiagnosis2.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -731,6 +746,16 @@
                     }
 
                     async function showModal() {
+                        Swal.fire({
+                            title: 'Mohon tunggu',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                        });
+                        const gejala = await ajaxGetGejala();
+                        const countGejala = gejala.length;
+                        Swal.close();
                         //looping Swal sebanyak jumlah gejala
                         let isClosed = false;
                         for (let i = 0; i < countGejala; i++) {
