@@ -235,6 +235,9 @@
                     data: function(data) { // Menggunakan "data" sebagai argumen
                         return data; // Mengembalikan "data" yang diterima
                     },
+                    error: function(xhr, error, thrown) {
+                        swalError(xhr.responseJSON.message);
+                    }
                 },
                 columns: [{
                         data: 'no',
@@ -297,12 +300,8 @@
                             );
                             $('#historiDiagnosisTable').DataTable().clear().draw();
                         },
-                        error: function(response) {
-                            Swal.fire(
-                                'Gagal!',
-                                'Data gagal dihapus.',
-                                'error'
-                            );
+                        error: function(error) {
+                            swalError(error.responseJSON.message);
                         }
                     });
                 }
@@ -353,7 +352,7 @@
                     behavior: 'smooth'
                 });
             } catch (error) {
-                console.log(error);
+                swalError(error);
             }
         }
 
@@ -396,9 +395,24 @@
             });
         }
 
-
+        const swalError = async (error) => {
+            const result = await Swal.mixin({
+                title: 'Terjadi kesalahan',
+                text: error.message,
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Muat Ulang',
+                cancelButtonText: 'Tutup'
+            }).fire();
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+        };
         $(document).ready(function() {
             let navbarActive = false;
+
             $('.navbar').on('show.bs.collapse', () => {
                 applyNavbarClassesDark();
                 navbarActive = true;
@@ -536,13 +550,7 @@
                             timer: 1500
                         });
                     } catch (error) {
-                        return Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: error.responseJSON.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+                        swalError(error.responseJSON);
                     }
                 });
 
@@ -622,10 +630,10 @@
                             }
                         });
                     } catch (error) {
-                        console.log(error);
+                        swalError(error);
                     }
                 } catch (error) {
-                    console.log(error);
+                    swalError(error);
                 }
 
                 elements.provinsiSelect.addEventListener('change', async (e) => {
@@ -642,7 +650,7 @@
                                 `<option value="${value.city_id}">${value.city_name}</option>`;
                         });
                     } catch (error) {
-                        console.log(error);
+                        swalError(error);
                     }
                 });
                 await drawHistoriDiagnosisTable();
@@ -746,16 +754,21 @@
                     }
 
                     async function showModal() {
-                        Swal.fire({
+                        const swalLoading = Swal.fire({
                             title: 'Mohon tunggu',
                             allowOutsideClick: false,
                             didOpen: () => {
                                 Swal.showLoading()
                             },
                         });
-                        const gejala = await ajaxGetGejala();
-                        const countGejala = gejala.length;
-                        Swal.close();
+                        let gejala, countGejala;
+                        try {
+                            gejala = await ajaxGetGejala();
+                            countGejala = gejala.length;
+                        } catch (error) {
+                            swalError(error);
+                        }
+                        swalLoading.close();
                         //looping Swal sebanyak jumlah gejala
                         let isClosed = false;
                         for (let i = 0; i < countGejala; i++) {
@@ -798,7 +811,7 @@
                                         'Penyakit yang di derita tidak ditemukan', 'error');
                                 }
                             } catch (error) {
-                                console.log(error);
+                                swalError(error);
                             }
                         }
                     }
@@ -823,7 +836,6 @@
                     modalEditProfileInstance.show();
                 })
             }
-
         });
     </script>
 
