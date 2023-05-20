@@ -19,14 +19,8 @@ class UserController extends Controller
     {
         //get id, name, reason, solution, image from penyakit models
         $penyakit = Penyakit::get(['id', 'name', 'reason', 'solution', 'image']);
-        $gejala = Gejala::get(['id', 'name']);
 
-        $data = [
-            'penyakit' => $penyakit,
-            'gejala' => $gejala,
-        ];
-
-        return view('user.user', $data);
+        return view('user.user', compact('penyakit'));
     }
 
     public function historiDiagnosis(Request $request)
