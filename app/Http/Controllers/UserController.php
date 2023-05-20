@@ -5,13 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diagnosis;
 use App\Models\Gejala;
 use App\Models\Penyakit;
-use App\Models\Rule;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate as FacadesGate;
-use Termwind\Components\Dd;
 
 class UserController extends Controller
 {
