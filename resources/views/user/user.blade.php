@@ -236,7 +236,7 @@
                         return data; // Mengembalikan "data" yang diterima
                     },
                     error: function(xhr, error, thrown) {
-                        swalError(xhr.responseJSON.message);
+                        swalError(xhr.responseJSON);
                     }
                 },
                 columns: [{
@@ -301,7 +301,7 @@
                             $('#historiDiagnosisTable').DataTable().clear().draw();
                         },
                         error: function(error) {
-                            swalError(error.responseJSON.message);
+                            swalError(error.responseJSON);
                         }
                     });
                 }
@@ -352,7 +352,7 @@
                     behavior: 'smooth'
                 });
             } catch (error) {
-                swalError(error);
+                swalError(error.responseJSON);
             }
         }
 
@@ -630,10 +630,10 @@
                             }
                         });
                     } catch (error) {
-                        swalError(error);
+                        swalError(error.responseJSON);
                     }
                 } catch (error) {
-                    swalError(error);
+                    swalError(error.responseJSON);
                 }
 
                 elements.provinsiSelect.addEventListener('change', async (e) => {
@@ -650,7 +650,7 @@
                                 `<option value="${value.city_id}">${value.city_name}</option>`;
                         });
                     } catch (error) {
-                        swalError(error);
+                        swalError(error.responseJSON);
                     }
                 });
                 await drawHistoriDiagnosisTable();
@@ -666,7 +666,7 @@
                             resolve(response);
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
-                            reject(xhr.responseJSON);
+                            reject(xhr);
                         }
                     });
                 });
@@ -766,7 +766,7 @@
                             gejala = await ajaxGetGejala();
                             countGejala = gejala.length;
                         } catch (error) {
-                            swalError(error);
+                            swalError(error.responseJSON);
                         }
                         swalLoading.close();
                         //looping Swal sebanyak jumlah gejala
@@ -811,7 +811,7 @@
                                         'Penyakit yang di derita tidak ditemukan', 'error');
                                 }
                             } catch (error) {
-                                swalError(error);
+                                swalError(error.responseJSON);
                             }
                         }
                     }
