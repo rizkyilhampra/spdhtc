@@ -28,7 +28,7 @@
             </a>
         </li>
         <li class="nav-item {{ request()->is('admin/histori-diagnosis*') ? 'active' : '' }}">
-            <a href="{{ route('admin.diagnosis') }}"><i class="fas fa-fire"></i>
+            <a href="{{ route('admin.histori.diagnosis') }}"><i class="fas fa-fire"></i>
                 <span>Histori</span>
             </a>
         </li>

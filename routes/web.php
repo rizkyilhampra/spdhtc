@@ -24,7 +24,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('admin')->middleware('can:asAdmin')->group(function () {
         Route::get('beranda', [BerandaController::class, 'index'])->name('admin.beranda');
-        Route::get('histori-diagnosis', [\App\Http\Controllers\AdminController::class, 'diagnosis'])->name('admin.diagnosis');
         Route::get('penyakit', [\App\Http\Controllers\PenyakitController::class, 'index'])->name('admin.penyakit');
         Route::get('penyakit/tambah', [\App\Http\Controllers\PenyakitController::class, 'create'])->name('admin.penyakit.tambah');
         Route::post('penyakit/store', [\App\Http\Controllers\PenyakitController::class, 'store'])->name('admin.penyakit.store');
@@ -41,6 +40,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('edit/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'edit'])->name('admin.rule.edit');
             Route::put('update/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'update'])->name('admin.rule.update');
             Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'destroy'])->name('admin.rule.destroy');
+        });
+        Route::get('histori-diagnosis', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'index'])->name('admin.histori.diagnosis');
+        Route::prefix('histori-diagnosis')->group(function () {
+            Route::get('detail/{id}', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'detail'])->name('admin.histori.diagnosis.detail');
+            Route::delete('destroy', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'destroy'])->name('admin.diagnosis.destroy');
         });
     });
 
