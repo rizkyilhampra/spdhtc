@@ -5,6 +5,18 @@
         <div class="section-header">
             <h1>Beranda</h1>
         </div>
+        @if (session()->exists('success-login-admin'))
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="hero bg-primary text-white">
+                        <div class="hero-inner">
+                            <h2>Selamat Datang Kembali, {{ auth()->user()->name }}!</h2>
+                            <p class="lead">This page is a place to manage posts, categories and more.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
@@ -23,7 +35,7 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
+                    <div class="card-icon bg-danger">
                         <i class="far fa-user"></i>
                     </div>
                     <div class="card-wrap">
@@ -38,7 +50,7 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
+                    <div class="card-icon bg-warning">
                         <i class="far fa-user"></i>
                     </div>
                     <div class="card-wrap">
@@ -53,7 +65,7 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
+                    <div class="card-icon bg-success">
                         <i class="far fa-user"></i>
                     </div>
                     <div class="card-wrap">
@@ -108,11 +120,13 @@
                     <div class="card-body">
                         @foreach ($diagnosisPenyakit as $key => $value)
                             <div class="mb-4">
-                                <div class="text-small float-right font-weight-bold text-muted">{{ $value['count'] }}</div>
+                                <div class="text-small float-right font-weight-bold text-muted">{{ $value['count'] }}
+                                </div>
                                 <div class="font-weight-bold mb-1">{{ $value['penyakit'] }}</div>
                                 <div class="progress" data-height="10">
                                     <div class="progress-bar" role="progressbar" data-width="{{ $value['count'] }}%"
-                                        aria-valuenow="{{ $value['count'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        aria-valuenow="{{ $value['count'] }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
                                 </div>
                             </div>
                         @endforeach

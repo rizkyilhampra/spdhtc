@@ -21,17 +21,36 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Penyakit Page</h1>
+            <h1>Halaman Penyakit</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
                 <a href="{{ route('admin.penyakit.tambah') }}" class="btn btn-primary" type="button">
                     Tambah Data
                 </a>
-                <a href="{{ route('admin.penyakit.tambah') }}" class="btn btn-warning" type="button">
+                <a href="{{ route('admin.penyakit.tambah') }}" class="btn btn-warning text-dark" type="button">
                     Cetak Data
                 </a>
             </div>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible show fade">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>×</span>
+                        </button>
+                        {{ session('success') }}
+                    </div>
+                </div>
+            @elseif (session('error'))
+                <div class="alert alert-danger alert-dismissible show fade">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>×</span>
+                        </button>
+                        {{ session('error') }}
+                    </div>
+                </div>
+            @endif
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
