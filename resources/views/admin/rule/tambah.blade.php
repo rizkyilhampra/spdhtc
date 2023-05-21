@@ -11,7 +11,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Tambah Rule Page</h1>
+            <h1>Halaman Tambah Aturan</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">

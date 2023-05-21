@@ -21,7 +21,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Rule Page</h1>
+            <h1>Halaman Aturan</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
@@ -67,13 +67,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
                                 @foreach ($rules as $rule => $value)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $no++ }}
+                                            {{ $value['id'] }}
                                         </td>
                                         <td>{{ $value['penyakit']['name'] }}</td>
                                         <td>{{ $value['gejala']['name'] }}</td>

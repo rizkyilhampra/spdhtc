@@ -69,13 +69,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
                                 @foreach ($penyakit as $p)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $no++ }}
+                                            {{ $p->id }}
                                         </td>
                                         <td>{{ $p->name }}</td>
                                         <td>{{ $p->reason }}</td>
