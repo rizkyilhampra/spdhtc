@@ -586,14 +586,6 @@
                         .address);
                     setElementAttributes(elements.provinsiSelect, '', false);
                     setElementAttributes(elements.profesiInput, '', false);
-
-                    if (!response.user.profile.province) {
-                        elements.kotaSelect.innerHTML =
-                            '<option value="">Pilih Provinsi Terlebih Dahulu</option>';
-                    } else {
-                        elements.kotaSelect.innerHTML =
-                            '<option disabled selected value="">Pilih Kota</option>';
-                    }
                     elements.provinsiSelect.innerHTML =
                         '<option disabled selected value="">Pilih Provinsi</option>';
                     elements.profesiInput.innerHTML =
@@ -616,21 +608,27 @@
                                 `<option value="${value}">${value}</option>`;
                         }
                     });
-                    try {
-                        const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
-                        response2.forEach(value => {
-                            if (value.city_id == response.user.profile.city) {
-                                elements.kotaSelect.innerHTML +=
-                                    `<option value="${value.city_id}" selected>${value.city_name}</option>`;
-                                elements.kotaSelect.disabled = false;
+                    elements.kotaSelect.innerHTML =
+                        '<option disabled selected value="">Pilih Kota</option>';
+                    if (response.user.profile.province != null) {
+                        elements.kotaSelect.innerHTML =
+                            '<option value="">Pilih Provinsi Terlebih Dahulu</option>';
+                        try {
+                            const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
+                            response2.forEach(value => {
+                                if (value.city_id == response.user.profile.city) {
+                                    elements.kotaSelect.innerHTML +=
+                                        `<option value="${value.city_id}" selected>${value.city_name}</option>`;
+                                    elements.kotaSelect.disabled = false;
 
-                            } else {
-                                elements.kotaSelect.innerHTML +=
-                                    `<option value="${value.city_id}">${value.city_name}</option>`;
-                            }
-                        });
-                    } catch (error) {
-                        swalError(error.responseJSON);
+                                } else {
+                                    elements.kotaSelect.innerHTML +=
+                                        `<option value="${value.city_id}">${value.city_name}</option>`;
+                                }
+                            });
+                        } catch (error) {
+                            swalError(error.responseJSON);
+                        }
                     }
                 } catch (error) {
                     swalError(error.responseJSON);
