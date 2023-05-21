@@ -33,7 +33,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('penyakit/hapus', [\App\Http\Controllers\PenyakitController::class, 'hapus'])->name('admin.penyakit.hapus');
         Route::delete('penyakit/destroy/{id}', [\App\Http\Controllers\PenyakitController::class, 'destroy'])->name('admin.penyakit.destroy');
         Route::get('gejala', [\App\Http\Controllers\AdminController::class, 'gejala'])->name('admin.gejala');
-        Route::get('rule', [\App\Http\Controllers\AdminController::class, 'rule'])->name('admin.rule');
+
+        Route::get('rule', [\App\Http\Controllers\Admin\RuleController::class, 'index'])->name('admin.rule');
+        Route::prefix('rule')->group(function () {
+            Route::get('tambah', [\App\Http\Controllers\Admin\RuleController::class, 'create'])->name('admin.rule.tambah');
+            Route::post('store', [\App\Http\Controllers\Admin\RuleController::class, 'store'])->name('admin.rule.store');
+            Route::get('edit/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'edit'])->name('admin.rule.edit');
+            Route::put('update/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'update'])->name('admin.rule.update');
+            Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'destroy'])->name('admin.rule.destroy');
+        });
     });
 
     Route::middleware('can:asUser')->group(function () {
