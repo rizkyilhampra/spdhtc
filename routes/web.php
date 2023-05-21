@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BerandaController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
@@ -46,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('detail/{id}', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'detail'])->name('admin.histori.diagnosis.detail');
             Route::delete('destroy', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'destroy'])->name('admin.diagnosis.destroy');
         });
+        Route::get('github', [AdminController::class, 'getCollaborators'])->name('github');
     });
 
     Route::middleware('can:asUser')->group(function () {
