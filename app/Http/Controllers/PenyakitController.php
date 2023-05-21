@@ -7,12 +7,6 @@ use Illuminate\Http\Request;
 
 class PenyakitController extends Controller
 {
-    //construct
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
     /**
      * Display a listing of the resource.
      *
@@ -20,10 +14,9 @@ class PenyakitController extends Controller
      */
     public function index()
     {
-        $penyakit = Penyakit::get(['id', 'name', 'reason', 'solution', 'image', 'updated_at']);
 
         $data = [
-            'penyakit' => $penyakit,
+            'penyakit' => Penyakit::get(['id', 'name', 'reason', 'solution', 'image', 'updated_at']),
             'loginDuration' =>  $this->LoginDuration()
         ];
         return view('admin.penyakit.penyakit', $data);
@@ -145,13 +138,21 @@ class PenyakitController extends Controller
      */
     public function destroy($id)
     {
-        $penyakit = Penyakit::findOrFail($id);
-        $old_image = $penyakit->image;
-        $image_path = "public/penyakit/" . $old_image;
-        if (file_exists($image_path)) {
-            unlink($image_path);
+        try {
+            $penyakit = Penyakit::findOrFail($id);
+            $old_image = $penyakit->image;
+            $image_path = "public/penyakit/" . $old_image;
+            if (file_exists($image_path)) {
+                try {
+                    unlink($image_path);
+                } catch (\Exception $th) {
+                    return redirect(route('admin.penyakit'))->with('error', 'Foto gagal dihapus!');
+                }
+            }
+            $penyakit->delete();
+            return redirect(route('admin.penyakit'))->with('success', 'Data berhasil dihapus!');
+        } catch (\Exception $th) {
+            return redirect(route('admin.penyakit'))->with('error', 'Data gagal dihapus!');
         }
-        $penyakit->delete();
-        return redirect(route('admin.penyakit'))->with('success', 'Data berhasil dihapus!');
     }
 }
