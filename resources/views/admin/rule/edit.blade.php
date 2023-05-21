@@ -11,7 +11,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Edit Rule {{ $rule['id'] }}</h1>
+            <h1>Halaman Ubah Aturan No {{ $rule['id'] }}</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">

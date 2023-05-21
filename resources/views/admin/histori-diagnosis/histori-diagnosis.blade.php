@@ -53,6 +53,7 @@
                                         No
                                     </th>
                                     <th>Nama Pengguna</th>
+                                    <th>Email Pengguna</th>
                                     <th>Nama Penyakit</th>
                                     <th>Tanggal Dibuat/Diubah</th>
                                     <th>Aksi</th>
@@ -65,6 +66,7 @@
                                             {{ $value['id'] }}
                                         </td>
                                         <td>{{ $value['user']['name'] }}</td>
+                                        <td>{{ $value['user']['email'] }}</td>
                                         <td>{{ $value['penyakit']['name'] }}</td>
                                         <td>{{ $value['updated_at'] }}</td>
                                         <td>
