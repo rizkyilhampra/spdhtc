@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BerandaController;
 use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
@@ -22,7 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', [\App\Http\Controllers\Controller::class, 'authenticated'])->name('home');
 
     Route::prefix('admin')->middleware('can:asAdmin')->group(function () {
-        Route::get('beranda', [\App\Http\Controllers\AdminController::class, 'beranda'])->name('admin.beranda');
+        Route::get('beranda', [BerandaController::class, 'index'])->name('admin.beranda');
         Route::get('histori-diagnosis', [\App\Http\Controllers\AdminController::class, 'diagnosis'])->name('admin.diagnosis');
         Route::get('penyakit', [\App\Http\Controllers\PenyakitController::class, 'index'])->name('admin.penyakit');
         Route::get('penyakit/tambah', [\App\Http\Controllers\PenyakitController::class, 'create'])->name('admin.penyakit.tambah');
