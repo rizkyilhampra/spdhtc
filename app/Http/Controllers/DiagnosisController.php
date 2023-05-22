@@ -86,10 +86,12 @@ class DiagnosisController extends Controller
         ]);
     }
 
-    // public function result()
-    // {
-    //     $diagnosisCheck = Diagnosis::where('user_id', auth()->user()->id)->get()->last();
-    //     $maxAnswerlog = max(array_keys(json_decode($diagnosisCheck->answer_log, true) ?? []));
-    //     dd($maxAnswerlog);
-    // }
+    public function getGejala(Request $request)
+    {
+        if (!$request->ajax()) {
+            abort(403, 'Forbidden');
+        }
+        $gejala = Gejala::get(['id', 'name']);
+        return response()->json($gejala);
+    }
 }

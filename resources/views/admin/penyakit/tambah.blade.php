@@ -3,11 +3,11 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Tambah Penyakit Page</h1>
+            <h1>Halaman Tambah Penyakit</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('admin.penyakit') }}" class="btn btn-secondary">Kembali</a>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -35,8 +35,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Solusi</label>
-                            <input type="text" class="form-control" name="solution" id="solution"
-                                value="{{ old('solution') }}">
+                            <textarea name="solution" class="form-control" id="solution" style="height: 200px">{{ old('solution') }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="image" class="form-label">Gambar</label>
