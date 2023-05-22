@@ -113,27 +113,22 @@ class GejalaController extends Controller
 
             if ($request->hasFile('image')) {
                 $old_image = $gejala->image;
-                //dd($gejala->image);
                 $image_path = "public/gejala/" . $old_image;
-                //dd($image_path);
                 if (file_exists($image_path)) {
                     unlink($image_path);
                 }
                 $image = $request->file('image');
                 $new_name = rand() . '.' . $image->getClientOriginalExtension();
                 $image->storeAs('public/gejala', $new_name);
-                $form_data['image'] = $new_name;
-                $gejala->update($form_data);
             }
 
             $form_data = array(
                 'name' => $request->name,
-
+                'image' => $new_name ?? $gejala->image
             );
 
             $gejala->update($form_data);
 
-            //isi dengan blok kode dari function
             return redirect()->route('admin.gejala')->with('success', 'Berhasil');
         } catch (\Exception $e) {
             return redirect()->route('admin.gejala')->with('error', $e);
