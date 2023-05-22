@@ -11,11 +11,30 @@
     <script src="{{ asset('assets/datatables/media/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/sweetalert/sweetalert.min.js') }}"></script>
 @endpush
 
 @push('jsCustom')
     <!-- Page Specific JS File -->
-    <script src="{{ asset('assets/js/page/modules-datatables.js') }}"></script>
+    <script>
+        const table = document.getElementById('table-1');
+        const dataTable = $(table).DataTable({});
+        $(document).on("click", "#table-1 #btnHapus", function(e) {
+            e.preventDefault();
+            var form = $(this).closest("td").find("form");
+            console.log(form);
+            swal({
+                    title: "Apakah Anda yakin?",
+                    text: "Setelah dihapus, Anda tidak akan dapat memulihkan data ini!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) form.submit();
+                });
+        });
+    </script>
 @endpush
 
 @section('content')
@@ -105,23 +124,3 @@
         </div>
     </section>
 @endsection
-
-@push('jsCustom')
-    <script>
-        window.addEventListener('load', function() {
-            const btnhapus = document.querySelectorAll('#btnHapus');
-            console.log(btnhapus);
-            const form = document.querySelectorAll('#formHapus');
-            console.log(form);
-            btnhapus.forEach((element, index) => {
-                element.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const konfirmasi = confirm('Apakah anda yakin ingin menghapus data ini?');
-                    if (konfirmasi) {
-                        form[index].submit();
-                    }
-                })
-            });
-        })
-    </script>
-@endpush
