@@ -1,5 +1,4 @@
 @extends('layouts.app')
-{{-- {{ dd($gejala) }} --}}
 
 @push('cssLibraries')
     <!-- CSS Libraries -->
@@ -16,20 +15,23 @@
 
 @push('jsCustom')
     <!-- Page Specific JS File -->
-    <script src="{{ asset('assets/js/page/modules-datatables.js') }}"></script>
+    <script>
+        const table = document.getElementById('table-1');
+        const dataTable = $(table).DataTable({});
+    </script>
 @endpush
 
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Gejala Page</h1>
+            <h1>Halaman Gejala</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
                 <a href="{{ route('admin.gejala.tambah') }}" class="btn btn-primary" type="button">
                     Tambah Data
                 </a>
-                <a href="{{ route('admin.gejala.tambah') }}" class="btn btn-warning" type="button">
+                <a href="{{ route('admin.gejala.tambah') }}" class="btn btn-warning text-dark" type="button">
                     Cetak Data
                 </a>
             </div>
@@ -129,4 +131,3 @@
         });
     </script>
 @endpush
-

@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Tambah Gejala Page</h1>
+            <h1>Halaman Tambah Gejala</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
@@ -23,18 +23,17 @@
                                 </div>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="image" class="form-label">Gambar</label>
+                            <input type="file" class="form-control" name="image" id="image">
+                            <div class="card card-body mt-3">
+                                <img class="img-fluid" width="300" id="imagePreview" src="">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="image" class="form-label">Gambar</label>
-                    <input type="file" class="form-control" name="image" id="image">
-                    <div class="card card-body mt-3">
-                        <img class="img-fluid" width="300" id="imagePreview" src="">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
             </div>
-        </div>
         </div>
     </section>
 @endsection
