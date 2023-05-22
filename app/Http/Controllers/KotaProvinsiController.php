@@ -34,16 +34,6 @@ class KotaProvinsiController extends Controller
         });
 
         return $provinces;
-
-        // // Mengambil data provinsi dari API RajaOngkir
-        // $client = new Client();
-        // $response = $client->request('GET', 'https://api.rajaongkir.com/starter/province', [
-        //     'headers' => [
-        //         'key' => env('RAJAONGKIR_API_KEY'),
-        //         'content-type' => 'application/x-www-form-urlencoded'
-        //     ],
-        // ]);
-        // return json_decode($response->getBody())->rajaongkir->results;
     }
 
     public function indexCity(Request $request, $id)
@@ -67,7 +57,7 @@ class KotaProvinsiController extends Controller
                 $cities = json_decode($response->getBody())->rajaongkir->results;
             } catch (GuzzleException $e) {
                 // Handle any exception from Guzzle
-                $cities = [];
+                $cities = [$e->getMessage()];
             }
 
             return $cities;
@@ -75,33 +65,4 @@ class KotaProvinsiController extends Controller
 
         return $cities;
     }
-
-    // public function indexCity($id)
-    // {
-    //     // Mengambil data kota dari API RajaOngkir
-    //     $client = new Client();
-    //     $response = $client->request('GET', 'https://api.rajaongkir.com/starter/city', [
-    //         'headers' => [
-    //             'key' => env('RAJAONGKIR_API_KEY'),
-    //             'content-type' => 'application/x-www-form-urlencoded'
-    //         ],
-    //         'query' => [
-    //             'province' => $id,
-    //         ],
-    //     ]);
-    //     $kota = json_decode($response->getBody())->rajaongkir->results;
-    //     return response()->json($kota);
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     // Menyimpan data kota yang dipilih ke dalam database
-    //     $kota = new Kota;
-    //     $kota->nama_kota = $request->input('kota');
-    //     $kota->kode_kota = $request->input('kode_kota');
-    //     $kota->id_provinsi = $request->input('provinsi');
-    //     $kota->save();
-
-    //     return redirect()->back()->with('success', 'Data kota berhasil disimpan.');
-    // }
 }

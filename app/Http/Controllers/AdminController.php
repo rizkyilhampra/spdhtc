@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class AdminController extends Controller
 {
@@ -14,23 +16,25 @@ class AdminController extends Controller
         return view('admin.beranda', compact('loginDuration'));
     }
 
-    public function diagnosis()
+    public function getCollaborators()
     {
-        return view('admin.diagnosis');
-    }
-
-    public function penyakit()
-    {
-        return view('admin.penyakit');
+        try {
+            $client = new Client();
+            $response = $client->request('GET', 'https://api.github.com/repos/rizkyilhampra/spdhtc/collaborators', [
+                'headers' => [
+                    'Accept' => 'application/vnd.github.v3+json',
+                    'Authorization' => 'token ' . env('GITHUB_PERSONAL_ACCESS_TOKEN'),
+                ],
+            ]);
+            $collaborators = json_decode($response->getBody(), true);
+        } catch (GuzzleException $e) {
+            $collaborators = [];
+        }
+        return $collaborators;
     }
 
     public function gejala()
     {
         return view('admin.gejala');
-    }
-
-    public function rule()
-    {
-        return view('admin.rule');
     }
 }
