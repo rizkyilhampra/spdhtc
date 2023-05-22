@@ -25,30 +25,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('admin')->middleware('can:asAdmin')->group(function () {
         Route::get('beranda', [BerandaController::class, 'index'])->name('admin.beranda');
-        Route::get('penyakit', [\App\Http\Controllers\PenyakitController::class, 'index'])->name('admin.penyakit');
-        Route::get('penyakit/tambah', [\App\Http\Controllers\PenyakitController::class, 'create'])->name('admin.penyakit.tambah');
-        Route::post('penyakit/store', [\App\Http\Controllers\PenyakitController::class, 'store'])->name('admin.penyakit.store');
-        Route::get('penyakit/edit/{id}', [\App\Http\Controllers\PenyakitController::class, 'edit'])->name('admin.penyakit.edit');
-        Route::put('penyakit/update/{id}', [\App\Http\Controllers\PenyakitController::class, 'update'])->name('admin.penyakit.update');
-        Route::get('penyakit/hapus', [\App\Http\Controllers\PenyakitController::class, 'hapus'])->name('admin.penyakit.hapus');
-        Route::delete('penyakit/destroy/{id}', [\App\Http\Controllers\PenyakitController::class, 'destroy'])->name('admin.penyakit.destroy');
-        Route::get('gejala', [\App\Http\Controllers\GejalaController::class, 'index'])->name('admin.gejala');
-        Route::get('gejala/tambah', [\App\Http\Controllers\GejalaController::class, 'create'])->name('admin.gejala.tambah');
-        Route::post('gejala/store', [\App\Http\Controllers\GejalaController::class, 'store'])->name('admin.gejala.store');
-        Route::get('gejala/edit/{id}', [\App\Http\Controllers\GejalaController::class, 'edit'])->name('admin.gejala.edit');
-        Route::put('gejala/update/{id}', [\App\Http\Controllers\GejalaController::class, 'update'])->name('admin.gejala.update');
-        Route::get('gejala/hapus', [\App\Http\Controllers\GejalaController::class, 'hapus'])->name('admin.gejala.hapus');
-        Route::delete('gejala/destroy/{id}', [\App\Http\Controllers\GejalaController::class, 'destroy'])->name('admin.gejala.destroy');=======
-        Route::get('rule', [\App\Http\Controllers\Admin\RuleController::class, 'index'])->name('admin.rule');
+        Route::prefix('penyakit')->group(function () {
+            Route::get('/', [\App\Http\Controllers\PenyakitController::class, 'index'])->name('admin.penyakit');
+            Route::get('tambah', [\App\Http\Controllers\PenyakitController::class, 'create'])->name('admin.penyakit.tambah');
+            Route::post('store', [\App\Http\Controllers\PenyakitController::class, 'store'])->name('admin.penyakit.store');
+            Route::get('edit/{id}', [\App\Http\Controllers\PenyakitController::class, 'edit'])->name('admin.penyakit.edit');
+            Route::put('update/{id}', [\App\Http\Controllers\PenyakitController::class, 'update'])->name('admin.penyakit.update');
+            Route::delete('destroy/{id}', [\App\Http\Controllers\PenyakitController::class, 'destroy'])->name('admin.penyakit.destroy');
+        });
+        Route::prefix('gejala')->group(function () {
+            Route::get('/', [\App\Http\Controllers\GejalaController::class, 'index'])->name('admin.gejala');
+            Route::get('tambah', [\App\Http\Controllers\GejalaController::class, 'create'])->name('admin.gejala.tambah');
+            Route::post('store', [\App\Http\Controllers\GejalaController::class, 'store'])->name('admin.gejala.store');
+            Route::get('edit/{id}', [\App\Http\Controllers\GejalaController::class, 'edit'])->name('admin.gejala.edit');
+            Route::put('update/{id}', [\App\Http\Controllers\GejalaController::class, 'update'])->name('admin.gejala.update');
+            Route::delete('destroy/{id}', [\App\Http\Controllers\GejalaController::class, 'destroy'])->name('admin.gejala.destroy');
+        });
         Route::prefix('rule')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\RuleController::class, 'index'])->name('admin.rule');
             Route::get('tambah', [\App\Http\Controllers\Admin\RuleController::class, 'create'])->name('admin.rule.tambah');
             Route::post('store', [\App\Http\Controllers\Admin\RuleController::class, 'store'])->name('admin.rule.store');
             Route::get('edit/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'edit'])->name('admin.rule.edit');
             Route::put('update/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'update'])->name('admin.rule.update');
             Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'destroy'])->name('admin.rule.destroy');
         });
-        Route::get('histori-diagnosis', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'index'])->name('admin.histori.diagnosis');
         Route::prefix('histori-diagnosis')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'index'])->name('admin.histori.diagnosis');
             Route::get('detail/{id}', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'detail'])->name('admin.histori.diagnosis.detail');
             Route::delete('destroy', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'destroy'])->name('admin.diagnosis.destroy');
         });
