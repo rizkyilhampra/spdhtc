@@ -106,7 +106,6 @@ class PenyakitController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-
         if ($request->hasFile('image')) {
             $old_image = $penyakit->image;
             $image_path = "public/penyakit/" . $old_image;
@@ -116,13 +115,13 @@ class PenyakitController extends Controller
             $image = $request->file('image');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->storeAs('public/penyakit', $new_name);
-            $form_data['image'] = $new_name;
         }
 
         $form_data = array(
             'name' => $request->name,
             'reason' => $request->reason,
             'solution' => $request->solution,
+            'image' => $new_name ?? $penyakit->image,
         );
 
         $penyakit->update($form_data);
