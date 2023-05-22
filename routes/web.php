@@ -32,8 +32,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('penyakit/update/{id}', [\App\Http\Controllers\PenyakitController::class, 'update'])->name('admin.penyakit.update');
         Route::get('penyakit/hapus', [\App\Http\Controllers\PenyakitController::class, 'hapus'])->name('admin.penyakit.hapus');
         Route::delete('penyakit/destroy/{id}', [\App\Http\Controllers\PenyakitController::class, 'destroy'])->name('admin.penyakit.destroy');
-        Route::get('gejala', [\App\Http\Controllers\AdminController::class, 'gejala'])->name('admin.gejala');
-
+        Route::get('gejala', [\App\Http\Controllers\GejalaController::class, 'index'])->name('admin.gejala');
+        Route::get('gejala/tambah', [\App\Http\Controllers\GejalaController::class, 'create'])->name('admin.gejala.tambah');
+        Route::post('gejala/store', [\App\Http\Controllers\GejalaController::class, 'store'])->name('admin.gejala.store');
+        Route::get('gejala/edit/{id}', [\App\Http\Controllers\GejalaController::class, 'edit'])->name('admin.gejala.edit');
+        Route::put('gejala/update/{id}', [\App\Http\Controllers\GejalaController::class, 'update'])->name('admin.gejala.update');
+        Route::get('gejala/hapus', [\App\Http\Controllers\GejalaController::class, 'hapus'])->name('admin.gejala.hapus');
+        Route::delete('gejala/destroy/{id}', [\App\Http\Controllers\GejalaController::class, 'destroy'])->name('admin.gejala.destroy');=======
         Route::get('rule', [\App\Http\Controllers\Admin\RuleController::class, 'index'])->name('admin.rule');
         Route::prefix('rule')->group(function () {
             Route::get('tambah', [\App\Http\Controllers\Admin\RuleController::class, 'create'])->name('admin.rule.tambah');
