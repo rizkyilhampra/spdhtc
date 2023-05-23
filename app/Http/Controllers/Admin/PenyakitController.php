@@ -46,7 +46,7 @@ class PenyakitController extends Controller
             'name' => 'required',
             'reason' => 'required',
             'solution' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         //upload image
@@ -104,7 +104,7 @@ class PenyakitController extends Controller
             'name' => 'required',
             'reason' => 'required',
             'solution' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('image')) {

@@ -48,7 +48,7 @@ class GejalaController extends Controller
 
             $this->validate($request, [
                 'name' => 'required',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
             //upload image
@@ -108,7 +108,7 @@ class GejalaController extends Controller
             $gejala = Gejala::findOrFail($id);
             $this->validate($request, [
                 'name' => 'required',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
 
