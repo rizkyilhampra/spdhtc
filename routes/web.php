@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\BerandaController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DiagnosisController;
+use App\Http\Controllers\GetCollaboratorGithubController;
+use App\Http\Controllers\ShowPdfController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,20 +28,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('admin')->middleware('can:asAdmin')->group(function () {
         Route::get('beranda', [BerandaController::class, 'index'])->name('admin.beranda');
         Route::prefix('penyakit')->group(function () {
-            Route::get('/', [\App\Http\Controllers\PenyakitController::class, 'index'])->name('admin.penyakit');
-            Route::get('tambah', [\App\Http\Controllers\PenyakitController::class, 'create'])->name('admin.penyakit.tambah');
-            Route::post('store', [\App\Http\Controllers\PenyakitController::class, 'store'])->name('admin.penyakit.store');
-            Route::get('edit/{id}', [\App\Http\Controllers\PenyakitController::class, 'edit'])->name('admin.penyakit.edit');
-            Route::put('update/{id}', [\App\Http\Controllers\PenyakitController::class, 'update'])->name('admin.penyakit.update');
-            Route::delete('destroy/{id}', [\App\Http\Controllers\PenyakitController::class, 'destroy'])->name('admin.penyakit.destroy');
+            Route::get('/', [\App\Http\Controllers\Admin\PenyakitController::class, 'index'])->name('admin.penyakit');
+            Route::get('tambah', [\App\Http\Controllers\Admin\PenyakitController::class, 'create'])->name('admin.penyakit.tambah');
+            Route::post('store', [\App\Http\Controllers\Admin\PenyakitController::class, 'store'])->name('admin.penyakit.store');
+            Route::get('edit/{id}', [\App\Http\Controllers\Admin\PenyakitController::class, 'edit'])->name('admin.penyakit.edit');
+            Route::put('update/{id}', [\App\Http\Controllers\Admin\PenyakitController::class, 'update'])->name('admin.penyakit.update');
+            Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\PenyakitController::class, 'destroy'])->name('admin.penyakit.destroy');
+            Route::get('pdf', [ShowPdfController::class, 'penyakitPdf'])->name('penyakit.pdf');
         });
         Route::prefix('gejala')->group(function () {
-            Route::get('/', [\App\Http\Controllers\GejalaController::class, 'index'])->name('admin.gejala');
-            Route::get('tambah', [\App\Http\Controllers\GejalaController::class, 'create'])->name('admin.gejala.tambah');
-            Route::post('store', [\App\Http\Controllers\GejalaController::class, 'store'])->name('admin.gejala.store');
-            Route::get('edit/{id}', [\App\Http\Controllers\GejalaController::class, 'edit'])->name('admin.gejala.edit');
-            Route::put('update/{id}', [\App\Http\Controllers\GejalaController::class, 'update'])->name('admin.gejala.update');
-            Route::delete('destroy/{id}', [\App\Http\Controllers\GejalaController::class, 'destroy'])->name('admin.gejala.destroy');
+            Route::get('/', [\App\Http\Controllers\Admin\GejalaController::class, 'index'])->name('admin.gejala');
+            Route::get('tambah', [\App\Http\Controllers\Admin\GejalaController::class, 'create'])->name('admin.gejala.tambah');
+            Route::post('store', [\App\Http\Controllers\Admin\GejalaController::class, 'store'])->name('admin.gejala.store');
+            Route::get('edit/{id}', [\App\Http\Controllers\Admin\GejalaController::class, 'edit'])->name('admin.gejala.edit');
+            Route::put('update/{id}', [\App\Http\Controllers\Admin\GejalaController::class, 'update'])->name('admin.gejala.update');
+            Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\GejalaController::class, 'destroy'])->name('admin.gejala.destroy');
+            Route::get('pdf', [ShowPdfController::class, 'gejalaPdf'])->name('gejala.pdf');
         });
         Route::prefix('rule')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\RuleController::class, 'index'])->name('admin.rule');
@@ -48,13 +52,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('edit/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'edit'])->name('admin.rule.edit');
             Route::put('update/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'update'])->name('admin.rule.update');
             Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'destroy'])->name('admin.rule.destroy');
+            Route::get('pdf', [ShowPdfController::class, 'rulePdf'])->name('rule.pdf');
         });
         Route::prefix('histori-diagnosis')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'index'])->name('admin.histori.diagnosis');
             Route::get('detail/{id}', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'detail'])->name('admin.histori.diagnosis.detail');
             Route::delete('destroy', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'destroy'])->name('admin.diagnosis.destroy');
+            Route::get('pdf', [ShowPdfController::class, 'historiDiagnosisPdf'])->name('histori.diagnosis.pdf');
         });
-        Route::get('github', [AdminController::class, 'getCollaborators'])->name('github');
     });
 
     Route::middleware('can:asUser')->group(function () {
@@ -72,6 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
+Route::get('github', [GetCollaboratorGithubController::class, 'getCollaborators'])->name('github');
 Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
 Route::get('/auth/google/callback', [SocialAuthController::class, 'handleProviderCallback'])
     ->name('google.callback');

@@ -2,20 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class AdminController extends Controller
+class GetCollaboratorGithubController extends Controller
 {
-    public function beranda()
-    {
-        $loginDuration = $this->LoginDuration();
-
-        return view('admin.beranda', compact('loginDuration'));
-    }
-
     public function getCollaborators()
     {
         try {
@@ -31,10 +22,5 @@ class AdminController extends Controller
             $collaborators = [];
         }
         return $collaborators;
-    }
-
-    public function gejala()
-    {
-        return view('admin.gejala');
     }
 }
