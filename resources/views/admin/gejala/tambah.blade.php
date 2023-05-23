@@ -1,23 +1,22 @@
 @extends('layouts.app')
+
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Halaman Edit Penyakit No {{ $penyakit->id }}</h1>
+            <h1>Halaman Tambah Gejala</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
-                <a href="{{ route('admin.penyakit') }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.penyakit.update', ['id' => $penyakit->id]) }}" method="post"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('admin.gejala.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
                         <div class="form-group">
-                            <label class="form-label">Nama Penyakit</label>
+                            <label class="form-label">Gejala</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                                id="name" value="{{ old('name', $penyakit->name) }}">
+                                id="name" value="{{ old('name') }}">
                             @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -25,25 +24,10 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Penyebab</label>
-                            <input type="text" class="form-control @error('reason') is-invalid @enderror" name="reason"
-                                id="reason" value="{{ old('reason', $penyakit->reason) }}">
-                            @error('reason')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Solusi</label>
-                            <textarea name="solution" class="form-control" id="solution" style="height: 200px">{{ old('solution', $penyakit->solution) }}</textarea>
-                        </div>
-                        <div class="form-group">
                             <label for="image" class="form-label">Gambar</label>
                             <input type="file" class="form-control" name="image" id="image">
                             <div class="card card-body mt-3">
-                                <img class="img-fluid" width="300" id="imagePreview"
-                                    src="{{ asset('storage/penyakit/' . $penyakit->image) }}">
+                                <img class="img-fluid" width="300" id="imagePreview" src="">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>

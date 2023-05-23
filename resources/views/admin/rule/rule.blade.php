@@ -14,7 +14,6 @@
     <script src="{{ asset('assets/sweetalert/sweetalert.min.js') }}"></script>
 @endpush
 
-
 @push('jsCustom')
     <!-- Page Specific JS File -->
     <script>
@@ -41,14 +40,14 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Halaman Penyakit</h1>
+            <h1>Halaman Aturan</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
-                <a href="{{ route('admin.penyakit.tambah') }}" class="btn btn-primary" type="button">
+                <a href="{{ route('admin.rule.tambah') }}" class="btn btn-primary" type="button">
                     Tambah Data
                 </a>
-                <a href="{{ route('penyakit.pdf') }}" target="_blank" class="btn btn-warning text-dark" type="button">
+                <a href="{{ route('rule.pdf') }}" target="_blank" class="btn btn-warning text-dark" type="button">
                     Cetak Data
                 </a>
             </div>
@@ -80,29 +79,21 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>Nama</th>
-                                    <th>Penyebab</th>
-                                    <th>Solusi</th>
+                                    <th>Penyakit</th>
+                                    <th>Gejala</th>
                                     <th>Tanggal Dibuat/Diubah</th>
-                                    <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($penyakit as $p)
+                                @foreach ($rules as $rule => $value)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $p->id }}
+                                            {{ $value['id'] }}
                                         </td>
-                                        <td>{{ $p->name }}</td>
-                                        <td>{{ $p->reason }}</td>
-                                        <td>{{ $p->solution }}</td>
-                                        <td>{{ $p->updated_at }}</td>
-                                        <td>
-                                            <img alt="image" src="{{ asset('storage/penyakit/' . $p->image) }}"
-                                                class="" width="200" data-toggle="tooltip"
-                                                title="{{ $p->name }}">
-                                        </td>
+                                        <td>{{ $value['penyakit']['name'] }}</td>
+                                        <td>{{ $value['gejala']['name'] }}</td>
+                                        <td>{{ $value['updated_at'] }}</td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-primary dropdown-toggle" type="button"
@@ -112,10 +103,10 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item btn btn-outline-warning"
-                                                        href="{{ route('admin.penyakit.edit', ['id' => $p->id]) }}">Edit</a>
+                                                        href="{{ route('admin.rule.edit', ['id' => $value['id']]) }}">Edit</a>
                                                     <a class="dropdown-item btn btn-outline-danger" id="btnHapus">Hapus</a>
                                                     <form id="formHapus"
-                                                        action="{{ route('admin.penyakit.destroy', ['id' => $p->id]) }}"
+                                                        action="{{ route('admin.rule.destroy', ['id' => $value['id']]) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')

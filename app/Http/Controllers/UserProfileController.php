@@ -76,7 +76,7 @@ class UserProfileController extends Controller
         }
 
         return response()->json([
-            'message' => 'Profile updated successfully',
-        ], 200);
+            'message' => 'Edit Profil Berhasil',
+        ]);
     }
 }
