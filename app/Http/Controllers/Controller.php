@@ -24,7 +24,7 @@ class Controller extends BaseController
         $user->update(['last_login_at' => now()]);
 
         if (FacadesGate::allows('asAdmin')) {
-            return redirect()->intended(Fortify::redirects('home', route('admin.beranda')))->with('success-login-admin');
+            return redirect()->intended(Fortify::redirects('home', route('admin.beranda')));
         } else if (FacadesGate::allows('asUser')) {
             return redirect()->intended(Fortify::redirects('home', route('index')))->with('success', 'Login berhasil, selamat datang ' . $user->name . '!');
         } else {

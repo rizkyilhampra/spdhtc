@@ -27,11 +27,5 @@ class UserCustomSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('12345678'),
         ]);
-        User::factory()->create([
-            'name' => 'user2',
-            'email' => 'user2@example.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('12345678'),
-        ]);
     }
 }

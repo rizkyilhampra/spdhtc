@@ -11,66 +11,27 @@
     <script src="{{ asset('assets/datatables/media/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/sweetalert/sweetalert.min.js') }}"></script>
 @endpush
-
 
 @push('jsCustom')
     <!-- Page Specific JS File -->
-    <script>
-        const table = document.getElementById('table-1');
-        const dataTable = $(table).DataTable({});
-        $(document).on("click", "#table-1 #btnHapus", function(e) {
-            e.preventDefault();
-            var form = $(this).closest("td").find("form");
-            console.log(form);
-            swal({
-                    title: "Apakah Anda yakin?",
-                    text: "Setelah dihapus, Anda tidak akan dapat memulihkan data ini!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) form.submit();
-                });
-        });
-    </script>
+    <script src="{{ asset('assets/js/page/modules-datatables.js') }}"></script>
 @endpush
 
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Halaman Penyakit</h1>
+            <h1>Penyakit Page</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
                 <a href="{{ route('admin.penyakit.tambah') }}" class="btn btn-primary" type="button">
                     Tambah Data
                 </a>
-                <a href="{{ route('penyakit.pdf') }}" target="_blank" class="btn btn-warning text-dark" type="button">
+                <a href="{{ route('admin.penyakit.tambah') }}" class="btn btn-warning" type="button">
                     Cetak Data
                 </a>
             </div>
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible show fade">
-                    <div class="alert-body">
-                        <button class="close" data-dismiss="alert">
-                            <span>×</span>
-                        </button>
-                        {{ session('success') }}
-                    </div>
-                </div>
-            @elseif (session('error'))
-                <div class="alert alert-danger alert-dismissible show fade">
-                    <div class="alert-body">
-                        <button class="close" data-dismiss="alert">
-                            <span>×</span>
-                        </button>
-                        {{ session('error') }}
-                    </div>
-                </div>
-            @endif
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -89,10 +50,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no = 1;
+                                @endphp
                                 @foreach ($penyakit as $p)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $p->id }}
+                                            {{ $no++ }}
                                         </td>
                                         <td>{{ $p->name }}</td>
                                         <td>{{ $p->reason }}</td>
@@ -133,3 +97,19 @@
         </div>
     </section>
 @endsection
+
+@push('jsCustom')
+    <script>
+        const btnhapus = document.querySelectorAll('#btnHapus');
+        const form = document.querySelectorAll('#formHapus');
+        btnhapus.forEach((element, index) => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                const konfirmasi = confirm('Apakah anda yakin ingin menghapus data ini?');
+                if (konfirmasi) {
+                    form[index].submit();
+                }
+            })
+        });
+    </script>
+@endpush

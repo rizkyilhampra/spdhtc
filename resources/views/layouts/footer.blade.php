@@ -1,9 +1,7 @@
 <div class="footer-left">
-    Copyright &copy; {{ date('Y') }} <div class="bullet"></div>
-    <a href="https://github.com/rizkyilhampra/spdhtc">
-        SPDHTC
-    </a>
+    Copyright &copy; 2023 <div class="bullet"></div> Build By <a href="https://rizkyilhampra.my.id/">Rizky Ilham
+        Pratama</a>
 </div>
 <div class="footer-right">
-    0.1
+    2.3.0
 </div>

@@ -8,27 +8,27 @@
     <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
         <li class="nav-item {{ request()->is('admin/beranda*') ? 'active' : '' }}">
-            <a href="{{ route('admin.beranda') }}"><i class="fas fa-home"></i>
+            <a href="{{ route('admin.beranda') }}"><i class="fas fa-fire"></i>
                 <span>Beranda</span>
             </a>
         </li>
         <li class="nav-item {{ request()->is('admin/penyakit*') ? 'active' : '' }}">
-            <a href="{{ route('admin.penyakit') }}"><i class="fas fa-medkit"></i>
+            <a href="{{ route('admin.penyakit') }}"><i class="fas fa-fire"></i>
                 <span>Penyakit</span>
             </a>
         </li>
         <li class="nav-item {{ request()->is('admin/gejala*') ? 'active' : '' }}">
-            <a href="{{ route('admin.gejala') }}"><i class="fas fa-flag"></i>
+            <a href="{{ route('admin.gejala') }}"><i class="fas fa-fire"></i>
                 <span>Gejala</span>
             </a>
         </li>
         <li class="nav-item {{ request()->is('admin/rule*') ? 'active' : '' }}">
-            <a href="{{ route('admin.rule') }}"><i class="fas fa-landmark"></i>
+            <a href="{{ route('admin.rule') }}"><i class="fas fa-fire"></i>
                 <span>Rule</span>
             </a>
         </li>
         <li class="nav-item {{ request()->is('admin/histori-diagnosis*') ? 'active' : '' }}">
-            <a href="{{ route('admin.histori.diagnosis') }}"><i class="fas fa-fire"></i>
+            <a href="{{ route('admin.diagnosis') }}"><i class="fas fa-fire"></i>
                 <span>Histori</span>
             </a>
         </li>
