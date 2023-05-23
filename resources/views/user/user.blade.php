@@ -84,7 +84,7 @@
                                             Solusi Penyakit
                                         </h6>
                                         <p class="card-text">
-                                            {{ $p->solution }}
+                                            {!! $p->solution = str_replace("\r\n", '<br/>', $p->solution) !!}
                                         </p>
                                     </div>
                                 </div>
@@ -222,34 +222,55 @@
         }
 
         async function drawHistoriDiagnosisTable() {
-            const response = await ajaxRequestToHistoriDiagnosis();
-            const data = response.data;
-            let no = 1;
-            data.forEach(element => {
-                const date = new Date(element.created_at);
-                const formattedDateTime = ("0" + date.getDate()).slice(-2) + "/" +
-                    ("0" + (date.getMonth() + 1)).slice(-2) + "/" +
-                    date.getFullYear() + " " +
-                    ("0" + date.getHours()).slice(-2) + ":" +
-                    ("0" + date.getMinutes()).slice(-2) + ":" +
-                    ("0" + date.getSeconds()).slice(-2);
-                $('#historiDiagnosisTable').DataTable({
-                    destroy: true,
-                    scrollX: true,
-                    order: [
-                        [1, 'desc']
-                    ],
-                }).row.add([
-                    no++,
-                    formattedDateTime,
-                    element.penyakit.name,
-                    `<button class="btn btn-outline-danger" onclick="deleteHistoriDiagnosis(${element.id})">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>`
-                ]);
+            $('#historiDiagnosisTable').DataTable({
+                destroy: true,
+                scrollX: true,
+                serverSide: true,
+                processing: true,
+                lengthMenu: [5, 10, 25, 50],
+                pageLength: 5,
+                ajax: {
+                    url: "{{ route('histori-diagnosis-user') }}",
+                    type: "GET",
+                    data: function(data) { // Menggunakan "data" sebagai argumen
+                        return data; // Mengembalikan "data" yang diterima
+                    },
+                    error: function(xhr, error, thrown) {
+                        swalError(xhr.responseJSON);
+                    }
+                },
+                columns: [{
+                        data: 'no',
+                    },
+                    {
+                        data: 'created_at',
+                        render: function(data, type, row, meta) {
+                            const date = new Date(data);
+                            const formattedDateTime = ("0" + date.getDate()).slice(-2) + "/" +
+                                ("0" + (date.getMonth() + 1)).slice(-2) + "/" +
+                                date.getFullYear() + " " +
+                                ("0" + date.getHours()).slice(-2) + ":" +
+                                ("0" + date.getMinutes()).slice(-2) + ":" +
+                                ("0" + date.getSeconds()).slice(-2);
+                            return formattedDateTime;
+                        }
+                    },
+                    {
+                        data: 'penyakit.name'
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row, meta) {
+                            return `<button class="btn btn-outline-primary me-1" onclick="detailHistoriDiagnosis(${data}, ${row.no})">
+                                <i class="fa-solid fa-eye"></i>
+                            <button class="btn btn-outline-danger" onclick="deleteHistoriDiagnosis(${data})">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            `;
+                        }
+                    },
+                ]
             });
-
-            $('#historiDiagnosisTable').DataTable().draw();
         }
 
         function deleteHistoriDiagnosis(id) {
@@ -271,29 +292,68 @@
                             _token: "{{ csrf_token() }}",
                             id: id
                         },
-                        success: function(response) {
+                        success: async function(response) {
                             Swal.fire(
                                 'Terhapus!',
                                 result.value.message,
                                 'success'
                             );
-                            clearHistoriDiagnosisTable();
-                            drawHistoriDiagnosisTable();
+                            $('#historiDiagnosisTable').DataTable().clear().draw();
                         },
-                        error: function(response) {
-                            Swal.fire(
-                                'Gagal!',
-                                'Data gagal dihapus.',
-                                'error'
-                            );
+                        error: function(error) {
+                            swalError(error.responseJSON);
                         }
                     });
                 }
             });
         }
 
-        function clearHistoriDiagnosisTable() {
-            $('#historiDiagnosisTable').DataTable().clear().draw();
+        async function detailHistoriDiagnosis(id, no) {
+            const detailHistoriDiagnosis = document.getElementById('detailHistoriDiagnosis');
+            const table = detailHistoriDiagnosis.querySelector('table');
+            const tableBody = table.querySelector('tbody');
+            const sectionHeading = detailHistoriDiagnosis.querySelector('h2');
+            //remove all child element in table body
+            while (tableBody.firstChild) {
+                tableBody.removeChild(tableBody.firstChild);
+            }
+            sectionHeading.innerHTML = "";
+
+            function ajaxRequestToHistoriDiagnosisDetail() {
+                return $.ajax({
+                    url: "{{ route('histori-diagnosis-user.detail') }}",
+                    method: "GET",
+                    data: {
+                        id: id,
+                        no: no
+                    }
+                });
+            }
+            try {
+                const response = await ajaxRequestToHistoriDiagnosisDetail();
+                response.answerLog.forEach((item, index) => {
+                    sectionHeading.innerHTML = `Detail Diagnosis No.${item.no}`;
+                    const tableRow = document.createElement('tr');
+                    const tableData = document.createElement('td');
+                    const tableData2 = document.createElement('td');
+                    const tableData3 = document.createElement('td');
+                    let number = index + 1;
+                    tableData.innerHTML = number;
+                    tableData2.innerHTML = item.name;
+                    tableData3.innerHTML = item.answer;
+                    tableRow.appendChild(tableData);
+                    tableRow.appendChild(tableData2);
+                    tableRow.appendChild(tableData3);
+                    tableBody.appendChild(tableRow);
+                });
+
+                await detailHistoriDiagnosis.classList.remove('d-none');
+                detailHistoriDiagnosis.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            } catch (error) {
+                swalError(error.responseJSON);
+            }
         }
 
         function ajaxRequestToHistoriDiagnosis() {
@@ -335,9 +395,24 @@
             });
         }
 
-
+        const swalError = async (error) => {
+            const result = await Swal.mixin({
+                title: 'Terjadi kesalahan',
+                text: error.message,
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Muat Ulang',
+                cancelButtonText: 'Tutup'
+            }).fire();
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+        };
         $(document).ready(function() {
             let navbarActive = false;
+
             $('.navbar').on('show.bs.collapse', () => {
                 applyNavbarClassesDark();
                 navbarActive = true;
@@ -389,12 +464,13 @@
                 });
             });
 
-            const btnBeranda = document.querySelector('.beranda');
-            const btnDiagnosis = document.querySelector('.diagnosis');
-            const btnPenyakit = document.querySelector('.penyakit');
-            const btnKontak = document.querySelector('.kontak');
-            const allBtn = [btnBeranda, btnDiagnosis, btnPenyakit, btnKontak];
-            allBtn.forEach((btn) => {
+            const btnNavbar = [
+                btnBeranda = document.querySelector('.beranda'),
+                btnDiagnosis = document.querySelector('.diagnosis'),
+                btnPenyakit = document.querySelector('.penyakit'),
+                btnKontak = document.querySelector('.kontak')
+            ];
+            btnNavbar.forEach((btn) => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
                     const href = btn.getAttribute('href');
@@ -430,6 +506,7 @@
                 });
 
             const gambarCabai = document.getElementById('gambar-cabai');
+
             const parallax = new simpleParallax(gambarCabai, {
                 delay: 1,
                 transition: 'cubic-bezier(0,0,0,1)'
@@ -473,13 +550,7 @@
                             timer: 1500
                         });
                     } catch (error) {
-                        return Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: error.responseJSON.message,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+                        swalError(error.responseJSON);
                     }
                 });
 
@@ -497,13 +568,13 @@
                     kotaSelect: document.querySelector('#kota')
                 };
 
-                setElementAttributes(elements.nameInput, 'Please wait...', true);
-                setElementAttributes(elements.emailInput, 'Please wait...', true);
-                setElementAttributes(elements.addressTextarea, 'Please wait...', true);
+                setElementAttributes(elements.nameInput, 'Mohon Tunggu...', true);
+                setElementAttributes(elements.emailInput, 'Mohon Tunggu...', true);
+                setElementAttributes(elements.addressTextarea, 'Mohon Tunggu...', true);
 
-                elements.kotaSelect.innerHTML = '<option value="">Please wait...</option>';
-                elements.profesiInput.innerHTML = '<option value="">Please wait...</option>';
-                elements.provinsiSelect.innerHTML = '<option value="">Please wait...</option>';
+                elements.kotaSelect.innerHTML = '<option value="">Mohon Tunggu...</option>';
+                elements.profesiInput.innerHTML = '<option value="">Mohon Tunggu...</option>';
+                elements.provinsiSelect.innerHTML = '<option value="">Mohon Tunggu...</option>';
                 elements.provinsiSelect.disabled = true;
                 elements.profesiInput.disabled = true;
                 elements.kotaSelect.disabled = true;
@@ -515,6 +586,10 @@
                         .address);
                     setElementAttributes(elements.provinsiSelect, '', false);
                     setElementAttributes(elements.profesiInput, '', false);
+                    elements.provinsiSelect.innerHTML =
+                        '<option disabled selected value="">Pilih Provinsi</option>';
+                    elements.profesiInput.innerHTML =
+                        '<option disabled selected value="">Pilih Profesi</option>';
                     response.provinsi.forEach(value => {
                         if (value.province_id == response.user.profile.province) {
                             elements.provinsiSelect.innerHTML +=
@@ -533,53 +608,68 @@
                                 `<option value="${value}">${value}</option>`;
                         }
                     });
-
-                    try {
-                        const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
+                    elements.kotaSelect.innerHTML =
+                        '<option disabled selected value="">Pilih Kota</option>';
+                    if (response.user.profile.province != null) {
                         elements.kotaSelect.innerHTML =
-                            '<option value="">Pilih provinsi terlebih dahulu</option>';
-                        elements.kotaSelect.disabled = true;
-                        response2.forEach(value => {
-                            if (value.city_id == response.user.profile.city) {
-                                elements.kotaSelect.innerHTML +=
-                                    `<option value="${value.city_id}" selected>${value.city_name}</option>`;
-                                elements.kotaSelect.disabled = false;
+                            '<option value="">Pilih Provinsi Terlebih Dahulu</option>';
+                        try {
+                            const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
+                            response2.forEach(value => {
+                                if (value.city_id == response.user.profile.city) {
+                                    elements.kotaSelect.innerHTML +=
+                                        `<option value="${value.city_id}" selected>${value.city_name}</option>`;
+                                    elements.kotaSelect.disabled = false;
 
-                            } else {
-                                elements.kotaSelect.innerHTML +=
-                                    `<option value="${value.city_id}">${value.city_name}</option>`;
-                            }
-                        });
-                    } catch (error) {
-                        console.log(error);
+                                } else {
+                                    elements.kotaSelect.innerHTML +=
+                                        `<option value="${value.city_id}">${value.city_name}</option>`;
+                                }
+                            });
+                        } catch (error) {
+                            swalError(error.responseJSON);
+                        }
                     }
                 } catch (error) {
-                    console.log(error);
+                    swalError(error.responseJSON);
                 }
 
                 elements.provinsiSelect.addEventListener('change', async (e) => {
                     elements.kotaSelect.innerHTML =
-                        '<option value="">Please wait...</option>';
+                        '<option value="">Mohon Tunggu...</option>';
                     elements.kotaSelect.disabled = true;
                     try {
                         const response = await ajaxCityRequest(e.target.value);
                         elements.kotaSelect.innerHTML =
-                            '<option value="">Pilih Kota</option>';
+                            '<option disabled selected value="">Pilih Kota</option>';
                         elements.kotaSelect.disabled = false;
                         response.forEach(value => {
                             elements.kotaSelect.innerHTML +=
                                 `<option value="${value.city_id}">${value.city_name}</option>`;
                         });
                     } catch (error) {
-                        console.log(error);
+                        swalError(error.responseJSON);
                     }
                 });
-
-                await clearHistoriDiagnosisTable();
-                drawHistoriDiagnosisTable();
+                await drawHistoriDiagnosisTable();
             });
-            const gejala = @json($gejala ?? 0);
-            const countGejala = gejala.length;
+
+            function ajaxGetGejala() {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: "{{ route('get-gejala') }}",
+                        type: "GET",
+                        dataType: "json",
+                        success: function(response) {
+                            resolve(response);
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            reject(xhr);
+                        }
+                    });
+                });
+            }
+
 
             btnDiagnosis2.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -646,7 +736,8 @@
                             await new Promise((resolve) => {
                                 // Memeriksa setiap 100ms apakah swal telah dihancurkan
                                 const interval = setInterval(() => {
-                                    if (!document.querySelector('.swal2-container')) {
+                                    if (!document.querySelector(
+                                            '.swal2-container')) {
                                         clearInterval(interval);
                                         resolve();
                                     }
@@ -661,6 +752,21 @@
                     }
 
                     async function showModal() {
+                        const swalLoading = Swal.fire({
+                            title: 'Mohon tunggu',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                        });
+                        let gejala, countGejala;
+                        try {
+                            gejala = await ajaxGetGejala();
+                            countGejala = gejala.length;
+                        } catch (error) {
+                            swalError(error.responseJSON);
+                        }
+                        swalLoading.close();
                         //looping Swal sebanyak jumlah gejala
                         let isClosed = false;
                         for (let i = 0; i < countGejala; i++) {
@@ -703,7 +809,7 @@
                                         'Penyakit yang di derita tidak ditemukan', 'error');
                                 }
                             } catch (error) {
-                                console.log(error);
+                                swalError(error.responseJSON);
                             }
                         }
                     }
@@ -728,7 +834,6 @@
                     modalEditProfileInstance.show();
                 })
             }
-
         });
     </script>
 

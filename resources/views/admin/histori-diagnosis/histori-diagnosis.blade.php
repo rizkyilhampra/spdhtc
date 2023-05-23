@@ -14,7 +14,6 @@
     <script src="{{ asset('assets/sweetalert/sweetalert.min.js') }}"></script>
 @endpush
 
-
 @push('jsCustom')
     <!-- Page Specific JS File -->
     <script>
@@ -38,31 +37,21 @@
     </script>
 @endpush
 
+
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Halaman Penyakit</h1>
+            <h1>Halaman Histori Diagnosis</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
-                <a href="{{ route('admin.penyakit.tambah') }}" class="btn btn-primary" type="button">
-                    Tambah Data
-                </a>
-                <a href="{{ route('penyakit.pdf') }}" target="_blank" class="btn btn-warning text-dark" type="button">
+                <a href="{{ route('histori.diagnosis.pdf') }}" target="_blank" class="btn btn-warning text-dark"
+                    type="button">
                     Cetak Data
                 </a>
             </div>
-            @if (session('success'))
+            @if (session('error'))
                 <div class="alert alert-success alert-dismissible show fade">
-                    <div class="alert-body">
-                        <button class="close" data-dismiss="alert">
-                            <span>×</span>
-                        </button>
-                        {{ session('success') }}
-                    </div>
-                </div>
-            @elseif (session('error'))
-                <div class="alert alert-danger alert-dismissible show fade">
                     <div class="alert-body">
                         <button class="close" data-dismiss="alert">
                             <span>×</span>
@@ -80,48 +69,28 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>Nama</th>
-                                    <th>Penyebab</th>
-                                    <th>Solusi</th>
+                                    <th>Nama Pengguna</th>
+                                    <th>Email Pengguna</th>
+                                    <th>Nama Penyakit</th>
                                     <th>Tanggal Dibuat/Diubah</th>
-                                    <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($penyakit as $p)
+                                @foreach ($diagnosis as $key => $value)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $p->id }}
+                                            {{ $value['id'] }}
                                         </td>
-                                        <td>{{ $p->name }}</td>
-                                        <td>{{ $p->reason }}</td>
-                                        <td>{{ $p->solution }}</td>
-                                        <td>{{ $p->updated_at }}</td>
+                                        <td>{{ $value['user']['name'] }}</td>
+                                        <td>{{ $value['user']['email'] }}</td>
+                                        <td>{{ $value['penyakit']['name'] }}</td>
+                                        <td>{{ $value['updated_at'] }}</td>
                                         <td>
-                                            <img alt="image" src="{{ asset('storage/penyakit/' . $p->image) }}"
-                                                class="" width="200" data-toggle="tooltip"
-                                                title="{{ $p->name }}">
-                                        </td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-primary dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Aksi
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item btn btn-outline-warning"
-                                                        href="{{ route('admin.penyakit.edit', ['id' => $p->id]) }}">Edit</a>
-                                                    <a class="dropdown-item btn btn-outline-danger" id="btnHapus">Hapus</a>
-                                                    <form id="formHapus"
-                                                        action="{{ route('admin.penyakit.destroy', ['id' => $p->id]) }}"
-                                                        method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                    </form>
-                                                </div>
-                                            </div>
+                                            <a href="{{ route('admin.histori.diagnosis.detail', $value['id']) }}"
+                                                class="btn btn-primary" type="button">
+                                                Detail
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
