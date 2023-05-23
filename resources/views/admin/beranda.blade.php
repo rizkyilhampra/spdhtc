@@ -10,8 +10,8 @@
                 <div class="col-12 mb-4">
                     <div class="hero bg-primary text-white">
                         <div class="hero-inner">
-                            <h2>Selamat Datang Kembali, {{ auth()->user()->name }}!</h2>
-                            <p class="lead">This page is a place to manage posts, categories and more.</p>
+                            <h2>Selamat datang kembali, {{ auth()->user()->name }}!</h2>
+                            <p class="lead">Disini adalah tempat untuk mengelola penyakit, gejala, rule, dan diagnosis</p>
                         </div>
                     </div>
                 </div>
