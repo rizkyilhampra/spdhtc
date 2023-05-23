@@ -10,6 +10,7 @@ use App\Models\Penyakit;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\Cache;
 
 class BerandaController extends Controller
 {
@@ -56,6 +57,13 @@ class BerandaController extends Controller
 
     public function chartProvince()
     {
+
+        $cacheKey = 'chart_province_data';
+        $cachedData = Cache::get($cacheKey);
+
+        if ($cachedData) {
+            return $cachedData;
+        }
         $data = UserProfile::selectRaw('count(*) as count, province')
             ->groupBy('province')
             ->get()->toArray();
@@ -74,13 +82,21 @@ class BerandaController extends Controller
             $item['province'] = $province[$item['province']]['province'] ?? null;
             return $item;
         }, $data);
-
+        Cache::put($cacheKey, $data, now()->addDay());
 
         return $data;
     }
 
     public function chartCity()
     {
+
+        $cacheKey = 'chart_city_data';
+        $cachedData = Cache::get($cacheKey);
+
+        if ($cachedData) {
+            return $cachedData;
+        }
+
         $data = UserProfile::selectRaw('count(*) as count, city')->groupBy('city')->get()->toArray();
 
         $userProfileCity = array_column($data, 'city'); // Mengambil semua id dari hasil query
@@ -104,6 +120,7 @@ class BerandaController extends Controller
             return $item;
         }, $data);
 
+        Cache::put($cacheKey, $data, now()->addDay());
         return $data;
     }
 
