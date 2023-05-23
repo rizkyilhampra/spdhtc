@@ -45,7 +45,8 @@
         </div>
         <div class="section-body">
             <div class="pb-4">
-                <a href="{{ route('admin.penyakit.tambah') }}" class="btn btn-warning text-dark" type="button">
+                <a href="{{ route('histori.diagnosis.pdf') }}" target="_blank" class="btn btn-warning text-dark"
+                    type="button">
                     Cetak Data
                 </a>
             </div>

@@ -47,7 +47,7 @@
                 <a href="{{ route('admin.rule.tambah') }}" class="btn btn-primary" type="button">
                     Tambah Data
                 </a>
-                <a href="{{ route('admin.rule.tambah') }}" class="btn btn-warning text-dark" type="button">
+                <a href="{{ route('rule.pdf') }}" target="_blank" class="btn btn-warning text-dark" type="button">
                     Cetak Data
                 </a>
             </div>
