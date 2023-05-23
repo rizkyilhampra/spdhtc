@@ -14,7 +14,6 @@
     <script src="{{ asset('assets/sweetalert/sweetalert.min.js') }}"></script>
 @endpush
 
-
 @push('jsCustom')
     <!-- Page Specific JS File -->
     <script>
@@ -41,14 +40,14 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Halaman Penyakit</h1>
+            <h1>Halaman Gejala</h1>
         </div>
         <div class="section-body">
             <div class="pb-4">
-                <a href="{{ route('admin.penyakit.tambah') }}" class="btn btn-primary" type="button">
+                <a href="{{ route('admin.gejala.tambah') }}" class="btn btn-primary" type="button">
                     Tambah Data
                 </a>
-                <a href="{{ route('penyakit.pdf') }}" target="_blank" class="btn btn-warning text-dark" type="button">
+                <a href="{{ route('gejala.pdf') }}" target="_blank" class="btn btn-warning text-dark" type="button">
                     Cetak Data
                 </a>
             </div>
@@ -81,25 +80,24 @@
                                         No
                                     </th>
                                     <th>Nama</th>
-                                    <th>Penyebab</th>
-                                    <th>Solusi</th>
                                     <th>Tanggal Dibuat/Diubah</th>
                                     <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($penyakit as $p)
+                                @php
+                                    $no = 1;
+                                @endphp
+                                @foreach ($gejala as $p)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $p->id }}
+                                            {{ $no++ }}
                                         </td>
                                         <td>{{ $p->name }}</td>
-                                        <td>{{ $p->reason }}</td>
-                                        <td>{{ $p->solution }}</td>
                                         <td>{{ $p->updated_at }}</td>
                                         <td>
-                                            <img alt="image" src="{{ asset('storage/penyakit/' . $p->image) }}"
+                                            <img alt="image" src="{{ asset('storage/gejala/' . $p->image) }}"
                                                 class="" width="200" data-toggle="tooltip"
                                                 title="{{ $p->name }}">
                                         </td>
@@ -112,10 +110,10 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item btn btn-outline-warning"
-                                                        href="{{ route('admin.penyakit.edit', ['id' => $p->id]) }}">Edit</a>
+                                                        href="{{ route('admin.gejala.edit', ['id' => $p->id]) }}">Edit</a>
                                                     <a class="dropdown-item btn btn-outline-danger" id="btnHapus">Hapus</a>
                                                     <form id="formHapus"
-                                                        action="{{ route('admin.penyakit.destroy', ['id' => $p->id]) }}"
+                                                        action="{{ route('admin.gejala.destroy', ['id' => $p->id]) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')
