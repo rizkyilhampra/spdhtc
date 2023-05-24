@@ -136,12 +136,24 @@
                                     <div id="carouselExample" class="carousel slide">
                                         <div class="carousel-inner">
                                             <div class="carousel-item active" id="people1">
-                                                <img src="https://images.unsplash.com/photo-1570158268183-d296b2892211?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                                                    class="img-fluid" alt="...">
+                                                <div class="container-careousel d-flex justify-content-center">
+                                                    @php
+                                                        [$width, $height] = getimagesize($collaborators[0]['avatar_url']);
+                                                    @endphp
+                                                    <img src="{{ $collaborators[0]['avatar_url'] }}" class="img-fluid"
+                                                        width="{{ $width }}" height="{{ $height }}"
+                                                        alt="gambar {{ $collaborators[0]['login'] }}">
+                                                </div>
                                             </div>
                                             <div class="carousel-item" id="people2">
-                                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"
-                                                    class="img-fluid " alt="...">
+                                                <div class="container-careousel  d-flex justify-content-center">
+                                                    @php
+                                                        [$width, $height] = getimagesize($collaborators[1]['avatar_url']);
+                                                    @endphp
+                                                    <img src="{{ $collaborators[1]['avatar_url'] }}" class="img-fluid"
+                                                        width="{{ $width }}" height="{{ $height }}"
+                                                        alt="gambar {{ $collaborators[0]['login'] }}">
+                                                </div>
                                             </div>
                                         </div>
                                         <button class="carousel-control-prev button-slide" type="button"
@@ -861,6 +873,16 @@
                     modalEditProfileInstance.show();
                 })
             }
+
+            // const collaborators = @json($collaborators);
+            // const imageCollaborators = [];
+            // collaborators.forEach(collaborator => {
+            //     imageCollaborators.push({
+            //         src: collaborator.avatar_url,
+            //         alt: collaborator.login
+            //     });
+            // });
+            // console.log(imageCollaborators);
         });
     </script>
 
