@@ -3,7 +3,12 @@
 @section('content')
     <div id="beranda" class="row min-vh-100 align-content-center section">
         <div class="col-12 col-md-6 py-5 " data-aos="fade-right" id="col1">
-            <img class="img-fluid bg-body-tertiary rounded" id="gambar-cabai" src="{{ asset('assets/img/gambar-cabai.jpg') }}"
+            @php
+                $image = 'gambar-cabai.jpg';
+                [$width, $height] = getimagesize(public_path('assets/img/' . $image));
+            @endphp
+            <img class="img-fluid bg-body-tertiary rounded" id="gambar-cabai" width="{{ $width }}"
+                height="{{ $height }}" src="{{ asset('assets/img/gambar-cabai.jpg') }}"
                 alt="Gambar Cabai https://fumida.co.id/wp-content/uploads/2021/03/67.-membasmi-hama-cabai.jpg">
         </div>
         <div class="col-12 col-md-6 align-self-center px-3 px-sm-5" data-aos="fade-left" data-aos-anchor="body"
