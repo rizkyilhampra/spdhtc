@@ -64,7 +64,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-12 col-lg-8">
+                                        <div class="col-12 col-lg-8 ">
                                             <div class="pb-3">
                                                 <h6 class="card-title font-medium">
                                                     Nama Penyakit
@@ -90,11 +90,20 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center">
-                                            <img data-bs-toggle="tooltip" data-bs-title="Gambar {{ $p->name }}"
-                                                class="img-fluid rounded-4 shadow" style="max-height: 400px"
-                                                src="{{ asset('/storage/penyakit/' . $p->image) }}"
-                                                alt="{{ $p->name }}" srcset="">
+                                        @php
+                                            $image = $p->image;
+                                            [$width, $height] = getimagesize(storage_path('app/public/penyakit/' . $image));
+                                        @endphp
+
+                                        <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center"
+                                            id="column-img-penyakit">
+                                            <div class="container-image-penyakit">
+                                                <img data-bs-toggle="tooltip" width="{{ $width }}"
+                                                    height="{{ $height }}"
+                                                    data-bs-title="Gambar {{ $p->name }}" class="img-fluid"
+                                                    src="{{ asset('/storage/penyakit/' . $p->image) }}"
+                                                    alt="{{ $p->name }}" srcset="">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
