@@ -30,7 +30,7 @@ class Penyakit extends Seeder
             5.	Penggunaan mulsa perak di dataran tinggi, dan jerami di dataran rendah mengurangi infestasi serangga pengisap daun
             6.	Eradikasi tanaman sakit, yaitu tanaman yang menunjukkan gejala segera dicabut dan dimusnahkan supaya tidak menjadi sumber penularan ke tanaman lain yang sehat
             ',
-            'image' => '1015219247.jpg',
+            'image' => '583706090.jpg',
         ]);
 
         ModelsPenyakit::create([
