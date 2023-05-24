@@ -80,3 +80,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/auth/google', [SocialAuthController::class, 'redirectToProvider'])->name('google');
 Route::get('/auth/google/callback', [SocialAuthController::class, 'handleProviderCallback'])
     ->name('google.callback');
+// Route::post('github', [GetCollaboratorGithubController::class, 'getCollaborators'])->name('github');
