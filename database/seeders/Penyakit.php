@@ -30,7 +30,7 @@ class Penyakit extends Seeder
             5.	Penggunaan mulsa perak di dataran tinggi, dan jerami di dataran rendah mengurangi infestasi serangga pengisap daun
             6.	Eradikasi tanaman sakit, yaitu tanaman yang menunjukkan gejala segera dicabut dan dimusnahkan supaya tidak menjadi sumber penularan ke tanaman lain yang sehat
             ',
-            'image' => 'image1.jpg',
+            'image' => '1015219247.jpg',
         ]);
 
         ModelsPenyakit::create([
@@ -42,7 +42,7 @@ class Penyakit extends Seeder
             4.	Tanaman muda yang terinfeksi virus di lapangan dimusnahkan dan disulam dengan yang sehat.
             5.	Aplikasi insektisida untuk mengendalikan kutudaun menggunakan nozel kipas agar terjadi pengurangan volume inseksida sebanyak 30%.
             ',
-            'image' => 'image1.jpg',
+            'image' => '868674832.jpg',
         ]);
 
         ModelsPenyakit::create([
@@ -54,7 +54,7 @@ class Penyakit extends Seeder
             4.	Perlakuan biji sebelum ditanam, direndam dengan Trichoderma 20 cc/liter air.
             5.	Saat semai tanah dicampur kompos Trichoderma.
             ',
-            'image' => 'image1.jpg',
+            'image' => '190785420.jpg',
         ]);
 
         ModelsPenyakit::create([
@@ -66,7 +66,7 @@ class Penyakit extends Seeder
             4.	Pemupukan organik seperti kompos Trichoderma atau bahan organic lain.
             5.	Pengendalian kimiawi, dengan aplikasi fungisida yang efektif yang telah diizinkan oleh Menteri Pertanian.
             ',
-            'image' => 'image1.jpg',
+            'image' => '1640319795.jpg',
         ]);
 
         ModelsPenyakit::create([
@@ -79,7 +79,7 @@ class Penyakit extends Seeder
             5.	Cendawan Phytophthora capsici dapat dikendalikan dengan fungisida sistemik Metalaksil-M 4% + Mancozeb 64% (Ridomil Gold MZ ® 4/64 WP) pada konsentrasi 3 g/l air, bergantian dengan fungisida kontak seperti klorotalonil (Daconil ® 500 F, 2g/l). Fungisida sistemik digunakan maksimal empat kali per musim.
             6.	Untuk mengurangi penggunaan pestisida (+ 30%) dianjurkan untuk menggunakan nozel kipas yang butiran semprotannya berupa kabut dan merata.
             ',
-            'image' => 'image1.jpg',
+            'image' => '1015219247.jpg',
         ]);
 
         ModelsPenyakit::create([
@@ -92,7 +92,7 @@ class Penyakit extends Seeder
             5.	Penggunaan mulsa plastik perak di dataran tinggi, dan jerami di dataran rendah mengurangi penyakit tanah, terutama di musim hujan.
             6.	Tanaman muda yang terinfeksi penyakit dimusnahkan dan disulam dengan yang sehat.
             ',
-            'image' => 'image1.jpg',
+            'image' => '1057130417.jpg',
         ]);
 
         ModelsPenyakit::create([
@@ -103,7 +103,7 @@ class Penyakit extends Seeder
             3.	Naungan persemaian secara bertahap dibuka agar matahari masuk dan tanaman menjadi lebih kuat.
             4.	 Penggunaan fungisida/bakterisida selektif dengan dosis batas terendah.
             ',
-            'image' => 'image1.jpg',
+            'image' => '289529137.jpg',
         ]);
     }
 }
