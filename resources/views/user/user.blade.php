@@ -63,29 +63,39 @@
                             aria-labelledby="pills-{{ $p->id }}-tab" tabindex="0">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="row-auto pb-3">
-                                        <h6 class="card-title font-medium">
-                                            Nama Penyakit
-                                        </h6>
-                                        <p class="card-text">
-                                            {{ $p->name }}
-                                        </p>
-                                    </div>
-                                    <div class="row-auto pb-3">
-                                        <h6 class="card-title font-medium">
-                                            Penyebab Penyakit
-                                        </h6>
-                                        <p class="card-text">
-                                            {{ $p->reason }}
-                                        </p>
-                                    </div>
-                                    <div class="row-auto pb-3">
-                                        <h6 class="card-title font-medium">
-                                            Solusi Penyakit
-                                        </h6>
-                                        <p class="card-text">
-                                            {!! $p->solution = str_replace("\r\n", '<br/>', $p->solution) !!}
-                                        </p>
+                                    <div class="row">
+                                        <div class="col-12 col-lg-8">
+                                            <div class="pb-3">
+                                                <h6 class="card-title font-medium">
+                                                    Nama Penyakit
+                                                </h6>
+                                                <p class="card-text">
+                                                    {{ $p->name }}
+                                                </p>
+                                            </div>
+                                            <div class="pb-3">
+                                                <h6 class="card-title font-medium">
+                                                    Penyebab Penyakit
+                                                </h6>
+                                                <p class="card-text">
+                                                    {{ $p->reason }}
+                                                </p>
+                                            </div>
+                                            <div class="pb-3">
+                                                <h6 class="card-title font-medium">
+                                                    Solusi Penyakit
+                                                </h6>
+                                                <p class="card-text">
+                                                    {!! $p->solution = str_replace("\r\n", '<br/>', $p->solution) !!}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center">
+                                            <img data-bs-toggle="tooltip" data-bs-title="Gambar {{ $p->name }}"
+                                                class="img-fluid rounded-4 shadow" style="max-height: 400px"
+                                                src="{{ asset('/storage/penyakit/' . $p->image) }}"
+                                                alt="{{ $p->name }}" srcset="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +103,6 @@
                     @endforeach
                 </div>
             </div>
-
         </div>
     </div>
     <div id="kontak" class="section">
@@ -411,6 +420,10 @@
             }
         };
         $(document).ready(function() {
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(
+                tooltipTriggerEl))
+
             let navbarActive = false;
 
             $('.navbar').on('show.bs.collapse', () => {
