@@ -173,3 +173,10 @@ footer {
 #exampleModal {
     z-index: 9999;
 }
+
+.container-image-penyakit {
+    max-height: 400px;
+    overflow: hidden;
+    border-radius: 0.375rem;
+    box-shadow: 0 0.5rem 1rem rgba(33, 37, 41, .15) !important;
+}
