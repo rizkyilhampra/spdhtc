@@ -13,8 +13,16 @@ class UserController extends Controller
     {
         //get id, name, reason, solution, image from penyakit models
         $penyakit = Penyakit::get(['id', 'name', 'reason', 'solution', 'image']);
+        $collaborators = $this->getCollaboratorGithub();
 
-        return view('user.user', compact('penyakit'));
+        return view('user.user', compact('penyakit', 'collaborators'));
+    }
+
+    public function getCollaboratorGithub()
+    {
+        $collaborators = new GetCollaboratorGithubController();
+        $collaborators = $collaborators->getCollaborators();
+        return $collaborators;
     }
 
     public function historiDiagnosis(Request $request)
