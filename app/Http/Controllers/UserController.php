@@ -5,25 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Diagnosis;
 use App\Models\Gejala;
 use App\Models\Penyakit;
+use GdImage;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function index()
     {
-        //get id, name, reason, solution, image from penyakit models
         $penyakit = Penyakit::get(['id', 'name', 'reason', 'solution', 'image']);
-        $collaborators = $this->getCollaboratorGithub();
 
-        return view('user.user', compact('penyakit', 'collaborators'));
+        return view('user.user', compact('penyakit'));
     }
 
-    public function getCollaboratorGithub()
-    {
-        $collaborators = new GetCollaboratorGithubController();
-        $collaborators = $collaborators->getCollaborators();
-        return $collaborators;
-    }
 
     public function historiDiagnosis(Request $request)
     {
