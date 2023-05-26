@@ -37,7 +37,7 @@
                             excepturi laborum eveniet enim.
                         </div>
                         <div class="d-grid pt-3">
-                            <button id="btn-diagnosis" class="btn btn-custom1 fs-5 font-medium">
+                            <button id="btn-diagnosis" class="btn btn-custom1 font-medium py-2">
                                 Mulai Diagnosis Penyakit
                             </button>
                         </div>
@@ -52,13 +52,14 @@
                 Daftar Penyakit Tanaman Cabai
             </h2>
             <div class="card card-body shadow p-3 mt-3" data-aos="fade-up">
-                <ul class="nav nav-pills mb-3 d-flex justify-content-center justify-content-sm-start" id="pills-tab"
-                    role="tablist">
+                <ul class="nav nav-pills mb-3 d-flex justify-content-start" id="pills-tab" role="tablist">
                     @foreach ($penyakit as $p)
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-{{ $p->id }}-tab" data-bs-toggle="pill"
+                            <button class="nav-link font-medium" id="pills-{{ $p->id }}-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-{{ $p->id }}" type="button" role="tab"
-                                aria-controls="pills-{{ $p->id }}" aria-selected="false">{{ $p->name }}</button>
+                                aria-controls="pills-{{ $p->id }}" aria-selected="false">
+                                {{ $p->name }}
+                            </button>
                         </li>
                     @endforeach
                 </ul>
@@ -69,29 +70,32 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-12 col-lg-8 ">
+                                        <div class="col-12 col-lg-8 pt-5 pt-lg-0 order-1">
                                             <div class="pb-3">
-                                                <h6 class="card-title font-medium">
-                                                    Nama Penyakit
-                                                </h6>
+                                                <h3 class="font-medium">Nama Penyakit</h3>
                                                 <p class="card-text">
                                                     {{ $p->name }}
                                                 </p>
                                             </div>
                                             <div class="pb-3">
-                                                <h6 class="card-title font-medium">
-                                                    Penyebab Penyakit
-                                                </h6>
+                                                <h3 class="font-medium">Penyebab Penyakit</h3>
                                                 <p class="card-text">
                                                     {{ $p->reason }}
                                                 </p>
                                             </div>
-                                            <div class="pb-3">
-                                                <h6 class="card-title font-medium">
-                                                    Solusi Penyakit
-                                                </h6>
+                                            <div>
+                                                <h3 class="font-medium ">Solusi Penyakit</h3>
                                                 <p class="card-text">
-                                                    {!! $p->solution = str_replace("\r\n", '<br/>', $p->solution) !!}
+                                                    @php
+                                                        $solusi = $p->solution;
+                                                        preg_match_all('/(\d+\.)\s*(.*?)(?=(\d+\.|$))/s', $solusi, $matches);
+                                                        $nomorAsOlTag = '<ol>';
+                                                        for ($i = 0; $i < count($matches[0]); $i++) {
+                                                            $nomorAsOlTag .= '<li>' . $matches[2][$i] . '</li>';
+                                                        }
+                                                        $nomorAsOlTag .= '</ol>';
+                                                        echo $nomorAsOlTag;
+                                                    @endphp
                                                 </p>
                                             </div>
                                         </div>
@@ -100,7 +104,7 @@
                                             [$width, $height] = getimagesize(storage_path('app/public/penyakit/' . $image));
                                         @endphp
 
-                                        <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center"
+                                        <div class="col-12 col-lg-4 order-lg-2 d-flex align-items-center justify-content-center"
                                             id="column-img-penyakit">
                                             <div class="container-image-penyakit">
                                                 <img data-bs-toggle="tooltip" width="{{ $width }}"
@@ -124,89 +128,48 @@
             Kontak
         </h2>
         <div class="row">
-            <div class="col-12 col-md-7 pb-4" data-aos="fade-right" data-bs-anchor="#kontak">
+            <div class="col-12 col-md-5 pb-4" data-aos="fade-right" data-bs-anchor="#kontak">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h4 class="font-semibold pb-2 card-title">
+                        <h3 class="font-medium pb-3 card-title">
                             Pengembang
-                        </h4>
+                        </h3>
                         <div class="row">
-                            <div class="col-lg-6 col-12">
-                                <div class="image-slider">
-                                    <div id="carouselExample" class="carousel slide">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active" id="people1">
-                                                <div class="container-careousel d-flex justify-content-center">
-                                                    @php
-                                                        [$width, $height] = getimagesize($collaborators[0]['avatar_url']);
-                                                    @endphp
-                                                    <img src="{{ $collaborators[0]['avatar_url'] }}" class="img-fluid"
-                                                        width="{{ $width }}" height="{{ $height }}"
-                                                        alt="gambar {{ $collaborators[0]['login'] }}">
-                                                </div>
-                                            </div>
-                                            <div class="carousel-item" id="people2">
-                                                <div class="container-careousel  d-flex justify-content-center">
-                                                    @php
-                                                        [$width, $height] = getimagesize($collaborators[1]['avatar_url']);
-                                                    @endphp
-                                                    <img src="{{ $collaborators[1]['avatar_url'] }}" class="img-fluid"
-                                                        width="{{ $width }}" height="{{ $height }}"
-                                                        alt="gambar {{ $collaborators[0]['login'] }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="carousel-control-prev button-slide" type="button"
-                                            data-bs-target="#carouselExample" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Previous</span>
-                                        </button>
-                                        <button class="carousel-control-next button-slide" type="button"
-                                            data-bs-target="#carouselExample" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Next</span>
-                                        </button>
-                                    </div>
-                                </div>
+                            <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center pb-4 pb-lg-0">
+                                <img src="{{ asset('assets/img/logo-poliban.png') }}" class="img-fluid" id="logo-poliban"
+                                    alt="logo poliban" width="150" height="137" srcset="" data-bs-toggle="tooltip"
+                                    data-bs-title="Logo POLIBAN">
                             </div>
-                            <div class="col-lg-6 col-12 pt-3 pt-lg-0 align-self-center">
-                                <div class="row pb-2" id="descPeople">
-                                    <div class="card-text" id="descPeople1">
-                                        <p class="mb-0 font-medium">
-                                            Rizky Ilham Pratama
-                                        </p>
-                                        <div class="col d-grid py-2">
-                                            <a class="btn btn-outline-dark text-nowrap text-start"
-                                                href="mailto:rizkyilhamp16@gmail.com" type="button">
-                                                <i class="fa-solid fa-envelope"></i>
-                                                rizkyilhamp16@gmail.com
-                                            </a>
-                                        </div>
-                                        <div class="col d-grid">
-                                            <a class="btn btn-outline-dark text-nowrap text-start" target="_blank"
-                                                type="button" href="https://instagram.com/rizkyilhampra">
-                                                <i class="fa-brands fa-instagram"></i>
-                                                @rizkyilhamp16
-                                            </a>
-                                        </div>
+                            <div class="col-12 col-lg-8 d-flex justify-content-center align-items-center">
+                                <div class="d-inline">
+                                    <p class="text-center font-medium mb-2">Muhammad Rizky Ilham Pratama</p>
+                                    <div class="d-flex justify-content-center pb-4">
+                                        <a class="btn btn-outline-dark me-2" target="_blank"
+                                            href="mailto::rizkyilhamp16@gmail.com" data-bs-toggle="tooltip"
+                                            data-bs-title="rizkyilhamp16@gmail.com">
+                                            <i class="fas fa-envelope"></i>
+                                            Email
+                                        </a>
+                                        <a class="btn btn-outline-dark " target="_blank"
+                                            href="https://instagram.com/rizkyilhampra" data-bs-toggle="tooltip"
+                                            data-bs-title="@rizkyilhampra">
+                                            <i class="fa-brands fa-instagram"></i>
+                                            Instagram
+                                        </a>
                                     </div>
-                                    <div class="card-text d-none" id="descPeople2">
-                                        <p class="mb-0 font-medium">
-                                            Rizaldy Fauzan
-                                        </p>
-                                        <div class="col py-2 d-grid">
-                                            <a class="btn btn-outline-dark text-nowrap text-start" href="#">
-                                                <i class="fa-solid fa-envelope"></i>
-                                                rizaldyfauzan@gmail.com
-                                            </a>
-                                        </div>
-                                        <div class="col d-grid">
-                                            <a class="btn btn-outline-dark text-nowrap text-start" target="_blank"
-                                                href="#">
-                                                <i class="fa-brands fa-instagram"></i>
-                                                @rizaldyfauzan
-                                            </a>
-                                        </div>
+                                    <p class="text-center font-medium  mb-2">Muhammad Rizaldy Fauzan</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a class="btn btn-outline-dark me-2" target="_blank" href="#"
+                                            data-bs-toggle="tooltip" data-bs-title="@gmail.com">
+                                            <i class="fas fa-envelope"></i>
+                                            Email
+                                        </a>
+                                        <a class="btn btn-outline-dark " target="_blank"
+                                            href="https://instagram.com/_zaldyfauzan/" data-bs-toggle="tooltip"
+                                            data-bs-title="@_zaldyfauzan">
+                                            <i class="fa-brands fa-instagram"></i>
+                                            Instagram
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -214,12 +177,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-5" data-aos="fade-left" data-bs-anchor="#kontak">
+            <div class="col-12 col-md-7" data-aos="fade-left" data-bs-anchor="#kontak">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h4 class="font-semibold pb-2 card-title">
+                        <h3 class="font-medium pb-2 card-title">
                             Tentang Kami
-                        </h4>
+                        </h3>
                         <div class="card-text">
                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae maiores nisi provident rerum
                             officiis, perspiciatis quae totam pariatur sint rem ullam impedit omnis vitae recusandae, ipsum
@@ -237,6 +200,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" href="{{ asset('/spesified-assets/aos.css') }}" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
 @endpush
 
 @push('scriptPerPage')
@@ -246,6 +210,7 @@
     <script src="{{ asset('/spesified-assets/aos.js') }}" type="text/javascript"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script type="text/javascript">
         function buttonToTop(top) {
             let button = $('#upScroll');
@@ -445,6 +410,8 @@
                 window.location.reload();
             }
         };
+
+
         $(document).ready(function() {
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(
@@ -521,20 +488,6 @@
                 });
             });
 
-
-            const myCarousel = document.getElementById('carouselExample');
-            myCarousel.addEventListener(
-                'slide.bs.carousel', event => {
-                    const id = event.relatedTarget.id;
-                    if (id == 'people2') {
-                        $('#descPeople1 ').addClass('d-none');
-                        $('#descPeople2').removeClass('d-none');
-                    } else if (id == 'people1') {
-                        $('#descPeople2').addClass('d-none');
-                        $('#descPeople1').removeClass('d-none');
-                    }
-                })
-
             let buttonScrollTop = document.getElementById('upScroll');
             buttonScrollTop.addEventListener(
                 'click', () => {
@@ -545,7 +498,6 @@
                 });
 
             const gambarCabai = document.getElementById('gambar-cabai');
-
             const parallax = new simpleParallax(gambarCabai, {
                 delay: 1,
                 transition: 'cubic-bezier(0,0,0,1)'
@@ -873,16 +825,6 @@
                     modalEditProfileInstance.show();
                 })
             }
-
-            // const collaborators = @json($collaborators);
-            // const imageCollaborators = [];
-            // collaborators.forEach(collaborator => {
-            //     imageCollaborators.push({
-            //         src: collaborator.avatar_url,
-            //         alt: collaborator.login
-            //     });
-            // });
-            // console.log(imageCollaborators);
         });
     </script>
 

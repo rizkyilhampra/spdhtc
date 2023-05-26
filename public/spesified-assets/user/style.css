@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap");
 
-
 * {
     font-family: "Poppins", sans-serif;
 }
@@ -32,11 +31,6 @@ body {
 [data-bs-theme="dark"] .navbar-toggler-icon {
     --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
-
-/* a {
-    color: inherit;
-    text-decoration: none;
-} */
 
 #beranda {
     padding-top: 3rem;
@@ -112,43 +106,26 @@ footer {
     display: block;
     visibility: hidden;
     opacity: 0;
-    /* Hidden by default */
     position: fixed;
-    /* Fixed/sticky position */
     bottom: 20px;
-    /* Place the button at the bottom of the page */
     right: 30px;
-    /* Place the button 30px from the right */
     z-index: 99;
-    /* Make sure it does not overlap */
-    /* border: none; */
-    /* Remove borders */
     outline: none;
-    /* Remove outline */
     background-color: #627e42;
-    /* Set a background color */
     color: white;
-    /* Text color */
     cursor: pointer;
-    /* Add a mouse pointer on hover */
-    /* Some padding */
     width: 50px;
     height: 50px;
-    /* border-radius: 50%; */
-    /* Rounded corners */
     font-size: 18px;
-    /* Increase font size */
 }
 
 #upScroll:hover {
     background-color: #4e6434;
-    /* Add a dark-grey background on hover */
 }
 
 #upScroll.show {
     visibility: visible;
     opacity: 1;
-    /* Add a transition effect (when scrolling - show the button) */
     transition: opacity 0.5s ease-in-out;
 }
 
