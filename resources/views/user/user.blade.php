@@ -638,9 +638,8 @@
                     elements.kotaSelect.innerHTML =
                         '<option value="">Mohon Tunggu...</option>';
                     elements.kotaSelect.disabled = true;
-                    let response = {};
                     try {
-                        response = await ajaxCityRequest(e.target.value);
+                        const response = await ajaxCityRequest(e.target.value);
                         elements.kotaSelect.innerHTML =
                             '<option disabled selected value="">Pilih Kota</option>';
                         elements.kotaSelect.disabled = false;
