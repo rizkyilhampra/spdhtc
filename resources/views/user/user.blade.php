@@ -571,10 +571,18 @@
                 elements.kotaSelect.disabled = true;
                 try {
                     const response = await ajaxRequestEditProfile();
+                    if (response.user.profile == null) {
+                        response.user.profile = {
+                            address: '',
+                            province: '',
+                            city: '',
+                            profession: ''
+                        }
+                    }
                     setElementAttributes(elements.nameInput, response.user.name);
                     setElementAttributes(elements.emailInput, response.user.email);
-                    setElementAttributes(elements.addressTextarea, response.user.profile
-                        .address);
+                    setElementAttributes(elements.addressTextarea, response.user.profile.address);
+
                     setElementAttributes(elements.provinsiSelect, '', false);
                     setElementAttributes(elements.profesiInput, '', false);
                     elements.provinsiSelect.innerHTML =
@@ -601,23 +609,24 @@
                     });
                     elements.kotaSelect.innerHTML =
                         '<option disabled selected value="">Pilih Kota</option>';
-                    if (response.user.profile.province != null) {
-                        elements.kotaSelect.innerHTML =
-                            '<option value="">Pilih Provinsi Terlebih Dahulu</option>';
-                        try {
-                            const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
-                            response2.forEach(value => {
-                                if (value.city_id == response.user.profile.city) {
-                                    elements.kotaSelect.innerHTML +=
-                                        `<option value="${value.city_id}" selected>${value.city_name}</option>`;
-                                    elements.kotaSelect.disabled = false;
 
-                                } else {
-                                    elements.kotaSelect.innerHTML +=
-                                        `<option value="${value.city_id}">${value.city_name}</option>`;
-                                }
-                            });
-                        } catch (error) {
+                    try {
+                        const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
+                        response2.forEach(value => {
+                            if (value.city_id == response.user.profile.city) {
+                                elements.kotaSelect.innerHTML +=
+                                    `<option value="${value.city_id}" selected>${value.city_name}</option>`;
+                                elements.kotaSelect.disabled = false;
+                            } else {
+                                elements.kotaSelect.innerHTML +=
+                                    `<option value="${value.city_id}">${value.city_name}</option>`;
+                            }
+                        });
+                    } catch (error) {
+                        if (error.status == 404) {
+                            elements.kotaSelect.innerHTML =
+                                '<option value="">Pilih Provinsi Terlebih Dahulu</option>';
+                        } else {
                             swalError(error.responseJSON);
                         }
                     }
@@ -629,8 +638,9 @@
                     elements.kotaSelect.innerHTML =
                         '<option value="">Mohon Tunggu...</option>';
                     elements.kotaSelect.disabled = true;
+                    let response = {};
                     try {
-                        const response = await ajaxCityRequest(e.target.value);
+                        response = await ajaxCityRequest(e.target.value);
                         elements.kotaSelect.innerHTML =
                             '<option disabled selected value="">Pilih Kota</option>';
                         elements.kotaSelect.disabled = false;
