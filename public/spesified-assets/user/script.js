@@ -230,13 +230,6 @@ function applyNavbarClassesLight() {
             'transition': 'all .5s ease-in-out'
         })
 }
-const notyf = new Notyf({
-    position: {
-        x: 'right',
-        y: 'top',
-    },
-    dismissible: true,
-});
 
 function ajaxGetGejala() {
     return new Promise((resolve, reject) => {
@@ -256,6 +249,13 @@ function ajaxGetGejala() {
 
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const notyf = new Notyf({
+        position: {
+            x: 'right',
+            y: 'top',
+        },
+        dismissible: true,
+    });
 
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(
@@ -467,6 +467,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     $('#pills-1-tab').addClass('active');
     $('#pills-1').addClass('show active');
 
+    let btnDiagnosis2 = document.querySelector('#btn-diagnosis');
     btnDiagnosis2.addEventListener('click', function (e) {
         e.preventDefault();
         if (!isUser) {
