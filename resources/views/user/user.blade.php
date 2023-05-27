@@ -2,13 +2,9 @@
 @section('title', 'SPDHTC')
 @section('content')
     <div id="beranda" class="row min-vh-100 align-content-center section">
-        <div class="col-12 col-md-6 py-5 " data-aos="fade-right" id="col1">
-            @php
-                $image = 'gambar-cabai.jpg';
-                [$width, $height] = getimagesize(public_path('assets/img/' . $image));
-            @endphp
-            <img class="img-fluid bg-body-tertiary rounded" id="gambar-cabai" width="{{ $width }}"
-                height="{{ $height }}" src="{{ asset('assets/img/gambar-cabai.jpg') }}"
+        <div class="col-12 col-md-6 py-5 " data-aos="fade-right" id="container-image-hero">
+            <img class="img-fluid bg-body-tertiary rounded" id="gambar-cabai" src="{{ asset('assets/img/gambar-cabai.webp') }}"
+                width="1280" height="853"
                 alt="Gambar Cabai https://fumida.co.id/wp-content/uploads/2021/03/67.-membasmi-hama-cabai.jpg">
         </div>
         <div class="col-12 col-md-6 align-self-center px-3 px-sm-5" data-aos="fade-left" data-aos-anchor="body"
@@ -72,38 +68,35 @@
                                     <div class="row">
                                         <div class="col-12 col-lg-8 pt-5 pt-lg-0 order-1">
                                             <div class="pb-3">
-                                                <h3 class="font-medium">Nama Penyakit</h3>
+                                                <p class="font-medium fs-4 mb-1">Nama Penyakit</p>
                                                 <p class="card-text">
                                                     {{ $p->name }}
                                                 </p>
                                             </div>
                                             <div class="pb-3">
-                                                <h3 class="font-medium">Penyebab Penyakit</h3>
+                                                <p class="font-medium fs-4 mb-1">Penyebab Penyakit</p>
                                                 <p class="card-text">
                                                     {{ $p->reason }}
                                                 </p>
                                             </div>
                                             <div>
-                                                <h3 class="font-medium ">Solusi Penyakit</h3>
-                                                <p class="card-text">
-                                                    @php
-                                                        $solusi = $p->solution;
-                                                        preg_match_all('/(\d+\.)\s*(.*?)(?=(\d+\.|$))/s', $solusi, $matches);
-                                                        $nomorAsOlTag = '<ol>';
-                                                        for ($i = 0; $i < count($matches[0]); $i++) {
-                                                            $nomorAsOlTag .= '<li>' . $matches[2][$i] . '</li>';
-                                                        }
-                                                        $nomorAsOlTag .= '</ol>';
-                                                        echo $nomorAsOlTag;
-                                                    @endphp
-                                                </p>
+                                                <p class="font-medium fs-4 mb-1">Solusi Penyakit</p>
+                                                @php
+                                                    $solusi = $p->solution;
+                                                    preg_match_all('/(\d+\.)\s*(.*?)(?=(\d+\.|$))/s', $solusi, $matches);
+                                                    $nomorAsOlTag = '<ol>';
+                                                    for ($i = 0; $i < count($matches[0]); $i++) {
+                                                        $nomorAsOlTag .= '<li>' . $matches[2][$i] . '</li>';
+                                                    }
+                                                    $nomorAsOlTag .= '</ol>';
+                                                    echo $nomorAsOlTag;
+                                                @endphp
                                             </div>
                                         </div>
                                         @php
                                             $image = $p->image;
                                             [$width, $height] = getimagesize(storage_path('app/public/penyakit/' . $image));
                                         @endphp
-
                                         <div class="col-12 col-lg-4 order-lg-2 d-flex align-items-center justify-content-center"
                                             id="column-img-penyakit">
                                             <div class="container-image-penyakit">
@@ -111,7 +104,7 @@
                                                     height="{{ $height }}"
                                                     data-bs-title="Gambar {{ $p->name }}" class="img-fluid"
                                                     src="{{ asset('/storage/penyakit/' . $p->image) }}"
-                                                    alt="{{ $p->name }}" srcset="">
+                                                    alt="{{ $p->name }}" srcset="" loading="lazy">
                                             </div>
                                         </div>
                                     </div>
@@ -131,14 +124,14 @@
             <div class="col-12 col-md-5 pb-4" data-aos="fade-right" data-bs-anchor="#kontak">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h3 class="font-medium pb-3 card-title">
+                        <p class="font-semibold pb-3 fs-4 card-title">
                             Pengembang
-                        </h3>
+                        </p>
                         <div class="row">
                             <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center pb-4 pb-lg-0">
                                 <img src="{{ asset('assets/img/logo-poliban.png') }}" class="img-fluid" id="logo-poliban"
-                                    alt="logo poliban" width="150" height="137" srcset="" data-bs-toggle="tooltip"
-                                    data-bs-title="Logo POLIBAN">
+                                    alt="logo poliban" width="150" height="137" srcset="" loading="lazy"
+                                    data-bs-toggle="tooltip" data-bs-title="Logo POLIBAN">
                             </div>
                             <div class="col-12 col-lg-8 d-flex justify-content-center align-items-center">
                                 <div class="d-inline">
@@ -180,9 +173,9 @@
             <div class="col-12 col-md-7" data-aos="fade-left" data-bs-anchor="#kontak">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h3 class="font-medium pb-2 card-title">
+                        <p class="font-semibold pb-2 fs-4 card-title">
                             Tentang Kami
-                        </h3>
+                        </p>
                         <div class="card-text">
                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae maiores nisi provident rerum
                             officiis, perspiciatis quae totam pariatur sint rem ullam impedit omnis vitae recusandae, ipsum
@@ -200,8 +193,17 @@
     <script type="text/javascript">
         const isUser = @json(Auth::check());
         const hasUserProfile = @json(Auth::user()->profile->id ?? false);
-        let btnDiagnosis2 = document.querySelector('#btn-diagnosis');
-        const csrfToken = '{{ csrf_token() }}';
         let login = @json(session('success') ?? false);
+        const csrfToken = '{{ csrf_token() }}';
     </script>
 @endpush
+
+@if (auth()->check())
+    @push('scriptPerPage')
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    @endpush
+    @push('stylePerPage')
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    @endpush
+@endif

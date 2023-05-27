@@ -169,3 +169,10 @@ footer {
 .splash-screen.hidden {
     display: none;
 }
+
+
+/* @media (max-width: 768px) {
+    #gambar-cabai {
+        width: 300px;
+    }
+} */
