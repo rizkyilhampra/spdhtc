@@ -116,7 +116,7 @@
             </div>
         </div>
     </div>
-    <div id="kontak" class="section">
+    {{-- <div id="kontak" class="section">
         <h2 class="fw-semibold pb-3" data-aos="fade-up">
             Kontak
         </h2>
@@ -185,8 +185,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    @include('user.profile-modal')
+    </div> --}}
+
 @endsection
 
 @push('scriptPerPage')

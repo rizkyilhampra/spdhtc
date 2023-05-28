@@ -44,8 +44,8 @@ body {
     padding-top: 5rem;
 }
 
-footer {
-    padding-top: 10rem;
+#penyakit {
+    margin-bottom: 10rem;
 }
 
 @media (max-width: 992px) {
@@ -170,9 +170,10 @@ footer {
     display: none;
 }
 
+.fs-extra-small {
+    font-size: .75em !important;
+}
 
-/* @media (max-width: 768px) {
-    #gambar-cabai {
-        width: 300px;
-    }
-} */
+.fs-small {
+    font-size: .875em !important;
+}

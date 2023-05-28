@@ -1,5 +1,5 @@
 <div class="footer-left">
-    Copyright &copy; {{ date('Y') }} <div class="bullet"></div>
+    Copyright &copy; 2023 <div class="bullet"></div>
     <a href="https://github.com/rizkyilhampra/spdhtc">
         SPDHTC
     </a>
