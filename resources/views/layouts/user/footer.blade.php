@@ -1,5 +1,5 @@
 <footer>
-    <div class="bg-dark text-body pt-5 px-5 pb-3" data-bs-theme="dark">
+    <div class="bg-dark text-body p-5" data-bs-theme="dark">
         <div class="row ">
             <div class="col-12 col-md-6 ">
                 <p class="font-semibold h4">
@@ -27,14 +27,12 @@
                         </small>
                         <div class="py-2">
                             <a class="btn btn-outline-light btn-sm " target="_blank"
-                                href="mailto::rizkyilhamp16@gmail.com" data-bs-toggle="tooltip"
-                                data-bs-title="rizkyilhamp16@gmail.com">
+                                href="mailto::rizkyilhamp16@gmail.com">
                                 <i class="fas fa-envelope"></i>
                                 Email
                             </a>
                             <a class="btn btn-outline-light btn-sm " target="_blank"
-                                href="https://instagram.com/rizkyilhampra" data-bs-toggle="tooltip"
-                                data-bs-title="@rizkyilhampra">
+                                href="https://instagram.com/rizkyilhampra">
                                 <i class="fa-brands fa-instagram"></i>
                                 Instagram
                             </a>
@@ -46,14 +44,12 @@
                         </small>
                         <div class="pt-2">
                             <a class="btn btn-outline-light btn-sm" target="_blank"
-                                href="mailto::fauzanrizaldy24@gmail.com" data-bs-toggle="tooltip"
-                                data-bs-title="fauzanrizaldy24@gmail.com">
+                                href="mailto::fauzanrizaldy24@gmail.com">
                                 <i class="fas fa-envelope"></i>
                                 Email
                             </a>
                             <a class="btn btn-outline-light btn-sm" target="_blank"
-                                href="https://instagram.com/_zaldyfauzan" data-bs-toggle="tooltip"
-                                data-bs-title="@_zaldyfauzan">
+                                href="https://instagram.com/_zaldyfauzan">
                                 <i class="fa-brands fa-instagram"></i>
                                 Instagram
                             </a>

@@ -20,6 +20,7 @@
     <link rel="preload" as="style" href="{{ asset('/spesified-assets/aos.css') }}" />
     <link rel="stylesheet" href="{{ asset('/spesified-assets/aos.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="{{ asset('/spesified-assets/chocolat.css') }}" type="text/css" media="screen">
     @stack('stylePerPage')
 </head>
 
@@ -42,7 +43,6 @@
     <div class="rounded-circle" id="upScroll">
         <i class="fas fa-chevron-up fa-lg"></i>
     </div>
-    @include('user.profile-modal')
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
@@ -57,6 +57,7 @@
         type="text/javascript"></script>
     <script src="{{ asset('/spesified-assets/aos.js') }}" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script async type="text/javascript" src="{{ asset('/spesified-assets/chocolat.js') }}"></script>
 
     @stack('scriptPerPage')
 

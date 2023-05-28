@@ -152,6 +152,10 @@ body {
     box-shadow: 0 0.5rem 1rem rgba(33, 37, 41, .15) !important;
 }
 
+.container-chocolat {
+    z-index: 9999;
+}
+
 .splash-screen {
     position: fixed;
     z-index: 9999;
