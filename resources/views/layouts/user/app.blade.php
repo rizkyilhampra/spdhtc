@@ -42,6 +42,7 @@
     <div class="rounded-circle" id="upScroll">
         <i class="fas fa-chevron-up fa-lg"></i>
     </div>
+    @include('user.profile-modal')
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
