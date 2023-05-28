@@ -33,7 +33,7 @@
                             excepturi laborum eveniet enim.
                         </div>
                         <div class="d-grid pt-3">
-                            <button id="btn-diagnosis" class="btn btn-custom1 font-medium py-2">
+                            <button id="btn-diagnosis" class="btn btn-custom1 py-2">
                                 Mulai Diagnosis Penyakit
                             </button>
                         </div>
@@ -51,7 +51,7 @@
                 <ul class="nav nav-pills mb-3 d-flex justify-content-start" id="pills-tab" role="tablist">
                     @foreach ($penyakit as $p)
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link font-medium" id="pills-{{ $p->id }}-tab" data-bs-toggle="pill"
+                            <button class="nav-link" id="pills-{{ $p->id }}-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-{{ $p->id }}" type="button" role="tab"
                                 aria-controls="pills-{{ $p->id }}" aria-selected="false">
                                 {{ $p->name }}
@@ -68,19 +68,20 @@
                                     <div class="row">
                                         <div class="col-12 col-lg-8 pt-5 pt-lg-0 order-1">
                                             <div class="pb-3">
-                                                <p class="font-medium fs-4 mb-1">Nama Penyakit</p>
+                                                {{-- <p class="font-medium h3 mb-1">Nama Penyakit</p> --}}
+                                                <h3 class="h4 ">Nama Penyakit</h3>
                                                 <p class="card-text">
                                                     {{ $p->name }}
                                                 </p>
                                             </div>
                                             <div class="pb-3">
-                                                <p class="font-medium fs-4 mb-1">Penyebab Penyakit</p>
+                                                <h3 class="h4 ">Penyebab Penyakit</h3>
                                                 <p class="card-text">
                                                     {{ $p->reason }}
                                                 </p>
                                             </div>
                                             <div>
-                                                <p class="font-medium fs-4 mb-1">Solusi Penyakit</p>
+                                                <h3 class="h4 ">Solusi Penyakit</h3>
                                                 @php
                                                     $solusi = $p->solution;
                                                     preg_match_all('/(\d+\.)\s*(.*?)(?=(\d+\.|$))/s', $solusi, $matches);
@@ -100,11 +101,14 @@
                                         <div class="col-12 col-lg-4 order-lg-2 d-flex align-items-center justify-content-center"
                                             id="column-img-penyakit">
                                             <div class="container-image-penyakit">
-                                                <img data-bs-toggle="tooltip" width="{{ $width }}"
-                                                    height="{{ $height }}"
-                                                    data-bs-title="Gambar {{ $p->name }}" class="img-fluid"
-                                                    src="{{ asset('/storage/penyakit/' . $p->image) }}"
-                                                    alt="{{ $p->name }}" srcset="" loading="lazy">
+                                                <div class="container-chocolat">
+                                                    <a href="#" class="open-image-chocolat">
+                                                        <img width="{{ $width }}" height="{{ $height }}"
+                                                            class="img-fluid chocolat-image" title="{{ $p->name }}"
+                                                            src="{{ asset('/storage/penyakit/' . $p->image) }}"
+                                                            alt="{{ $p->name }}" srcset="" loading="lazy">
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -116,77 +120,154 @@
             </div>
         </div>
     </div>
-    {{-- <div id="kontak" class="section">
-        <h2 class="fw-semibold pb-3" data-aos="fade-up">
-            Kontak
-        </h2>
-        <div class="row">
-            <div class="col-12 col-md-5 pb-4" data-aos="fade-right" data-bs-anchor="#kontak">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <p class="font-semibold pb-3 fs-4 card-title">
-                            Pengembang
-                        </p>
-                        <div class="row">
-                            <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center pb-4 pb-lg-0">
-                                <img src="{{ asset('assets/img/logo-poliban.png') }}" class="img-fluid" id="logo-poliban"
-                                    alt="logo poliban" width="150" height="137" srcset="" loading="lazy"
-                                    data-bs-toggle="tooltip" data-bs-title="Logo POLIBAN">
-                            </div>
-                            <div class="col-12 col-lg-8 d-flex justify-content-center align-items-center">
-                                <div class="d-inline">
-                                    <p class="text-center font-medium mb-2">Muhammad Rizky Ilham Pratama</p>
-                                    <div class="d-flex justify-content-center pb-4">
-                                        <a class="btn btn-outline-dark me-2" target="_blank"
-                                            href="mailto::rizkyilhamp16@gmail.com" data-bs-toggle="tooltip"
-                                            data-bs-title="rizkyilhamp16@gmail.com">
-                                            <i class="fas fa-envelope"></i>
-                                            Email
-                                        </a>
-                                        <a class="btn btn-outline-dark " target="_blank"
-                                            href="https://instagram.com/rizkyilhampra" data-bs-toggle="tooltip"
-                                            data-bs-title="@rizkyilhampra">
-                                            <i class="fa-brands fa-instagram"></i>
-                                            Instagram
-                                        </a>
-                                    </div>
-                                    <p class="text-center font-medium  mb-2">Muhammad Rizaldy Fauzan</p>
-                                    <div class="d-flex justify-content-center">
-                                        <a class="btn btn-outline-dark me-2" target="_blank" href="#"
-                                            data-bs-toggle="tooltip" data-bs-title="fauzanrizaldy24@gmail.com">
-                                            <i class="fas fa-envelope"></i>
-                                            Email
-                                        </a>
-                                        <a class="btn btn-outline-dark " target="_blank"
-                                            href="https://instagram.com/_zaldyfauzan/" data-bs-toggle="tooltip"
-                                            data-bs-title="@_zaldyfauzan">
-                                            <i class="fa-brands fa-instagram"></i>
-                                            Instagram
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-7" data-aos="fade-left" data-bs-anchor="#kontak">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <p class="font-semibold pb-2 fs-4 card-title">
-                            Tentang Kami
-                        </p>
-                        <div class="card-text">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae maiores nisi provident rerum
-                            officiis, perspiciatis quae totam pariatur sint rem ullam impedit omnis vitae recusandae, ipsum
-                            dicta deserunt sunt cum.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
+    @if (auth()->check())
+        @include('user.profile-modal')
+        @push('scriptPerPage')
+            <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+            <script defer>
+                const modalEditProfile = document.getElementById('editProfileModal');
+                const modalEditProfileInstance = bootstrap.Modal.getOrCreateInstance(modalEditProfile);
+                modalEditProfile.addEventListener('shown.bs.modal', async () => {
+                    const btnSubmitEditProfile = document.getElementById('btnSubmitEditProfile');
+                    btnSubmitEditProfile.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        Swal.fire({
+                            title: 'Mohon tunggu',
+                            html: 'Sedang memproses data',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                        });
+                        try {
+                            const response = await ajaxPostEditProfile();
+                            return Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } catch (error) {
+                            swalError(error.responseJSON);
+                        }
+                    });
 
+                    const setElementAttributes = (element, value, disabled = false) => {
+                        element.value = value;
+                        element.disabled = disabled;
+                    };
+
+                    const elements = {
+                        nameInput: document.querySelector('input[name="name"]'),
+                        emailInput: document.querySelector('input[name="email"]'),
+                        addressTextarea: document.querySelector('textarea[name="address"]'),
+                        provinsiSelect: document.querySelector('#provinsi'),
+                        profesiInput: document.querySelector('#profesi'),
+                        kotaSelect: document.querySelector('#kota')
+                    };
+
+                    setElementAttributes(elements.nameInput, 'Mohon Tunggu...', true);
+                    setElementAttributes(elements.emailInput, 'Mohon Tunggu...', true);
+                    setElementAttributes(elements.addressTextarea, 'Mohon Tunggu...', true);
+
+                    elements.kotaSelect.innerHTML = '<option value="">Mohon Tunggu...</option>';
+                    elements.profesiInput.innerHTML = '<option value="">Mohon Tunggu...</option>';
+                    elements.provinsiSelect.innerHTML = '<option value="">Mohon Tunggu...</option>';
+                    elements.provinsiSelect.disabled = true;
+                    elements.profesiInput.disabled = true;
+                    elements.kotaSelect.disabled = true;
+                    try {
+                        const response = await ajaxRequestEditProfile();
+                        if (response.user.profile == null) {
+                            response.user.profile = {
+                                address: '',
+                                province: '',
+                                city: '',
+                                profession: ''
+                            }
+                        }
+                        setElementAttributes(elements.nameInput, response.user.name);
+                        setElementAttributes(elements.emailInput, response.user.email);
+                        setElementAttributes(elements.addressTextarea, response.user.profile.address);
+
+                        setElementAttributes(elements.provinsiSelect, '', false);
+                        setElementAttributes(elements.profesiInput, '', false);
+                        elements.provinsiSelect.innerHTML =
+                            '<option disabled selected value="">Pilih Provinsi</option>';
+                        elements.profesiInput.innerHTML =
+                            '<option disabled selected value="">Pilih Profesi</option>';
+                        response.provinsi.forEach(value => {
+                            if (value.province_id == response.user.profile.province) {
+                                elements.provinsiSelect.innerHTML +=
+                                    `<option value="${value.province_id}" selected>${value.province}</option>`;
+                            } else {
+                                elements.provinsiSelect.innerHTML +=
+                                    `<option value="${value.province_id}">${value.province}</option>`;
+                            }
+                        });
+                        response.profesi.forEach(value => {
+                            if (value == response.user.profile.profession) {
+                                elements.profesiInput.innerHTML +=
+                                    `<option value="${value}" selected>${value}</option>`;
+                            } else {
+                                elements.profesiInput.innerHTML +=
+                                    `<option value="${value}">${value}</option>`;
+                            }
+                        });
+                        elements.kotaSelect.innerHTML =
+                            '<option disabled selected value="">Pilih Kota</option>';
+
+                        try {
+                            const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
+                            response2.forEach(value => {
+                                if (value.city_id == response.user.profile.city) {
+                                    elements.kotaSelect.innerHTML +=
+                                        `<option value="${value.city_id}" selected>${value.city_name}</option>`;
+                                    elements.kotaSelect.disabled = false;
+                                } else {
+                                    elements.kotaSelect.innerHTML +=
+                                        `<option value="${value.city_id}">${value.city_name}</option>`;
+                                }
+                            });
+                        } catch (error) {
+                            if (error.status == 404) {
+                                elements.kotaSelect.innerHTML =
+                                    '<option value="">Pilih Provinsi Terlebih Dahulu</option>';
+                            } else {
+                                swalError(error.responseJSON);
+                            }
+                        }
+                    } catch (error) {
+                        swalError(error.responseJSON);
+                    }
+
+                    elements.provinsiSelect.addEventListener('change', async (e) => {
+                        elements.kotaSelect.innerHTML =
+                            '<option value="">Mohon Tunggu...</option>';
+                        elements.kotaSelect.disabled = true;
+                        try {
+                            const response = await ajaxCityRequest(e.target.value);
+                            elements.kotaSelect.innerHTML =
+                                '<option disabled selected value="">Pilih Kota</option>';
+                            elements.kotaSelect.disabled = false;
+                            response.forEach(value => {
+                                elements.kotaSelect.innerHTML +=
+                                    `<option value="${value.city_id}">${value.city_name}</option>`;
+                            });
+                        } catch (error) {
+                            swalError(error.responseJSON);
+                        }
+                    });
+                    await drawHistoriDiagnosisTable();
+                });
+            </script>
+        @endpush
+        @push('stylePerPage')
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+        @endpush
+    @endif
 @endsection
 
 @push('scriptPerPage')
@@ -195,15 +276,30 @@
         const hasUserProfile = @json(Auth::user()->profile->id ?? false);
         let login = @json(session('success') ?? false);
         const csrfToken = '{{ csrf_token() }}';
+        const penyakitImage = @json($penyakit);
+        const assetStorage = '{{ asset('/storage/penyakit/') }}';
+        const openImageChocolat = document.querySelectorAll('.open-image-chocolat');
+        openImageChocolat.forEach((e, i, t) => {
+            const image = e.querySelector('.chocolat-image');
+            let containerChocolat = document.querySelectorAll('.container-chocolat');
+            let containerImagePenyakit = document.querySelectorAll('.container-image-penyakit');
+            containerImagePenyakit = containerImagePenyakit[i];
+            containerChocolat = containerChocolat[i];
+            image.addEventListener('click', (e) => {
+                e.preventDefault();
+                const instanceChocolat = Chocolat([{
+                    src: assetStorage + '/' + penyakitImage[i].image,
+                    title: penyakitImage[i].name
+                }], {
+                    container: containerChocolat,
+                    imageSize: 'contain',
+                });
+                containerImagePenyakit.style.maxHeight = 'none';
+                instanceChocolat.api.open();
+                instanceChocolat.api.set('afterClose', () => {
+                    containerImagePenyakit.style.maxHeight = '400px';
+                });
+            });
+        });
     </script>
 @endpush
-
-@if (auth()->check())
-    @push('scriptPerPage')
-        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-    @endpush
-    @push('stylePerPage')
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
-    @endpush
-@endif
