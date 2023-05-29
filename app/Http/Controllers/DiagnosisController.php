@@ -88,9 +88,6 @@ class DiagnosisController extends Controller
 
     public function getGejala(Request $request)
     {
-        if (!$request->ajax()) {
-            abort(403, 'Forbidden');
-        }
         $gejala = Gejala::get(['id', 'name']);
         return response()->json($gejala);
     }
