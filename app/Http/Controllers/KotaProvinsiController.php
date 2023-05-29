@@ -27,7 +27,7 @@ class KotaProvinsiController extends Controller
                 $provinces = json_decode($response->getBody())->rajaongkir->results;
             } catch (GuzzleException $e) {
                 // Handle any exception from Guzzle
-                $provinces = [];
+                $provinces = [$e->getMessage()];
             }
 
             return $provinces;

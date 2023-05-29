@@ -23,19 +23,10 @@ class UserProfileSeeder extends Seeder
             \App\Models\UserProfile::create([
                 'user_id' => $i,
                 'address' => Factory::create()->address,
-                'city' => 'Anytown',
-                'province' => 'BC',
+                'city' => 144,
+                'province' => 13,
                 'profession' => $profession[rand(0, 1)],
             ]);
         }
-
-        UserProfile::where('user_id', 12)->update([
-            'province' => 13,
-            'city' => 144
-        ]);
-        UserProfile::where('user_id', 13)->update([
-            'province' => 13,
-            'city' => 144
-        ]);
     }
 }
