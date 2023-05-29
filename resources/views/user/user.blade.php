@@ -68,7 +68,6 @@
                                     <div class="row">
                                         <div class="col-12 col-lg-8 pt-5 pt-lg-0 order-1">
                                             <div class="pb-3">
-                                                {{-- <p class="font-medium h3 mb-1">Nama Penyakit</p> --}}
                                                 <h3 class="h4 ">Nama Penyakit</h3>
                                                 <p class="card-text">
                                                     {{ $p->name }}
@@ -106,7 +105,9 @@
                                                         <img width="{{ $width }}" height="{{ $height }}"
                                                             class="img-fluid chocolat-image" title="{{ $p->name }}"
                                                             src="{{ asset('/storage/penyakit/' . $p->image) }}"
-                                                            alt="{{ $p->name }}" srcset="" loading="lazy">
+                                                            alt="{{ $p->name }}" srcset="" loading="lazy"
+                                                            data-bs-toggle="tooltip"
+                                                            data-bs-title="Gambar {{ $p->name }}">
                                                     </a>
                                                 </div>
                                             </div>
@@ -278,28 +279,5 @@
         const csrfToken = '{{ csrf_token() }}';
         const penyakitImage = @json($penyakit);
         const assetStorage = '{{ asset('/storage/penyakit/') }}';
-        const openImageChocolat = document.querySelectorAll('.open-image-chocolat');
-        openImageChocolat.forEach((e, i, t) => {
-            const image = e.querySelector('.chocolat-image');
-            let containerChocolat = document.querySelectorAll('.container-chocolat');
-            let containerImagePenyakit = document.querySelectorAll('.container-image-penyakit');
-            containerImagePenyakit = containerImagePenyakit[i];
-            containerChocolat = containerChocolat[i];
-            image.addEventListener('click', (e) => {
-                e.preventDefault();
-                const instanceChocolat = Chocolat([{
-                    src: assetStorage + '/' + penyakitImage[i].image,
-                    title: penyakitImage[i].name
-                }], {
-                    container: containerChocolat,
-                    imageSize: 'contain',
-                });
-                containerImagePenyakit.style.maxHeight = 'none';
-                instanceChocolat.api.open();
-                instanceChocolat.api.set('afterClose', () => {
-                    containerImagePenyakit.style.maxHeight = '400px';
-                });
-            });
-        });
     </script>
 @endpush
