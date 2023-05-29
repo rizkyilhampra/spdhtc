@@ -1,6 +1,6 @@
 <nav class="navbar fixed-top navbar-expand-lg bg-body-transparent" data-aos="fade-down">
     <div class="container-fluid">
-        <a class="navbar-brand font-semibold" href="#">
+        <a class="navbar-brand font-semibold pe-none" href="#">
             <div class="d-inline-block">
                 <i class="d-flex justify-content-center fa-solid fa-user-doctor fa-bounce"
                     style="height: 24px; width: 30px"></i>
