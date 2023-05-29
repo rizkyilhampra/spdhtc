@@ -17,7 +17,7 @@ class UserProfileController extends Controller
 
         //get index method from KotaProvinsiController
         $kotaProvinsi = new KotaProvinsiController();
-        $provinces = $kotaProvinsi->indexProvince();
+        $provinces = $kotaProvinsi->indexProvince($request);
         $profession = [
             'Petani',
             'Lainnya',
