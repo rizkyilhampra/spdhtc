@@ -277,15 +277,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const section = $('div.section');
     $('li.nav-item a').first().addClass('active');
 
-    $(window).scroll(function () {
+    $(window).scroll(async function () {
         if ($(this).scrollTop() > 5) {
-            applyNavbarClassesDark();
+            await applyNavbarClassesDark();
             buttonToTop(true);
         } else {
-            applyNavbarClassesLight();
             if (navbarActive) {
-                applyNavbarClassesDark();
+                await applyNavbarClassesDark();
             }
+            await applyNavbarClassesLight();
             buttonToTop(false);
         }
         let scrollPosition = $(this).scrollTop();
