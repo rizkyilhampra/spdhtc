@@ -181,3 +181,7 @@ body {
 .fs-small {
     font-size: .875em !important;
 }
+
+.chocolat-wrapper {
+    z-index: 9999 !important;
+}

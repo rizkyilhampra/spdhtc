@@ -493,20 +493,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Chocolat(document.querySelectorAll('.chocolat-image'), {
-    //     container: document.querySelector('.container-chocolat'),
-    //     linkImages: false,
-    // })
+    const openImageChocolat = document.querySelectorAll('.open-image-chocolat');
 
+    openImageChocolat.forEach((element, index) => {
+        const image = element.querySelector('.chocolat-image');
+        image.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const lebarLayar = window.innerWidth || document.documentElement.clientWidth || document
+                .body.clientWidth;
 
+            if (lebarLayar >= 992) {
+                const instanceChocolat = await Chocolat([{
+                    src: `${assetStorage}/${penyakitImage[index].image}`,
+                    title: penyakitImage[index].name
+                }], {});
 
-    // const chocolatContainer = document.querySelectorAll('[class^="container-chocolat"]');
-    // chocolatContainer.forEach(element => {
-    //     Chocolat(element.querySelectorAll('.chocolat-image'), {
-    //         container: element,
-    //         linkImages: false,
-    //     });
-    // });
+                instanceChocolat.api.open();
+            }
+        });
+    });
 });
 
 window.addEventListener('load', async () => {
