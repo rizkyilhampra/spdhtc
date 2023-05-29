@@ -20,9 +20,7 @@ class UserController extends Controller
 
     public function historiDiagnosis(Request $request)
     {
-        if (!$request->ajax()) {
-            abort(403, 'Forbidden');
-        } else if ($request->isMethod('delete')) {
+        if ($request->isMethod('delete')) {
             $diagnosis = Diagnosis::find($request->id);
             $diagnosis->delete();
             return response()->json([
@@ -89,10 +87,6 @@ class UserController extends Controller
 
     public function historiDiagnosisDetail(Request $request)
     {
-        if (!$request->ajax()) {
-            abort(403, 'Forbidden');
-        }
-
         $diagnosis = Diagnosis::find($request->id, ['answer_log']);
         $answerLog = json_decode($diagnosis->answer_log, true);
         foreach ($answerLog as $key => $value) {

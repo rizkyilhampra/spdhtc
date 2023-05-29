@@ -11,13 +11,9 @@ class UserProfileController extends Controller
 {
     public function index(Request $request)
     {
-        if (!$request->ajax()) {
-            abort(403, 'Forbidden');
-        }
-
         //get index method from KotaProvinsiController
         $kotaProvinsi = new KotaProvinsiController();
-        $provinces = $kotaProvinsi->indexProvince($request);
+        $provinces = $kotaProvinsi->indexProvince();
         $profession = [
             'Petani',
             'Lainnya',
@@ -33,10 +29,6 @@ class UserProfileController extends Controller
 
     public function updateUser(Request $request)
     {
-        if (!$request->ajax()) {
-            abort(403, 'Forbidden');
-        }
-
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required',
