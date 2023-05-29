@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>@yield('title', 'Custom')</title>
+    <title>@yield('title') &mdash; SPDHTC</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -14,28 +14,29 @@
 
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    @yield('cssLibraries')
+    @stack('cssLibraries')
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
 </head>
 
-<body>
-    <div id="app">
+<body class="d-flex flex-column h-100">
+    <div id="app" class="mt-auto">
         <section class="section">
-            <div class="container mt-5">
+            <div class="container">
                 @yield('content')
-                @section('footer')
-                    <div class="simple-footer">
-                        Copyright &copy;
-                        <a href="https://github.com/rizkyilhampra/spdhtc" target="_blank">SPDHTC</a>
-                        <span>{{ date('Y') }}</span>
-                    </div>
-                @show
             </div>
         </section>
     </div>
+    <footer class="d-block mt-auto py-3">
+        <div class="simple-footer mb-0">
+            Copyright &copy; 2023 <div class="bullet"></div>
+            <a href="https://github.com/rizkyilhampra/spdhtc" target="_blank">
+                SPDHTC
+            </a>
+        </div>
+    </footer>
 
     <!-- General JS Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
@@ -47,19 +48,20 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="../assets/js/stisla.js"></script>
+    <script src="{{ asset('assets/js/stisla.js') }}"></script>
 
     <!-- JS Libraies -->
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-    @yield('jsLibraries')
+    @stack('jsLibraries')
 
     <!-- Template JS File -->
-    <script src="../assets/js/scripts.js"></script>
-    <script src="../assets/js/custom.js"></script>
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 
     <!-- Page Specific JS File -->
-    @yield('jsPage')
-    @yield('jsCustom')
+    <script src="{{ asset('spesified-assets/auth-pages.js') }}"></script>
+    @stack('jsPage')
+    @stack('jsCustom')
 </body>
 
 </html>

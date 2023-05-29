@@ -25,17 +25,17 @@
         <div class="main-wrapper">
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar">
-                @include('layouts.navbar')
+                @include('layouts.admin.navbar')
             </nav>
             <div class="main-sidebar sidebar-style-2">
-                @include('layouts.sidebar')
+                @include('layouts.admin.sidebar')
             </div>
             <!-- Main Content -->
             <div class="main-content">
                 @yield('content')
             </div>
             <footer class="main-footer">
-                @include('layouts.footer')
+                @include('layouts.admin.footer')
             </footer>
         </div>
     </div>

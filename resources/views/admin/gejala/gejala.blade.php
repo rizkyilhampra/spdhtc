@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @push('cssLibraries')
     <!-- CSS Libraries -->

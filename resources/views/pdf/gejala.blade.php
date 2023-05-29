@@ -1,4 +1,4 @@
-@extends('layouts.pdf')
+@extends('layouts.pdf-layout')
 @section('title', 'Data Gejala')
 @section('content')
     <table class="table table-bordered table-striped">
