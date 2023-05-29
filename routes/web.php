@@ -66,13 +66,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('diagnosis', [DiagnosisController::class, 'Diagnosis'])
             ->middleware('can:hasUserProfile')
             ->name('user.diagnosis');
-        Route::get('get-gejala', [DiagnosisController::class, 'getGejala'])->name('get-gejala')->middleware('can:hasUserProfile');
-        Route::get('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
-        Route::put('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'updateUser'])->name('update-profile');
-        Route::get('provinsi', [\App\Http\Controllers\KotaProvinsiController::class, 'indexProvince'])->name('provinsi');
-        Route::get('edit-profile/lokasi/kota/{id}', [\App\Http\Controllers\KotaProvinsiController::class, 'indexCity'])->name('kota');
-        Route::get('histori-diagnosis-user', [\App\Http\Controllers\UserController::class, 'historiDiagnosis'])->name('histori-diagnosis-user');
-        Route::get('histori-diagnosis-user/detail', [\App\Http\Controllers\UserController::class, 'historiDiagnosisDetail'])->name('histori-diagnosis-user.detail');
+        Route::middleware('check.direct.access')->group(function () {
+            Route::put('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'updateUser'])->name('update-profile');
+            Route::get('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
+            Route::get('get-gejala', [DiagnosisController::class, 'getGejala'])->name('get-gejala')->middleware('can:hasUserProfile');
+            Route::get('provinsi', [\App\Http\Controllers\KotaProvinsiController::class, 'indexProvince'])->name('provinsi');
+            Route::get('edit-profile/lokasi/kota/{id}', [\App\Http\Controllers\KotaProvinsiController::class, 'indexCity'])->name('kota');
+            Route::get('histori-diagnosis-user', [\App\Http\Controllers\UserController::class, 'historiDiagnosis'])->name('histori-diagnosis-user');
+            Route::get('histori-diagnosis-user/detail', [\App\Http\Controllers\UserController::class, 'historiDiagnosisDetail'])->name('histori-diagnosis-user.detail');
+        });
         Route::delete('histori-diagnosis-user', [\App\Http\Controllers\UserController::class, 'historiDiagnosis'])->name('histori-diagnosis-user.delete');
     });
 });
