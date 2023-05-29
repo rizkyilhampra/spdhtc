@@ -1,13 +1,9 @@
-@extends('layouts.custom')
+@extends('layouts.auth-layout')
 
 @section('title', 'Masuk')
 @section('content')
     <div class="row">
         <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-            <div class="login-brand">
-                <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
-            </div>
-
             <div class="card card-primary">
                 <div class="card-header">
                     <h4>Masuk</h4>
@@ -56,7 +52,7 @@
                         </div>
                     </form>
                     <div class="text-center mt-4 mb-3">
-                        <div class="text-job text-muted">Atau masuk dan daftar melalui</div>
+                        <div class="text-job text-muted">Atau masuk dengan</div>
                     </div>
                     <div class="row sm-gutters">
                         <div class="col-12">
@@ -70,27 +66,17 @@
             <div class="mt-3 text-muted text-center">
                 Belum punya akun? <a href="{{ route('register') }}">Daftar disini </a>
             </div>
-        @section('footer')
-            @parent
-        @endsection
+        </div>
     </div>
-</div>
 @endsection
-@section('jsCustom')
-<script>
-    var notyf = new Notyf({
-        position: {
-            x: 'right',
-            y: 'top',
-        },
-        dismissible: true
-    });
-    let status = '{{ session('status') }}';
-    if (status) {
-        notyf.success(status);
-    }
-</script>
-@endsection
-@section('cssLibraries')
-<link rel="stylesheet" href="../spesified-assets/bootstrap-social.css">
-@endsection
+@push('jsCustom')
+    <script>
+        const status = '{{ session('status') }}';
+        if (status) {
+            notyf.success(status);
+        }
+    </script>
+@endpush
+@push('cssLibraries')
+    <link rel="stylesheet" href="{{ asset('spesified-assets/bootstrap-social.css') }}">
+@endpush

@@ -1,4 +1,4 @@
-@extends('layouts.pdf')
+@extends('layouts.pdf-layout')
 @section('title', 'Data Histori Diagnosis')
 @section('content')
     <table>

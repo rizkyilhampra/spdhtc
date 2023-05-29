@@ -1,12 +1,8 @@
-@extends('layouts.custom')
+@extends('layouts.auth-layout')
 @section('title', 'Reset Kata Sandi')
 @section('content')
     <div class="row">
         <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-            <div class="login-brand">
-                <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
-            </div>
-
             <div class="card card-primary">
                 <div class="card-header">
                     <h4>Reset Kata Sandi</h4>
@@ -57,41 +53,22 @@
                     </form>
                 </div>
             </div>
-        @section('footer')
-            @parent
-        @endsection
+        </div>
     </div>
-</div>
-@endsection
-@section('jsPage')
-<script src="../assets/js/page/auth-register.js"></script>
 @endsection
 
-@section('jsLibraries')
-<script src="{{ asset('spesified-assets/jquery.pwstrength.min.js') }}"></script>
-{{-- <script src="{{ asset('spesified-assets/jquery.selectric.min.js') }}"></script> --}}
-@endsection
-@section('jsCustom')
-<script>
-    var notyf = new Notyf({
-        position: {
-            x: 'right',
-            y: 'top',
-        },
-        dismissible: true
-    });
+@push('jsPage')
+    <script src="{{ asset('assets/js/page/auth-register.js') }}"></script>
+@endpush
 
-    function tokenExpired() {
-        if ('{{ $errors->has('email') }}') {
-            let form = document.querySelector('.needs-validation');
-            form.innerHTML =
-                'Mohon maaf, token anda sudah kadaluarsa. Silahkan melakukan permintaan reset password kembali';
-            notyf.error("{{ $errors->first('email') }}");
-            setTimeout(function() {
-                window.location.href = "{{ route('password.request') }}";
-            }, 5000);
-        }
-    }
-    new tokenExpired();
-</script>
-@endsection
+@push('jsLibraries')
+    <script src="{{ asset('spesified-assets/jquery.pwstrength.min.js') }}"></script>
+@endpush
+@push('jsCustom')
+    <script>
+        const errorHasEmail = '{{ $errors->has('email') }}';
+        const errorMsgEmail = '{{ $errors->first('email') }}';
+        const routePasswordRequest = "{{ route('password.request') }}";
+        tokenExpired();
+    </script>
+@endpush
