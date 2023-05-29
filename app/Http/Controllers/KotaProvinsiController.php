@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\Cache;
 
 class KotaProvinsiController extends Controller
 {
-    public function indexProvince()
+    public function indexProvince(Request $request)
     {
+        if (!$request->ajax()) {
+            abort(403, 'Forbidden');
+        }
+
         $cacheKey = 'provinces';
         $cacheTime = 60 * 60 * 24; // Cache for 24 hours
 
@@ -38,6 +42,9 @@ class KotaProvinsiController extends Controller
 
     public function indexCity(Request $request, $id)
     {
+        if (!$request->ajax()) {
+            abort(403, 'Forbidden');
+        }
         $cacheKey = 'cities_' . $id;
         $cacheTime = 60 * 60 * 24; // Cache for 24 hours
 
