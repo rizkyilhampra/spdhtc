@@ -126,7 +126,7 @@
         @push('scriptPerPage')
             <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-            <script defer>
+            <script>
                 const modalEditProfile = document.getElementById('editProfileModal');
                 const modalEditProfileInstance = bootstrap.Modal.getOrCreateInstance(modalEditProfile);
                 modalEditProfile.addEventListener('shown.bs.modal', async () => {
@@ -143,7 +143,8 @@
                         });
                         try {
                             const response = await ajaxPostEditProfile();
-                            return Swal.fire({
+                            await new Promise(resolve => setTimeout(resolve, 1000)); // Delay selama 1 detik
+                            const swalSuccess = await Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
                                 text: response.message,
