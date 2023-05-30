@@ -69,6 +69,16 @@
                                 Daftar
                             </button>
                         </div>
+                        <div class="text-center mt-4 mb-3">
+                            <div class="text-job text-muted">Atau masuk dengan</div>
+                        </div>
+                        <div class="row sm-gutters">
+                            <div class="col-12">
+                                <a class="btn btn-block btn-social btn-google" href="{{ route('google') }}">
+                                    <span class="fab fa-google"></span> Google
+                                </a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -85,4 +95,8 @@
 
 @push('jsLibraries')
     <script src="{{ asset('spesified-assets/jquery.pwstrength.min.js') }}"></script>
+@endpush
+
+@push('cssLibraries')
+    <link rel="stylesheet" href="{{ asset('spesified-assets/bootstrap-social.css') }}">
 @endpush
