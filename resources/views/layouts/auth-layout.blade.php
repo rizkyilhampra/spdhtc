@@ -24,7 +24,7 @@
 <body class="d-flex flex-column h-100">
     <div id="app" class="mt-auto">
         <section class="section">
-            <div class="container">
+            <div class="container mt-5">
                 @yield('content')
             </div>
         </section>
