@@ -42,7 +42,14 @@ async function drawHistoriDiagnosisTable() {
             }
         },
         {
-            data: 'penyakit.name'
+            data: 'penyakit.name',
+            render: function (data, type, row, meta) {
+                //handle if data is null
+                if (data == null) {
+                    return `<span class="badge bg-danger">Penyakit tidak ditemukan</span>`;
+                }
+                return data;
+            }
         },
         {
             data: 'id',
@@ -412,65 +419,78 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             async function showModal() {
-                const swalLoading = Swal.fire({
-                    title: 'Mohon tunggu',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading()
-                    },
+                const swalBeforeDiagnosis = await Swal.fire({
+                    title: 'Catatan',
+                    text: 'Sistem ini memiliki keterbatasan dalam cakupan data penyakit tanaman cabai, sehingga tidak semua penyakit dapat didiagnosis. Hanya penyakit yang terdapat dalam daftar penyakit yang dapat didiagnosis. Apakah Anda ingin melanjutkan proses diagnosis?',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Lanjutkan',
+                    cancelButtonText: 'Batal'
                 });
-                let gejala, countGejala;
-                try {
-                    gejala = await ajaxGetGejala();
-                    countGejala = gejala.length;
-                } catch (error) {
-                    swalError(error.responseJSON);
-                }
-                swalLoading.close();
-                //looping Swal sebanyak jumlah gejala
-                let isClosed = false;
-                for (let i = 0; i < countGejala; i++) {
-                    const element = gejala[i];
-                    const {
-                        value: jawaban,
-                        dismiss: dismissReason
-                    } = await Swal.fire({
-                        title: 'Pertanyaan ' + (i + 1) + ' dari ' +
-                            countGejala,
-                        text: 'Apakah ' + element.name +
-                            '?',
-                        icon: 'question',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Ya',
-                        showDenyButton: true,
-                        denyButtonColor: '#d33',
-                        denyButtonText: 'Tidak',
-                        showCloseButton: true,
+                if (swalBeforeDiagnosis.isConfirmed) {
+                    const swalLoading = Swal.fire({
+                        title: 'Mohon tunggu',
                         allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        allowEnterKey: false,
-                        reverseButtons: true,
+                        didOpen: () => {
+                            Swal.showLoading()
+                        },
                     });
-                    if (dismissReason == Swal.DismissReason.close) {
-                        isClosed = true;
-                        break;
-                    }
+                    let gejala, countGejala;
                     try {
-                        const response = await ajaxRequestToDiagnosis(element.id, jawaban);
-                        if (response[1] != null) {
-                            await Swal.close();
-                            modalResult(response[1], true, 'Penyakit ditemukan !',
-                                'Penyakit yang diderita adalah ' + response[1].name,
-                                'success');
-                            break;
-                        } else if (response.penyakitUndentified) {
-                            modalResult(response.penyakitUndentified, false,
-                                'Penyakit tidak ditemukan !',
-                                'Penyakit yang di derita tidak ditemukan', 'error');
-                        }
+                        gejala = await ajaxGetGejala();
+                        countGejala = gejala.length;
                     } catch (error) {
                         swalError(error.responseJSON);
                     }
+                    swalLoading.close();
+
+                    //looping Swal sebanyak jumlah gejala
+                    let isClosed = false;
+                    for (let i = 0; i < countGejala; i++) {
+                        const element = gejala[i];
+                        const {
+                            value: jawaban,
+                            dismiss: dismissReason
+                        } = await Swal.fire({
+                            title: 'Pertanyaan ' + (i + 1) + ' dari ' +
+                                countGejala,
+                            text: 'Apakah ' + element.name +
+                                '?',
+                            icon: 'question',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Ya',
+                            showDenyButton: true,
+                            denyButtonColor: '#d33',
+                            denyButtonText: 'Tidak',
+                            showCloseButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                            reverseButtons: true,
+                        });
+                        if (dismissReason == Swal.DismissReason.close) {
+                            isClosed = true;
+                            break;
+                        }
+                        try {
+                            const response = await ajaxRequestToDiagnosis(element.id, jawaban);
+                            if (response[1] != null) {
+                                await Swal.close();
+                                modalResult(response[1], true, 'Penyakit ditemukan!',
+                                    'Penyakit yang diderita adalah ' + response[1].name,
+                                    'success');
+                                break;
+                            } else if (response.penyakitUndentified) {
+                                modalResult(response.penyakitUndentified, false,
+                                    'Penyakit tidak ditemukan!',
+                                    'Mohon maaf, penyakit tidak dapat ditemukan', 'error');
+                            }
+                        } catch (error) {
+                            swalError(error.responseJSON);
+                        }
+                    }
+                } else {
+                    Swal.close();
                 }
             }
             showModal();
