@@ -34,8 +34,8 @@ body {
 
 #beranda {
     padding-top: 3rem;
-
-    background-image: linear-gradient(to bottom, rgba(98, 126, 66, 0.5) 0%, #fcfcfd 100%) !important;
+    background-image: linear-gradient(to bottom, rgba(98, 126, 66, 0.8) 0%, #fcfcfd 100%) !important;
+    /* background-color: #759b67; */
 }
 
 #diagnosis,
@@ -49,7 +49,13 @@ body {
 }
 
 @media (max-width: 992px) {
-    #beranda {
+    .min-vh-u-lg-85 {
+        min-height: 50vh !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .min-vh-u-lg-85 {
         min-height: 85vh !important;
     }
 }

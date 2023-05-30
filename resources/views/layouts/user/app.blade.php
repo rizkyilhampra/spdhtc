@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title')</title>
+    <title>@yield('title') SPDHTC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preload" as="style" href="{{ asset('/spesified-assets/splash-screen.css') }}">
     <link rel="stylesheet" href="{{ asset('/spesified-assets/splash-screen.css') }}">
@@ -34,7 +34,7 @@
     <main>
         <section>
             @include('layouts.user.navbar')
-            <div class="container-fluid overflow-x-hidden" id="containerContent">
+            <div class="overflow-x-hidden" id="containerContent">
                 @yield('content')
             </div>
         </section>

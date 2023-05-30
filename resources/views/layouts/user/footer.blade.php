@@ -1,23 +1,26 @@
-<footer>
-    <div class="bg-dark text-body p-5" data-bs-theme="dark">
+<footer class="d-block bg-dark text-body py-5" data-bs-theme="dark">
+    <div class="container">
         <div class="row ">
             <div class="col-12 col-md-6 ">
                 <p class="font-semibold h4">
                     SPDHTC
                 </p>
-                <p class="pt-3">
+                <p class="pt-3 pb-2">
                     <small>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus sint consequuntur molestias ex
-                        cupiditate quia cumque animi veritatis ipsam possimus corrupti distinctio quam, reiciendis iste
-                        omnis eaque laborum quasi accusantium?
+                        SPDHTC (Sistem Pakar Diagnosis Penyakit Tanaman Cabai) merupakan hasil dari tugas akhir tim
+                        pengembang di Prodi Teknik Informatika Politeknik negeri Banjarmasin. SPDHTC menggunakan data
+                        yang diperoleh dari pakar yang berkompeten, sehingga keakuratan datanya dapat dipercaya. Latar
+                        belakang mengapa SPDHTC dibangun adalah untuk membantu masyarakat, terutama para petani cabai,
+                        dalam mendapatkan informasi dengan cepat dan mudah tanpa harus berkonsultasi secara langsung
+                        dengan pakar atau penyuluh lapangan.
                     </small>
                 </p>
             </div>
-            <div class="col-12 col-md-4 offset-md-2 pt-3 pt-md-0">
-                <strong class="text-white font-medium">
+            <div class="col-12 col-md-4 offset-md-2 pt-3 pb-2 pt-md-0">
+                <strong class="text-white font-medium d-block mb-2">
                     Kontak
                 </strong>
-                <small class="d-block pt-4 pb-2 font-medium">
+                <small class="d-block pt-3 pb-2 font-medium">
                     Tim Pengembang
                 </small>
                 <ul>
@@ -57,6 +60,17 @@
                     </li>
                 </ul>
             </div>
+        </div>
+        <div class="row pt-3">
+            <strong class="text-white font-medium d-block mb-2">
+                Catatan
+            </strong>
+            <p class="pt-3">
+                <small>Sistem ini memiliki keterbatasan cakupan data penyakit tanaman cabai, sehingga tidak semua
+                    penyakit dapat didiagnosis. Namun, SPDHTC bersifat <i>scalable</i> atau dapat dikembangkan atau
+                    diperluas. Jika tertarik untuk berkontribusi atau ikut memperluas cakupan data tersebut, silakan
+                    hubungi kontak tim pengembang untuk lebih lanjut.</small>
+            </p>
         </div>
         <div class="d-flex justify-content-center mt-5 ">
             <small class="font-monospace">

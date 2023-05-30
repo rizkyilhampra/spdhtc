@@ -268,9 +268,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     $('.navbar').on('hide.bs.collapse', () => {
         navbarActive = false;
-        applyNavbarClassesLight();
         if ($(this).scrollTop() > 5) {
             applyNavbarClassesDark();
+        } else {
+            applyNavbarClassesLight();
         }
     });
 
