@@ -35,7 +35,6 @@ body {
 #beranda {
     padding-top: 3rem;
     background-image: linear-gradient(to bottom, rgba(98, 126, 66, 0.8) 0%, #fcfcfd 100%) !important;
-    /* background-color: #759b67; */
 }
 
 #diagnosis,
@@ -60,37 +59,17 @@ body {
     }
 }
 
-.color-sage {
-    background-color: #bbba71;
-}
-
-.color-bistre {
-    background-color: #322416;
-}
-
-.color-black {
-    background-color: #090806;
-}
-
-.color-dark-mose-green {
-    background-color: #3d5509;
-}
-
 .color-fren-green {
     background-color: #627e42;
 }
 
-.color-asparagus {
-    background-color: #759b67;
-}
-
 .btn-custom1 {
-    background-color: #A09E4D !important;
+    background-color: #7b8e64 !important;
     color: #fff !important;
 }
 
 .btn-custom1:hover {
-    background-color: #919046 !important;
+    background-color: #6a7d53 !important;
     color: #fff !important;
 }
 
@@ -99,12 +78,16 @@ body {
 }
 
 .nav-pills {
-    --bs-nav-pills-link-active-bg: #A09E4D !important;
+    --bs-nav-pills-link-active-bg: #7b8e64 !important;
 }
 
 .nav {
     --bs-nav-link-color: #090806 !important;
     --bs-nav-link-hover-color: #090806cb !important;
+}
+
+.nav-pills .nav-link:not(.active) {
+    text-decoration: underline;
 }
 
 #upScroll {

@@ -56,14 +56,16 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card card-body border border-0 shadow p-3 mt-3" data-aos="fade-up">
-                        <ul class="nav nav-pills mb-3 d-flex justify-content-start" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills mb-3 d-flex flex-column flex-md-row" id="pills-tab" role="tablist">
                             @foreach ($penyakit as $p)
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-{{ $p->id }}-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-{{ $p->id }}" type="button" role="tab"
-                                        aria-controls="pills-{{ $p->id }}" aria-selected="false">
-                                        {{ $p->name }}
-                                    </button>
+                                    <div class="d-grid py-1 py-md-0">
+                                        <button class="nav-link" id="pills-{{ $p->id }}-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-{{ $p->id }}" type="button" role="tab"
+                                            aria-controls="pills-{{ $p->id }}" aria-selected="false">
+                                            {{ $p->name }}
+                                        </button>
+                                    </div>
                                 </li>
                             @endforeach
                         </ul>
