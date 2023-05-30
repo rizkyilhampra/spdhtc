@@ -13,7 +13,8 @@
                         <div class="form-group">
                             <label for="name">Nama</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                value="{{ old('name') }}" name="name" required autofocus>
+                                value="{{ old('name') }}" name="name" required autofocus autocomplete="name"
+                                placeholder="Masukkan nama anda">
                             <div class="invalid-feedback">
                                 @if ($errors->has('name'))
                                     {{ $errors->first('name') }}
@@ -25,7 +26,8 @@
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}" required name="email">
+                                value="{{ old('email') }}" required autocomplete="email" placeholder="nama@email.com"
+                                name="email">
                             <div class="invalid-feedback">
                                 @if ($errors->has('email'))
                                     {{ $errors->first('email') }}
@@ -40,7 +42,8 @@
                                 <label for="password" class="d-block">Kata Sandi</label>
                                 <input id="password" type="password"
                                     class="form-control pwstrength @error('password') is-invalid @enderror"
-                                    data-indicator="pwindicator" required name="password">
+                                    data-indicator="pwindicator" autocomplete="new-password" placeholder="Min. 8 karakter"
+                                    required name="password">
                                 <div id="pwindicator" class="pwindicator">
                                     <div class="bar"></div>
                                     <div class="label"></div>
@@ -55,7 +58,7 @@
                             </div>
                             <div class="form-group col-6">
                                 <label for="password_confirmation" class="d-block">Konfirmasi Password</label>
-                                <input id="password_confirmation" required type="password"
+                                <input id="password_confirmation" required type="password" placeholder="Min. 8 karakter"
                                     class="form-control
                                     @error('password') is-invalid @enderror"
                                     name="password_confirmation">

@@ -15,7 +15,8 @@
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}" name="email" tabindex="1" required autofocus>
+                                value="{{ old('email') }}" name="email" tabindex="1" autocomplete="email"
+                                placeholder="nama@email.com" required autofocus>
                             <div class="invalid-feedback">
                                 @if ($errors->has('email'))
                                     {{ $errors->first('email') }}
@@ -35,7 +36,8 @@
                                 </div>
                             </div>
                             <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
+                                class="form-control @error('password') is-invalid @enderror" name="password"
+                                autocomplete="current-password" placeholder="Masukkan Password anda" required
                                 tabindex="2">
                             <div class="invalid-feedback">
                                 @if ($errors->has('password'))

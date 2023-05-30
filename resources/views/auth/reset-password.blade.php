@@ -19,14 +19,15 @@
                         <div class="form-group" hidden>
                             <label for="token">Token</label>
                             <input id="token" value="{{ $request->token }}" type="text" class="form-control"
-                                name="token" tabindex="1" hidden>
+                                name="token" tabindex="2" hidden>
                         </div>
 
                         <div class="form-group">
                             <label for="password">Kata Sandi Baru</label>
                             <input id="password" type="password"
                                 class="form-control pwstrength @error('password') is-invalid @enderror"
-                                data-indicator="pwindicator" name="password" tabindex="2" autofocus required>
+                                data-indicator="pwindicator" name="password" autocomplete="new-password"
+                                placeholder="Min. 8 Karakter" tabindex="3" autofocus required>
                             <div id="pwindicator" class="pwindicator">
                                 <div class="bar"></div>
                                 <div class="label"></div>
@@ -43,10 +44,10 @@
                             <label for="password_confirmation">Konfirmasi Kata Sandi</label>
                             <input id="password_confirmation" type="password"
                                 class="form-control @error('password') is-invalid @enderror" name="password_confirmation"
-                                tabindex="2" required>
+                                tabindex="4" required>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="5">
                                 Reset Kata Sandi
                             </button>
                         </div>
