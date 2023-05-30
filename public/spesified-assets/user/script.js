@@ -283,10 +283,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             await applyNavbarClassesDark();
             buttonToTop(true);
         } else {
+            await applyNavbarClassesLight();
             if (navbarActive) {
                 await applyNavbarClassesDark();
             }
-            await applyNavbarClassesLight();
             buttonToTop(false);
         }
         let scrollPosition = $(this).scrollTop();
