@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use Termwind\Components\Dd;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -27,19 +28,32 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'max:255',
                 Rule::unique('users')->ignore($user->id),
             ],
+
+            'address' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'province' => ['required', 'string', 'max:255'],
+            'profession' => ['required', 'string', 'max:255'],
+
         ])->validateWithBag('updateProfileInformation');
 
-        if ($input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail) {
+        if (
+            $input['email'] !== $user->email &&
+            $user instanceof MustVerifyEmail
+        ) {
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
             ])->save();
+
+            $user->profile->address = $input['address'];
+            $user->profile->city = $input['city'];
+            $user->profile->province = $input['province'];
+            $user->profile->profession = $input['profession'];
+            $user->profile->save();
         }
     }
-
     /**
      * Update the given verified user's profile information.
      *
