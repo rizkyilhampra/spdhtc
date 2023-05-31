@@ -30,9 +30,10 @@
     </div>
 @endsection
 
-@section('jsCustom')
+@push('jsCustom')
     <script>
         const statusSession = '{{ session('status') }}';
         emailHasSent();
+        cekSession();
     </script>
-@endsection
+@endpush
