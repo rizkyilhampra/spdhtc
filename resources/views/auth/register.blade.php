@@ -74,9 +74,13 @@
                         </div>
                         <div class="row sm-gutters">
                             <div class="col-12">
-                                <a class="btn btn-block btn-social btn-google" href="{{ route('google') }}">
+                                <a class="btn btn-block btn-social btn-google" href="{{ route('google') }}"
+                                    onclick="event.preventDefault(); document.getElementById('google-form').submit();">
                                     <span class="fab fa-google"></span> Google
                                 </a>
+                                <form id="google-form" action="{{ route('google') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </div>
                     </form>
