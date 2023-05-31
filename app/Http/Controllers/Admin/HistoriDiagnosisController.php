@@ -31,9 +31,15 @@ class HistoriDiagnosisController extends Controller
         }, 'penyakit' => function ($query) {
             $query->select('id', 'name');
         }])->get(['id', 'user_id', 'penyakit_id', 'updated_at'])->map(function ($diagnosis) {
+            if ($diagnosis['penyakit'] == null) {
+                $diagnosis['penyakit'] = [
+                    'id' => null,
+                    'name' => 'Penyakit tidak ditemukan',
+                ];
+            }
             $diagnosis['updated_at'] = $diagnosis['updated_at'];
             $diagnosis['user'] = $diagnosis['user']->toArray();
-            $diagnosis['penyakit'] = $diagnosis['penyakit']->toArray();
+            $diagnosis['penyakit'] = $diagnosis['penyakit'];
             return [
                 'id' => $diagnosis['id'],
                 'updated_at' => $diagnosis['updated_at'],
@@ -41,7 +47,6 @@ class HistoriDiagnosisController extends Controller
                 'penyakit' => $diagnosis['penyakit'],
             ];
         })->values()->toArray();
-
 
         return $diagnosis;
     }

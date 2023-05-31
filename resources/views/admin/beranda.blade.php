@@ -122,7 +122,13 @@
                             <div class="mb-4">
                                 <div class="text-small float-right font-weight-bold text-muted">{{ $value['count'] }}
                                 </div>
-                                <div class="font-weight-bold mb-1">{{ $value['penyakit'] }}</div>
+                                <div class="font-weight-bold mb-1">
+                                    @if ($value['penyakit_id'] == null)
+                                        <span class="text-danger">Penyakit tidak ditemukan</span>
+                                    @else
+                                        {{ $value['penyakit'] }}
+                                    @endif
+                                </div>
                                 <div class="progress" data-height="10">
                                     <div class="progress-bar" role="progressbar" data-width="{{ $value['count'] }}%"
                                         aria-valuenow="{{ $value['count'] }}" aria-valuemin="0" aria-valuemax="100">

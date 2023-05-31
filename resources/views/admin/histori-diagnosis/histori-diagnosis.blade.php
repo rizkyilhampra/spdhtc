@@ -84,7 +84,12 @@
                                         </td>
                                         <td>{{ $value['user']['name'] }}</td>
                                         <td>{{ $value['user']['email'] }}</td>
-                                        <td>{{ $value['penyakit']['name'] }}</td>
+                                        @if ($value['penyakit']['id'] == null)
+                                            <td><span class="badge bg-danger text-white">Penyakit tidak ditemukan</span>
+                                            </td>
+                                        @else
+                                            <td>{{ $value['penyakit']['name'] }}</td>
+                                        @endif
                                         <td>{{ $value['updated_at'] }}</td>
                                         <td>
                                             <a href="{{ route('admin.histori.diagnosis.detail', $value['id']) }}"
