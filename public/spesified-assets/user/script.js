@@ -342,8 +342,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         e.preventDefault();
         if (!isUser) {
             Swal.fire({
-                title: 'Anda belum login',
-                text: 'Silahkan login terlebih dahulu untuk melakukan diagnosis',
+                title: 'Anda belum login!',
+                text: 'Silahkan login terlebih dahulu',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
         } else if (!hasUserProfile) {
             Swal.fire({
-                title: 'Anda belum melengkapi profil',
+                title: 'Anda belum melengkapi profil!',
                 text: 'Silahkan lengkapi profil terlebih dahulu untuk melakukan diagnosis',
                 icon: 'warning',
                 showCancelButton: true,

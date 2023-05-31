@@ -166,6 +166,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
+                            return window.location.reload();
                         } catch (error) {
                             swalError(error.responseJSON);
                         }

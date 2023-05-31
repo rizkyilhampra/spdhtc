@@ -70,7 +70,7 @@
                             </button>
                         </div>
                         <div class="text-center mt-4 mb-3">
-                            <div class="text-job text-muted">Atau masuk dengan</div>
+                            <div class="text-job text-muted">Atau daftar dengan</div>
                         </div>
                         <div class="row sm-gutters">
                             <div class="col-12">
