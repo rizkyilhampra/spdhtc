@@ -2,6 +2,8 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\AuthGroup;
+use App\Models\AuthGroupUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -31,10 +33,15 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        $authGroup = AuthGroup::findOrFail(2);
+        $authGroup->users()->attach($user->id, ['created_at' => now(), 'updated_at' => now()]);
+
+        return $user;
     }
 }
