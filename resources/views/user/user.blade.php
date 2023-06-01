@@ -135,7 +135,7 @@
             </div>
         </div>
     </div>
-    @if (auth()->check())
+    @can('asUser')
         @section('title', 'User ' . html_entity_decode('&mdash;'))
         @include('user.profile-modal')
         @push('scriptPerPage')
@@ -285,7 +285,7 @@
         @push('stylePerPage')
             <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
         @endpush
-    @endif
+    @endcan
 @endsection
 
 @push('scriptPerPage')
