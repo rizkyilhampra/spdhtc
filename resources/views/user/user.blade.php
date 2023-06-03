@@ -138,152 +138,17 @@
     @can('asUser')
         @section('title', 'User ' . html_entity_decode('&mdash;'))
         @include('user.profile-modal')
+        @push('styleLibraries')
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+            <link rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+        @endpush
         @push('scriptPerPage')
             <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
             <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-            <script>
-                const modalEditProfile = document.getElementById('editProfileModal');
-                const modalEditProfileInstance = bootstrap.Modal.getOrCreateInstance(modalEditProfile);
-                modalEditProfile.addEventListener('shown.bs.modal', async () => {
-                    const btnSubmitEditProfile = document.getElementById('btnSubmitEditProfile');
-                    btnSubmitEditProfile.addEventListener('click', async (e) => {
-                        e.preventDefault();
-                        Swal.fire({
-                            title: 'Mohon tunggu',
-                            html: 'Sedang memproses data',
-                            allowOutsideClick: false,
-                            didOpen: () => {
-                                Swal.showLoading()
-                            },
-                        });
-                        try {
-                            const response = await ajaxPostEditProfile();
-                            await new Promise(resolve => setTimeout(resolve, 1000)); // Delay selama 1 detik
-                            const swalSuccess = await Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: response.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                            return window.location.reload();
-                        } catch (error) {
-                            swalError(error.responseJSON);
-                        }
-                    });
-
-                    const setElementAttributes = (element, value, disabled = false) => {
-                        element.value = value;
-                        element.disabled = disabled;
-                    };
-
-                    const elements = {
-                        nameInput: document.querySelector('input[name="name"]'),
-                        emailInput: document.querySelector('input[name="email"]'),
-                        addressTextarea: document.querySelector('textarea[name="address"]'),
-                        provinsiSelect: document.querySelector('#provinsi'),
-                        profesiInput: document.querySelector('#profesi'),
-                        kotaSelect: document.querySelector('#kota')
-                    };
-
-                    setElementAttributes(elements.nameInput, 'Mohon Tunggu...', true);
-                    setElementAttributes(elements.emailInput, 'Mohon Tunggu...', true);
-                    setElementAttributes(elements.addressTextarea, 'Mohon Tunggu...', true);
-
-                    elements.kotaSelect.innerHTML = '<option value="">Mohon Tunggu...</option>';
-                    elements.profesiInput.innerHTML = '<option value="">Mohon Tunggu...</option>';
-                    elements.provinsiSelect.innerHTML = '<option value="">Mohon Tunggu...</option>';
-                    elements.provinsiSelect.disabled = true;
-                    elements.profesiInput.disabled = true;
-                    elements.kotaSelect.disabled = true;
-                    try {
-                        const response = await ajaxRequestEditProfile();
-                        if (response.user.profile == null) {
-                            response.user.profile = {
-                                address: '',
-                                province: '',
-                                city: '',
-                                profession: ''
-                            }
-                        }
-                        setElementAttributes(elements.nameInput, response.user.name);
-                        setElementAttributes(elements.emailInput, response.user.email);
-                        setElementAttributes(elements.addressTextarea, response.user.profile.address);
-
-                        setElementAttributes(elements.provinsiSelect, '', false);
-                        setElementAttributes(elements.profesiInput, '', false);
-                        elements.provinsiSelect.innerHTML =
-                            '<option disabled selected value="">Pilih Provinsi</option>';
-                        elements.profesiInput.innerHTML =
-                            '<option disabled selected value="">Pilih Profesi</option>';
-                        response.provinsi.forEach(value => {
-                            if (value.province_id == response.user.profile.province) {
-                                elements.provinsiSelect.innerHTML +=
-                                    `<option value="${value.province_id}" selected>${value.province}</option>`;
-                            } else {
-                                elements.provinsiSelect.innerHTML +=
-                                    `<option value="${value.province_id}">${value.province}</option>`;
-                            }
-                        });
-                        response.profesi.forEach(value => {
-                            if (value == response.user.profile.profession) {
-                                elements.profesiInput.innerHTML +=
-                                    `<option value="${value}" selected>${value}</option>`;
-                            } else {
-                                elements.profesiInput.innerHTML +=
-                                    `<option value="${value}">${value}</option>`;
-                            }
-                        });
-                        elements.kotaSelect.innerHTML =
-                            '<option disabled selected value="">Pilih Kota</option>';
-
-                        try {
-                            const response2 = await ajaxCityRequest(elements.provinsiSelect.value);
-                            response2.forEach(value => {
-                                if (value.city_id == response.user.profile.city) {
-                                    elements.kotaSelect.innerHTML +=
-                                        `<option value="${value.city_id}" selected>${value.city_name}</option>`;
-                                    elements.kotaSelect.disabled = false;
-                                } else {
-                                    elements.kotaSelect.innerHTML +=
-                                        `<option value="${value.city_id}">${value.city_name}</option>`;
-                                }
-                            });
-                        } catch (error) {
-                            if (error.status == 404) {
-                                elements.kotaSelect.innerHTML =
-                                    '<option value="">Pilih Provinsi Terlebih Dahulu</option>';
-                            } else {
-                                swalError(error.responseJSON);
-                            }
-                        }
-                    } catch (error) {
-                        swalError(error.responseJSON);
-                    }
-
-                    elements.provinsiSelect.addEventListener('change', async (e) => {
-                        elements.kotaSelect.innerHTML =
-                            '<option value="">Mohon Tunggu...</option>';
-                        elements.kotaSelect.disabled = true;
-                        try {
-                            const response = await ajaxCityRequest(e.target.value);
-                            elements.kotaSelect.innerHTML =
-                                '<option disabled selected value="">Pilih Kota</option>';
-                            elements.kotaSelect.disabled = false;
-                            response.forEach(value => {
-                                elements.kotaSelect.innerHTML +=
-                                    `<option value="${value.city_id}">${value.city_name}</option>`;
-                            });
-                        } catch (error) {
-                            swalError(error.responseJSON);
-                        }
-                    });
-                    await drawHistoriDiagnosisTable();
-                });
-            </script>
-        @endpush
-        @push('stylePerPage')
-            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            <script src="{{ asset('spesified-assets/user/profile-modal.js') }}"></script>
         @endpush
     @endcan
 @endsection
