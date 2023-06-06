@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Diagnosis;
 use App\Models\Gejala;
 use App\Models\Penyakit;
-use GdImage;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -30,9 +29,6 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        $start = $request->input('start', 0);
-        $length = $request->input('length', 5);
-
         $query = Diagnosis::with(['penyakit' => function ($query) {
             $query->select('id', 'name');
         }])->where('user_id', $user->id ?? null);
@@ -50,32 +46,35 @@ class UserController extends Controller
 
         $totalData = $query->count();
 
-        $historiDiagnosis = $query->offset($start)
+        $start = $request->input('start', 0);
+        $length = $request->input('length', 5);
+
+        $orderColumn = $request->input('order.0.column', 0);
+        $orderDirection = $request->input('order.0.dir', 'asc');
+
+        $orderColumns = [
+            0 => 'id',
+            1 => 'created_at',
+        ];
+
+        if (array_key_exists($orderColumn, $orderColumns)) {
+            $orderBy = $orderColumns[$orderColumn];
+            $query->orderBy($orderBy, $orderDirection);
+
+            $no = ($orderDirection == 'asc') ? $start + 1 : $totalData - $start;
+        }
+
+        $historiDiagnosis = $query
+            ->offset($start)
             ->limit($length)
             ->get(['id', 'created_at', 'penyakit_id']);
 
-        $data = $historiDiagnosis->map(function ($item) {
-            $item->penyakit = Penyakit::find($item->penyakit_id, ['name']) ?? ['name' => 'Tidak Diketahui'];
+        $data = $historiDiagnosis->map(function ($item) use (&$no, $orderDirection) {
+            $penyakit = Penyakit::find($item->penyakit_id, ['name']);
+            $item->penyakit = $penyakit ? $penyakit->name : 'Tidak Diketahui';
+            $item->no = ($orderDirection == 'asc') ? $no++ : $no--;
             return $item;
         });
-
-        $no = $start + 1;
-        $data = $data->map(function ($item) use (&$no) {
-            $item->no = $no++;
-            return $item;
-        });
-
-        if ($request->has('order.0.column') && $request->has('order.0.dir')) {
-            $orderColumn = $request->input('order.0.column');
-            $orderDirection = $request->input('order.0.dir');
-            if ($orderColumn == 0) {
-                $data = $data->sortBy('no', SORT_REGULAR, $orderDirection == 'desc')->values();
-            } else if ($orderColumn == 1) {
-                $data = $data->sortBy('created_at', SORT_REGULAR, $orderDirection == 'desc')->values();
-            } else if ($orderColumn == 2) {
-                $data = $data->sortBy('penyakit.name', SORT_REGULAR, $orderDirection == 'desc')->values();
-            }
-        }
 
         return response()->json([
             'draw' => $request->input('draw'),

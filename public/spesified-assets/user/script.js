@@ -15,12 +15,18 @@ async function drawHistoriDiagnosisTable() {
         processing: true,
         lengthMenu: [5, 10, 25, 50],
         pageLength: 5,
+        order: [0, 'desc'],
+        columnDefs: [{
+            targets: 2,
+            orderable: false
+        },
+        {
+            targets: 3,
+            orderable: false
+        }],
         ajax: {
             url: "histori-diagnosis-user",
             type: "GET",
-            data: function (data) { // Menggunakan "data" sebagai argumen
-                return data; // Mengembalikan "data" yang diterima
-            },
             error: function (xhr, error, thrown) {
                 swalError(xhr.responseJSON);
             }
