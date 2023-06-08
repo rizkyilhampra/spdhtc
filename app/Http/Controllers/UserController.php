@@ -84,29 +84,41 @@ class UserController extends Controller
         ]);
     }
 
-    public function historiDiagnosisDetail(Request $request)
+    public function detailDiagnosis(Request $request)
     {
-        $diagnosis = Diagnosis::find($request->id, ['answer_log']);
+        $penyakit = Penyakit::find(
+            Diagnosis::find($request->id_diagnosis, ['penyakit_id'])->penyakit_id,
+            ['name', 'reason', 'solution', 'image']
+        );
+
+        $diagnosis = Diagnosis::find($request->id_diagnosis, ['answer_log']);
         $answerLog = json_decode($diagnosis->answer_log, true);
         foreach ($answerLog as $key => $value) {
             $answerLog[$key] = $value == 1 ? 'Ya' : 'Tidak';
         }
         $gejala = Gejala::whereIn('id', array_keys($answerLog))->get(['id', 'name']);
         foreach ($gejala as $item) {
-
             $item->answer = $answerLog[$item->id];
         }
         $answerLog = $gejala->map(function ($item) use ($request) {
             return [
-                'no' => $request->no,
                 'id' => $item->id,
                 'name' => $item->name,
                 'answer' => $item->answer,
             ];
         });
 
-        return response()->json([
-            'answerLog' => $answerLog,
-        ]);
+        return response()->json(
+            [
+                'penyakit' => $penyakit,
+                'answerLog' => $answerLog,
+            ]
+        );
+    }
+
+    public function getGejala()
+    {
+        $gejala = Gejala::get(['id', 'name']);
+        return response()->json($gejala);
     }
 }

@@ -60,7 +60,7 @@ async function drawHistoriDiagnosisTable() {
         {
             data: 'id',
             render: function (data, type, row, meta) {
-                return `<button class="btn btn-outline-primary me-1" onclick="detailHistoriDiagnosis(${data}, ${row.no})">
+                return `<button class="btn btn-outline-primary me-1" onclick="getPenyakitIdFromHistori(${data}, ${row.no})">
                         <i class="fa-solid fa-eye"></i>
                     <button class="btn btn-outline-danger" onclick="deleteHistoriDiagnosis(${data})">
                         <i class="fa-solid fa-trash"></i>
@@ -104,61 +104,6 @@ function deleteHistoriDiagnosis(id) {
                 }
             });
         }
-    });
-}
-
-async function detailHistoriDiagnosis(id, no) {
-    const detailHistoriDiagnosis = document.getElementById('detailHistoriDiagnosis');
-    const table = detailHistoriDiagnosis.querySelector('table');
-    const tableBody = table.querySelector('tbody');
-    const sectionHeading = detailHistoriDiagnosis.querySelector('h2');
-    //remove all child element in table body
-    while (tableBody.firstChild) {
-        tableBody.removeChild(tableBody.firstChild);
-    }
-    sectionHeading.innerHTML = "";
-
-    function ajaxRequestToHistoriDiagnosisDetail() {
-        return $.ajax({
-            url: "/histori-diagnosis-user/detail",
-            method: "GET",
-            data: {
-                id: id,
-                no: no
-            }
-        });
-    }
-    try {
-        const response = await ajaxRequestToHistoriDiagnosisDetail();
-        response.answerLog.forEach((item, index) => {
-            sectionHeading.innerHTML = `Detail Diagnosis No.${item.no}`;
-            const tableRow = document.createElement('tr');
-            const tableData = document.createElement('td');
-            const tableData2 = document.createElement('td');
-            const tableData3 = document.createElement('td');
-            let number = index + 1;
-            tableData.innerHTML = number;
-            tableData2.innerHTML = item.name;
-            tableData3.innerHTML = item.answer;
-            tableRow.appendChild(tableData);
-            tableRow.appendChild(tableData2);
-            tableRow.appendChild(tableData3);
-            tableBody.appendChild(tableRow);
-        });
-
-        detailHistoriDiagnosis.classList.remove('d-none');
-        detailHistoriDiagnosis.scrollIntoView({
-            behavior: 'smooth'
-        });
-    } catch (error) {
-        swalError(error.responseJSON);
-    }
-}
-
-function ajaxRequestToHistoriDiagnosis() {
-    return $.ajax({
-        url: "/histori-diagnosis-user",
-        method: "GET"
     });
 }
 
@@ -451,15 +396,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     swalLoading.close();
 
                     //looping Swal sebanyak jumlah gejala
-                    let isClosed = false;
+                    var isClosed = false;
                     for (let i = 0; i < countGejala; i++) {
                         const element = gejala[i];
                         const {
                             value: jawaban,
                             dismiss: dismissReason
                         } = await Swal.fire({
-                            title: 'Pertanyaan ' + (i + 1) + ' dari ' +
-                                countGejala,
+                            title: 'Pertanyaan ' + (i + 1),
                             text: 'Apakah ' + element.name +
                                 '?',
                             icon: 'question',
@@ -480,16 +424,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                         try {
                             const response = await ajaxRequestToDiagnosis(element.id, jawaban);
-                            if (response[1] != null) {
+                            console.log(response);
+                            if (response.idPenyakit != null) {
                                 await Swal.close();
-                                modalResult(response[1], true, 'Penyakit ditemukan!',
-                                    'Penyakit yang diderita adalah ' + response[1].name,
-                                    'success');
+                                getPenyakitFromDiagnose(response, true);
                                 break;
                             } else if (response.penyakitUndentified) {
-                                modalResult(response.penyakitUndentified, false,
-                                    'Penyakit tidak ditemukan!',
-                                    'Mohon maaf, penyakit tidak dapat ditemukan', 'error');
+                                getUndentifiedPenyakit(response.penyakitUndentified);
+                                break;
                             }
                         } catch (error) {
                             swalError(error.responseJSON);
