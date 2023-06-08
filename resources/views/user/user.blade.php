@@ -138,6 +138,7 @@
     @can('asUser')
         @section('title', 'User ' . html_entity_decode('&mdash;'))
         @include('user.profile-modal')
+        @include('user.detail-diagnosis-modal')
         @push('styleLibraries')
             <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
@@ -149,6 +150,10 @@
             <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
             <script src="{{ asset('spesified-assets/user/profile-modal.js') }}"></script>
+            <script src="{{ asset('spesified-assets/user/detail-diagnosis-modal.js') }}"></script>
+            <script>
+                const assetImageUrl = '{{ asset('storage/penyakit') }}';
+            </script>
         @endpush
     @endcan
 @endsection
