@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class DiagnosisController extends Controller
 {
-    public function Diagnosis(Request $request)
+    public function diagnosis(Request $request)
     {
         $allGejala = Gejala::get('id')->count();
 
@@ -69,26 +69,21 @@ class DiagnosisController extends Controller
                     $modelDiagnosis->penyakit_id = $penyakitId;
                     $modelDiagnosis->save();
                 }
-                $penyakit = Penyakit::where('id', $modelDiagnosis->penyakit_id)->first(['name', 'reason', 'solution', 'image']);
+                $penyakit = Penyakit::where('id', $modelDiagnosis->penyakit_id)->first('id');
                 $terdeteksi = true;
             }
         }
 
-
         // Tidak ada penyakit yang terdeteksi
         if (!$terdeteksi && $request->idgejala == $allGejala) {
-            return response()->json(['penyakitUndentified' => 'Tidak ada penyakit yang cocok dengan gejala yang anda masukkan.']);
+            return response()->json([
+                'penyakitUndentified' => true
+            ]);
         }
 
         return response()->json([
-            $modelDiagnosis->answer_log,
-            $penyakit ?? null
+            'idDiagnosis' => $modelDiagnosis->id,
+            'idPenyakit' => $penyakit ?? null
         ]);
-    }
-
-    public function getGejala(Request $request)
-    {
-        $gejala = Gejala::get(['id', 'name']);
-        return response()->json($gejala);
     }
 }

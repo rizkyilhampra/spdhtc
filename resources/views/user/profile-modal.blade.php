@@ -39,8 +39,8 @@
                                         <div class="col-lg-6 col-12">
                                             <div class="mb-3">
                                                 <label for="provinsi" class="form-label font-medium">Provinsi</label>
-                                                <select class="form-select select-custom" name="province" id="provinsi"
-                                                    aria-label="Default select example">
+                                                <select class="form-select select2 select-custom" name="province"
+                                                    id="provinsi" aria-label="Default select example">
                                                 </select>
                                             </div>
                                         </div>
@@ -48,7 +48,7 @@
                                             <div class="mb-3">
                                                 <label for="kota"
                                                     class="form-label font-medium">Kota/Kabupaten</label>
-                                                <select disabled class="form-select select-custom" name="city"
+                                                <select class="form-select select2 select-custom" name="city"
                                                     id="kota" aria-label="Default select example">
                                                 </select>
                                             </div>
@@ -56,9 +56,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="profesi" class="form-label font-medium">Profesi</label>
-                                        <select class="form-select select-custom" name="profession" id="profesi"
-                                            aria-label="Default select example">
-                                            <option disabled selected>Pilih Profesi</option>
+                                        <select class="form-select select2 select-custom" name="profession"
+                                            id="profesi" aria-label="Default select example">
                                         </select>
                                     </div>
                                     <div class="pt-3 ">
@@ -92,29 +91,6 @@
                                     <tbody>
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center d-none" id="detailHistoriDiagnosis">
-                    <div class="col-12 col-sm-10 py-5">
-                        <h2 class="font-semibold pb-3">
-                        </h2>
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped  " id="detailHistoriDiagnosisTable">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">No</th>
-                                                <th scope="col">Gejala</th>
-                                                <th scope="col">Bobot</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
                         </div>
                     </div>
