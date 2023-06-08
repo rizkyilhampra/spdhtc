@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BerandaController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DiagnosisController;
-use App\Http\Controllers\GetCollaboratorGithubController;
 use App\Http\Controllers\ShowPdfController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
@@ -63,19 +61,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::middleware('can:asUser')->group(function () {
-        Route::post('diagnosis', [DiagnosisController::class, 'Diagnosis'])
+        Route::post('diagnosis', [DiagnosisController::class, 'diagnosis'])
             ->middleware('can:hasUserProfile')
             ->name('user.diagnosis');
+        Route::put('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'updateUser'])->name('update-profile');
+        Route::delete('histori-diagnosis-user', [\App\Http\Controllers\UserController::class, 'historiDiagnosis'])->name('histori-diagnosis-user.delete');
         Route::middleware('check.direct.access')->group(function () {
-            Route::put('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'updateUser'])->name('update-profile');
+            Route::middleware('can:hasUserProfile')->group(function () {
+                Route::get('get-gejala', [UserController::class, 'getGejala'])->name('get-gejala');
+                Route::get('histori-diagnosis-user', [\App\Http\Controllers\UserController::class, 'historiDiagnosis'])->name('histori-diagnosis-user');
+                Route::get('detail-diagnosis', [UserController::class, 'detailDiagnosis'])->name('detail-diagnosis');
+            });
             Route::get('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
-            Route::get('get-gejala', [DiagnosisController::class, 'getGejala'])->name('get-gejala')->middleware('can:hasUserProfile');
             Route::get('provinsi', [\App\Http\Controllers\KotaProvinsiController::class, 'indexProvince'])->name('provinsi');
             Route::get('edit-profile/lokasi/kota/{id}', [\App\Http\Controllers\KotaProvinsiController::class, 'indexCity'])->name('kota');
-            Route::get('histori-diagnosis-user', [\App\Http\Controllers\UserController::class, 'historiDiagnosis'])->name('histori-diagnosis-user');
-            Route::get('histori-diagnosis-user/detail', [\App\Http\Controllers\UserController::class, 'historiDiagnosisDetail'])->name('histori-diagnosis-user.detail');
         });
-        Route::delete('histori-diagnosis-user', [\App\Http\Controllers\UserController::class, 'historiDiagnosis'])->name('histori-diagnosis-user.delete');
     });
 });
 
