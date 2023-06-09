@@ -424,7 +424,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                         try {
                             const response = await ajaxRequestToDiagnosis(element.id, jawaban);
-                            console.log(response);
                             if (response.idPenyakit != null) {
                                 await Swal.close();
                                 getPenyakitFromDiagnose(response, true);
