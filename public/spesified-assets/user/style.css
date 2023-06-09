@@ -8,6 +8,11 @@ body {
     scroll-behavior: smooth;
 }
 
+body.modal-open,
+.modal-open nav.navbar {
+    padding-right: 0 !important;
+}
+
 .font-normal {
     font-weight: 400 !important;
 }
@@ -179,4 +184,8 @@ body {
 
 .chocolat-wrapper {
     z-index: 9999 !important;
+}
+
+ol {
+    margin-bottom: 0 !important;
 }

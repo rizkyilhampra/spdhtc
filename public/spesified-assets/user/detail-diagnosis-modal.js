@@ -105,10 +105,23 @@ function drawDetailDiagnosis(response, wasDiagnosed) {
         headerPenyakitSolution.insertAdjacentHTML('afterend', nomorAsOlTag);
 
         const imagePenyakit = new Image();
-        imagePenyakit.src = assetImageUrl + '/' + response.penyakit.image;
+        imagePenyakit.src = assetStorage + '/' + response.penyakit.image;
         imagePenyakit.alt = response.penyakit.name;
+        imagePenyakit.id = 'imagePenyakit';
         imagePenyakit.classList.add('img-fluid');
         containerImagePenyakitDetailDiagnosisModal.appendChild(imagePenyakit);
+
+        new bootstrap.Tooltip(imagePenyakit, {
+            title: response.penyakit.name,
+        });
+
+        imagePenyakit.addEventListener('click', () => {
+            const chocolatInstance = Chocolat([{
+                src: assetStorage + '/' + response.penyakit.image,
+                title: response.penyakit.name,
+            }], {});
+            chocolatInstance.api.open();
+        });
     }
 }
 
@@ -182,7 +195,10 @@ function drawChart(data) {
                         beginAtZero: true,
                         stepSize: 25,
                         max: 100,
-                    }
+                        callback: function (value) {
+                            return value + "%"
+                        }
+                    },
                 }],
                 xAxes: [{
                     ticks: {
