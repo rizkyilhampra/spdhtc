@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diagnosis;
 use App\Models\Gejala;
 use App\Models\Penyakit;
+use App\Models\Rule;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -120,5 +121,45 @@ class UserController extends Controller
     {
         $gejala = Gejala::get(['id', 'name']);
         return response()->json($gejala);
+    }
+
+
+    public function chartDiagnosisPenyakit(Request $request)
+    {
+        // Mengumpulkan aturan-aturan berdasarkan penyakit dan gejala
+        $rule = Rule::get(['penyakit_id', 'gejala_id']);
+        $aturan = [];
+        foreach ($rule as $value) {
+            $aturan[$value->penyakit_id][] = $value->gejala_id;
+        }
+
+        // Mendapatkan data diagnosis dan log jawaban
+        $diagnosis = Diagnosis::find($request->id_diagnosis, ['answer_log']);
+        $answerLog = json_decode($diagnosis->answer_log, true);
+
+        // Menghitung bobot untuk setiap penyakit
+        $bobot = [];
+        foreach ($aturan as $idPenyakit => $idGejala) {
+            $bobot[$idPenyakit] = 0;
+            foreach ($answerLog as $key => $value) {
+                if (in_array($key, $idGejala)) {
+                    $bobot[$idPenyakit] += $value;
+                }
+            }
+        }
+
+        // Menghitung persentase bobot untuk setiap penyakit
+        foreach ($bobot as $key => $value) {
+            $jumlahGejala = count($aturan[$key]);
+            $bobot[$key] = ($jumlahGejala > 0) ? round(($value / $jumlahGejala) * 100, 2) : 0;
+        }
+
+        // Melakukan pemetaan bobot ke nama penyakit
+        $bobot = collect($bobot)->mapWithKeys(function ($item, $key) {
+            $penyakit = Penyakit::find($key, ['id', 'name']);
+            return [$penyakit->name => $item];
+        });
+
+        return response()->json($bobot);
     }
 }
