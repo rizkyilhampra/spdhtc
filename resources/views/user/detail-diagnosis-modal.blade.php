@@ -47,35 +47,34 @@
                         </div>
                     </div>
                     <div class="row py-5">
-                        <div class="col-12 col-lg-6">
-                            <h2 class="font-semibold">
-                                Histori Jawaban
-                            </h2>
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped" id="detailJawabanDiagnosisTable">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">No</th>
-                                                    <th scope="col">Gejala</th>
-                                                    <th scope="col">Bobot</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="table-group-divider">
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        <h2 class="font-semibold">
+                            Histori Jawaban
+                        </h2>
+                        <div class="card shadow" style="max-height: 400px; overflow-y: scroll">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="detailJawabanDiagnosisTable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Gejala</th>
+                                                <th scope="col">Bobot</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6 pt-5 pt-lg-0">
-                            <h2 class="font-semibold">
-                                Persentase Penyakit
-                            </h2>
-                            <div class="card shadow">
-                                <div class="card-body">
-                                </div>
+                    </div>
+                    <div class="row pb-5">
+                        <h2 class="font-semibold">
+                            Persentase Penyakit
+                        </h2>
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <canvas id="chartDiagnosisPenyakit" height="300"></canvas>
                             </div>
                         </div>
                     </div>
