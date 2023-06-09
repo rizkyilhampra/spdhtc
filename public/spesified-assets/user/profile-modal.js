@@ -1,6 +1,8 @@
 const modalEditProfile = document.getElementById('editProfileModal');
 const modalEditProfileInstance = bootstrap.Modal.getOrCreateInstance(modalEditProfile);
 modalEditProfile.addEventListener('shown.bs.modal', async () => {
+    drawHistoriDiagnosisTable();
+
     const btnSubmitEditProfile = document.getElementById('btnSubmitEditProfile');
     btnSubmitEditProfile.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -165,7 +167,6 @@ modalEditProfile.addEventListener('shown.bs.modal', async () => {
             }
         }
     });
-    await drawHistoriDiagnosisTable();
 });
 
 $(document).on('select2:open', () => {
