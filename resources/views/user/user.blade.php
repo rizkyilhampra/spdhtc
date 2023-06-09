@@ -32,10 +32,11 @@
                                 Sistem ini menggunakan metode forward chaining dalam mendiagnosis penyakit. Prosesnya
                                 dimulai dengan evaluasi gejala yang diberikan oleh pengguna, kemudian
                                 sistem akan mencocokkan dengan aturan yang ada. Jika terdapat aturan yang telah terpenuhi,
-                                sistem akan memberikan hasil diagnosis penyakit. Hasil diagnosis penyakit akan disimpan di
-                                dalam sistem. Pengguna dapat melihat histori hasil diagnosis beserta
-                                bobot tiap gejala yang telah diberikan. Setelah mengetahui penyakit, pengguna dapat
-                                mengunjungi halaman bagian Daftar Penyakit untuk melihat informasi lebih lanjut.
+                                sistem akan memberikan detail hasil diagnosis penyakit. Detail hasil diagnosis
+                                penyakit akan
+                                disimpan di
+                                dalam sistem. Pengguna dapat melihat kembali detail hasil diagnosis yang telah dilakukan
+                                pada histori diagnosis di menu profil.
                             </div>
                             <div class="d-grid pt-3">
                                 <button id="btn-diagnosis" class="btn btn-custom1 py-2">
@@ -152,9 +153,6 @@
             <script src="{{ asset('assets/chart.js/dist/Chart.min.js') }}"></script>
             <script src="{{ asset('spesified-assets/user/profile-modal.js') }}"></script>
             <script src="{{ asset('spesified-assets/user/detail-diagnosis-modal.js') }}"></script>
-            <script>
-                const assetImageUrl = '{{ asset('storage/penyakit') }}';
-            </script>
         @endpush
     @endcan
 @endsection
