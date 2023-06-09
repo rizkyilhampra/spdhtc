@@ -14,6 +14,9 @@ let idDiagnosis = null;
 let noHistoriDiagnosis = null;
 let diagnosed = false;
 let penyakitUndentified = false;
+let labelChart = null;
+let valueChart = null;
+let chartDiagnosisPenyakit = null;
 
 function getPenyakitIdFromHistori(data, no) {
     idDiagnosis = data;
@@ -44,12 +47,23 @@ function ajaxRequestDetailDiagnosis() {
         },
     });
 }
+function ajaxRequestChartDiagnosisPenyakit() {
+    return $.ajax({
+        url: '/chart-diagnosis-penyakit',
+        method: 'GET',
+        data: {
+            id_diagnosis: idDiagnosis,
+        },
+    });
+}
 
 detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
     try {
         let response = await ajaxRequestDetailDiagnosis();
+        let response1 = await ajaxRequestChartDiagnosisPenyakit();
         drawDetailDiagnosis(response, diagnosed);
         drawDetailJawabanDiagnosis(response.answerLog);
+        drawChart(response1);
     } catch (error) {
         swalError(error.responseJSON);
     }
@@ -91,10 +105,23 @@ function drawDetailDiagnosis(response, wasDiagnosed) {
         headerPenyakitSolution.insertAdjacentHTML('afterend', nomorAsOlTag);
 
         const imagePenyakit = new Image();
-        imagePenyakit.src = assetImageUrl + '/' + response.penyakit.image;
+        imagePenyakit.src = assetStorage + '/' + response.penyakit.image;
         imagePenyakit.alt = response.penyakit.name;
+        imagePenyakit.id = 'imagePenyakit';
         imagePenyakit.classList.add('img-fluid');
         containerImagePenyakitDetailDiagnosisModal.appendChild(imagePenyakit);
+
+        new bootstrap.Tooltip(imagePenyakit, {
+            title: response.penyakit.name,
+        });
+
+        imagePenyakit.addEventListener('click', () => {
+            const chocolatInstance = Chocolat([{
+                src: assetStorage + '/' + response.penyakit.image,
+                title: response.penyakit.name,
+            }], {});
+            chocolatInstance.api.open();
+        });
     }
 }
 
@@ -128,4 +155,64 @@ detailDiagnosisModal.addEventListener('hide.bs.modal', function (event) {
     while (tableBody.firstChild) {
         tableBody.removeChild(tableBody.firstChild);
     }
+    if (chartDiagnosisPenyakit != null) {
+        chartDiagnosisPenyakit.destroy();
+    }
 });
+
+function drawChart(data) {
+    let bobot = data;
+    labelChart = Object.entries(bobot).map(([nama, nilai]) => nama);
+    valueChart = Object.entries(bobot).map(([nama, nilai]) => nilai);
+
+    var ctx = document.getElementById("chartDiagnosisPenyakit").getContext('2d');
+    chartDiagnosisPenyakit = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labelChart,
+            datasets: [{
+                label: 'Statistics',
+                data: valueChart,
+                borderWidth: 2,
+                backgroundColor: '#6777ef',
+                borderColor: '#6777ef',
+                borderWidth: 2.5,
+                pointBackgroundColor: '#ffffff',
+                pointRadius: 4
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        drawBorder: false,
+                        color: '#f2f2f2',
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 25,
+                        max: 100,
+                        callback: function (value) {
+                            return value + "%"
+                        }
+                    },
+                }],
+                xAxes: [{
+                    ticks: {
+                        display: true
+                    },
+                    gridLines: {
+                        display: true
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+}
+
+
