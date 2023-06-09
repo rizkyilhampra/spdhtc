@@ -7,7 +7,7 @@ function buttonToTop(top) {
     }
 }
 
-async function drawHistoriDiagnosisTable() {
+function drawHistoriDiagnosisTable() {
     $('#historiDiagnosisTable').DataTable({
         destroy: true,
         scrollX: true,
@@ -156,38 +156,49 @@ const swalError = async (error) => {
 };
 
 function applyNavbarClassesDark() {
-    return $('.navbar')
-        .removeClass('bg-body-transparent')
-        .addClass('color-fren-green')
-        .attr('data-bs-theme', 'dark').css({
-            'transition': 'all .5s ease-in-out'
-        }),
-        $('svg path')
-            .attr('style', 'fill: #fff !important')
-            .css({
-                'transition': 'all .5s ease-in-out'
-            }),
-        $('.navbar-nav li a div button').removeClass('btn-outline-dark').addClass('btn-outline-light').css({
-            'transition': 'all .5s ease-in-out'
-        })
+    const navbar = document.querySelector('.navbar');
+    const svgPaths = Array.from(document.querySelectorAll('svg path'));
+    const navbarButtons = Array.from(document.querySelectorAll('.navbar-nav li a div button'));
+
+    navbar.classList.remove('bg-body-transparent');
+    navbar.classList.add('color-fren-green');
+    navbar.setAttribute('data-bs-theme', 'dark');
+    navbar.style.transition = 'all .5s ease-in-out';
+
+    svgPaths.forEach((path) => {
+        path.setAttribute('style', 'fill: #fff !important');
+        path.style.transition = 'all .5s ease-in-out';
+    });
+
+    navbarButtons.forEach((button) => {
+        button.classList.remove('btn-outline-dark');
+        button.classList.add('btn-outline-light');
+        button.style.transition = 'all .5s ease-in-out';
+    });
 }
 
 function applyNavbarClassesLight() {
-    return $('.navbar')
-        .removeClass('color-fren-green')
-        .removeAttr('data-bs-theme')
-        .addClass('bg-body-transparent').css({
-            'transition': 'all .5s ease-in-out'
-        }),
-        $('svg path')
-            .removeAttr('style')
-            .css({
-                'transition': 'all .5s ease-in-out'
-            }),
-        $('.navbar-nav li a div button').removeClass('btn-outline-light').addClass('btn-outline-dark').css({
-            'transition': 'all .5s ease-in-out'
-        })
+    const navbar = document.querySelector('.navbar');
+    const svgPaths = Array.from(document.querySelectorAll('svg path'));
+    const navbarButtons = Array.from(document.querySelectorAll('.navbar-nav li a div button'));
+
+    navbar.classList.remove('color-fren-green');
+    navbar.removeAttribute('data-bs-theme');
+    navbar.classList.add('bg-body-transparent');
+    navbar.style.transition = 'all .5s ease-in-out';
+
+    svgPaths.forEach((path) => {
+        path.removeAttribute('style');
+        path.style.transition = 'all .5s ease-in-out';
+    });
+
+    navbarButtons.forEach((button) => {
+        button.classList.remove('btn-outline-light');
+        button.classList.add('btn-outline-dark');
+        button.style.transition = 'all .5s ease-in-out';
+    });
 }
+
 
 function ajaxGetGejala() {
     return new Promise((resolve, reject) => {
@@ -220,44 +231,54 @@ document.addEventListener('DOMContentLoaded', async () => {
         tooltipTriggerEl))
 
     let navbarActive = false;
-    $('.navbar').on('show.bs.collapse', () => {
+    const navbar = document.querySelector('.navbar');
+    const sections = Array.from(document.querySelectorAll('div.section'));
+    const navbarNavItems = Array.from(document.querySelectorAll('.navbar-nav li a'));
+
+    navbar.addEventListener('show.bs.collapse', () => {
         applyNavbarClassesDark();
         navbarActive = true;
     });
-    $('.navbar').on('hide.bs.collapse', () => {
+
+    navbar.addEventListener('hide.bs.collapse', () => {
         navbarActive = false;
-        if ($(this).scrollTop() > 5) {
+        if (window.scrollY > 5) {
             applyNavbarClassesDark();
         } else {
             applyNavbarClassesLight();
         }
     });
 
-    const section = $('div.section');
-    $('li.nav-item a').first().addClass('active');
-
-    $(window).scroll(async function () {
-        if ($(this).scrollTop() > 5) {
-            await applyNavbarClassesDark();
+    window.addEventListener('scroll', async () => {
+        if (window.scrollY > 5) {
+            applyNavbarClassesDark();
             buttonToTop(true);
         } else {
-            await applyNavbarClassesLight();
+            applyNavbarClassesLight();
             if (navbarActive) {
-                await applyNavbarClassesDark();
+                applyNavbarClassesDark();
             }
             buttonToTop(false);
         }
-        let scrollPosition = $(this).scrollTop();
-        section.each(function () {
-            let sectionTop = $(this).offset().top - 100;
-            let sectionBottom = sectionTop + $(this).outerHeight();
+
+        const scrollPosition = window.scrollY;
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionBottom = sectionTop + section.offsetHeight;
             if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                $('.navbar-nav li a').removeClass('active');
-                $('.navbar-nav li a[href="#' + $(this).attr('id') + '"]').addClass(
-                    'active');
+                navbarNavItems.forEach((item) => {
+                    item.classList.remove('active');
+                });
+                const correspondingNavItem = navbarNavItems.find((item) => {
+                    return item.getAttribute('href') === `#${section.id}`;
+                });
+                if (correspondingNavItem) {
+                    correspondingNavItem.classList.add('active');
+                }
             }
         });
     });
+
 
     const btnNavbar = [
         btnBeranda = document.querySelector('.beranda'),
@@ -334,41 +355,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
 
-            async function modalResult(response, terdeteksi = true, title, text, icon) {
-                const {
-                    isConfirmed,
-                    isDenied,
-                } = await Swal.fire({
-                    title: title,
-                    text: text,
-                    icon: icon,
-                    showCancelButton: true,
-                    showDenyButton: true,
-                    showCloseButton: true,
-                    confirmButtonText: 'Lihat Histori Diagnosis',
-                    cancelButtonText: 'Tutup',
-                    denyButtonText: 'Diagnosis Ulang'
-                });
-
-                if (isConfirmed) {
-                    await new Promise((resolve) => {
-                        // Memeriksa setiap 100ms apakah swal telah dihancurkan
-                        const interval = setInterval(() => {
-                            if (!document.querySelector(
-                                '.swal2-container')) {
-                                clearInterval(interval);
-                                resolve();
-                            }
-                        }, 100);
-                    });
-                    modalEditProfileInstance.show();
-                } else if (isDenied) {
-                    showModal();
-                } else {
-                    Swal.close();
-                }
-            }
-
             async function showModal() {
                 const swalBeforeDiagnosis = await Swal.fire({
                     title: 'Catatan',
@@ -424,7 +410,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                         try {
                             const response = await ajaxRequestToDiagnosis(element.id, jawaban);
-                            console.log(response);
                             if (response.idPenyakit != null) {
                                 await Swal.close();
                                 getPenyakitFromDiagnose(response, true);

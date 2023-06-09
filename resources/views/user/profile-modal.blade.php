@@ -13,7 +13,7 @@
                                 Edit Profil
                             </h2>
                         </div>
-                        <div class="card shadow">
+                        <div class="card border border-0 shadow">
                             <div class="card-body">
                                 <form action="{{ route('update-profile') }}" method="POST">
                                     @method('PUT')
@@ -63,7 +63,7 @@
                                     <div class="pt-3 ">
                                         <div class="d-grid">
                                             <button type="submit" id="btnSubmitEditProfile"
-                                                class="btn btn-success">Simpan</button>
+                                                class="btn btn-primary">Simpan</button>
                                         </div>
                                     </div>
                                 </form>
@@ -76,7 +76,7 @@
                         <h2 class="font-semibold pb-3">
                             Histori Diagnosis
                         </h2>
-                        <div class="card shadow">
+                        <div class="card border border-0 shadow">
                             <div class="card-body">
                                 <table class="table table-striped text-nowrap" style="width: 100%;"
                                     id="historiDiagnosisTable">
