@@ -7,7 +7,7 @@ function buttonToTop(top) {
     }
 }
 
-async function drawHistoriDiagnosisTable() {
+function drawHistoriDiagnosisTable() {
     $('#historiDiagnosisTable').DataTable({
         destroy: true,
         scrollX: true,
@@ -332,41 +332,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         value: jawaban
                     },
                 });
-            }
-
-            async function modalResult(response, terdeteksi = true, title, text, icon) {
-                const {
-                    isConfirmed,
-                    isDenied,
-                } = await Swal.fire({
-                    title: title,
-                    text: text,
-                    icon: icon,
-                    showCancelButton: true,
-                    showDenyButton: true,
-                    showCloseButton: true,
-                    confirmButtonText: 'Lihat Histori Diagnosis',
-                    cancelButtonText: 'Tutup',
-                    denyButtonText: 'Diagnosis Ulang'
-                });
-
-                if (isConfirmed) {
-                    await new Promise((resolve) => {
-                        // Memeriksa setiap 100ms apakah swal telah dihancurkan
-                        const interval = setInterval(() => {
-                            if (!document.querySelector(
-                                '.swal2-container')) {
-                                clearInterval(interval);
-                                resolve();
-                            }
-                        }, 100);
-                    });
-                    modalEditProfileInstance.show();
-                } else if (isDenied) {
-                    showModal();
-                } else {
-                    Swal.close();
-                }
             }
 
             async function showModal() {
