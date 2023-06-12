@@ -16,12 +16,13 @@ let diagnosed = false;
 let penyakitUndentified = false;
 let labelChart = null;
 let valueChart = null;
+let fromHistori = false;
 let chartDiagnosisPenyakit = null;
 
 function getPenyakitIdFromHistori(data, no) {
     idDiagnosis = data;
     noHistoriDiagnosis = no;
-    diagnosed = false;
+    fromHistori = true;
     instanceDetailDiagnosisModal.show();
 }
 
@@ -33,7 +34,8 @@ function getPenyakitFromDiagnose(data, wasDiagnosed) {
 }
 
 function getUndentifiedPenyakit(data) {
-    penyakitUndentified = data;
+    idDiagnosis = data.idDiagnosis;
+    penyakitUndentified = data.penyakitUndentified;
     instanceDetailDiagnosisModal.show();
 }
 
@@ -61,30 +63,33 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
     try {
         let response = await ajaxRequestDetailDiagnosis();
         let response1 = await ajaxRequestChartDiagnosisPenyakit();
-        drawDetailDiagnosis(response, diagnosed);
+        drawDetailDiagnosis(response, diagnosed, fromHistori);
         drawDetailJawabanDiagnosis(response.answerLog);
         drawChart(response1);
     } catch (error) {
+        console.log(error);
         swalError(error.responseJSON);
     }
 });
 
 
-function drawDetailDiagnosis(response, wasDiagnosed) {
+function drawDetailDiagnosis(response, wasDiagnosed, fromHistori) {
+    titleDetailDiagnosisModal.innerText = 'Detail Diagnosis';
     if (wasDiagnosed) {
-        titleDetailDiagnosisModal.innerText = 'Detail Diagnosis';
         headerDetailDiagnosis.innerText = "Penyakit Ditemukan!";
         subheaderDetailDiagnosis.innerHTML = "Penyakit yang diderita adalah " + `<u>${response.penyakit.name}</u>`;
         headerDetailDiagnosis.classList.remove('d-none');
         subheaderDetailDiagnosis.classList.remove('d-none');
+    } else if (fromHistori) {
+        titleDetailDiagnosisModal.innerText = 'Detail Diagnosis No. ' + noHistoriDiagnosis;
     }
-    titleDetailDiagnosisModal.innerText = 'Detail Diagnosis No. ' + noHistoriDiagnosis;
-    if (response.penyakit == null || penyakitUndentified) {
+
+    if (response.penyakit == null || penyakitUndentified == true) {
         headerDetailDiagnosis.innerText = "Penyakit Tidak Ditemukan!";
         subheaderDetailDiagnosis.innerHTML = 'Tidak ada penyakit yang cocok dengan gejala yang anda masukkan.';
+        rowDetailPenyakit.classList.add('d-none');
         headerDetailDiagnosis.classList.remove('d-none');
         subheaderDetailDiagnosis.classList.remove('d-none');
-        rowDetailPenyakit.classList.add('d-none');
     } else {
         if (rowDetailPenyakit.classList.contains('d-none')) {
             rowDetailPenyakit.classList.remove('d-none');
@@ -143,7 +148,7 @@ function drawDetailJawabanDiagnosis(data) {
     });
 }
 
-detailDiagnosisModal.addEventListener('hide.bs.modal', function (event) {
+detailDiagnosisModal.addEventListener('hide.bs.modal', () => {
     containerImagePenyakitDetailDiagnosisModal.innerHTML = '';
     if (headerPenyakitSolution.nextElementSibling) {
         headerPenyakitSolution.nextElementSibling.remove();
@@ -158,6 +163,16 @@ detailDiagnosisModal.addEventListener('hide.bs.modal', function (event) {
     if (chartDiagnosisPenyakit != null) {
         chartDiagnosisPenyakit.destroy();
     }
+
+    idPenyakit = null;
+    idDiagnosis = null;
+    noHistoriDiagnosis = null;
+    diagnosed = false;
+    penyakitUndentified = false;
+    labelChart = null;
+    valueChart = null;
+    fromHistori = false;
+    chartDiagnosisPenyakit = null;
 });
 
 function drawChart(data) {

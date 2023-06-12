@@ -77,7 +77,8 @@ class DiagnosisController extends Controller
         // Tidak ada penyakit yang terdeteksi
         if (!$terdeteksi && $request->idgejala == $allGejala) {
             return response()->json([
-                'penyakitUndentified' => true
+                'penyakitUndentified' => true,
+                'idDiagnosis' => $modelDiagnosis->id,
             ]);
         }
 
