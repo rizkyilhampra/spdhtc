@@ -117,11 +117,16 @@ function drawDetailDiagnosis(response, diagnosed) {
         });
 
         imagePenyakit.addEventListener('click', () => {
-            const chocolatInstance = Chocolat([{
-                src: assetStorage + '/' + response.penyakit.image,
-                title: response.penyakit.name,
-            }], {});
-            chocolatInstance.api.open();
+            const lebarLayar = window.innerWidth || document.documentElement.clientWidth || document
+                .body.clientWidth;
+
+            if (lebarLayar >= 992) {
+                const chocolatInstance = Chocolat([{
+                    src: assetStorage + '/' + response.penyakit.image,
+                    title: response.penyakit.name,
+                }], {});
+                chocolatInstance.api.open();
+            }
         });
     }
 }
