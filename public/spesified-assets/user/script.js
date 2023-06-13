@@ -411,13 +411,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                         try {
                             const response = await ajaxRequestToDiagnosis(element.id, jawaban);
-                            console.log(response);
-                            //if response 404
                             if (response.idPenyakit != null) {
                                 await Swal.close();
                                 return getPenyakitFromDiagnose(response, true);
-                            } else if (response.penyakitUndentified) {
-                                return getUndentifiedPenyakit(response);
+                            } else if (response.penyakitUnidentified === true) {
+                                return getPenyakitFromDiagnose(response, true);
                             }
                         } catch (error) {
                             swalError(error.responseJSON);
