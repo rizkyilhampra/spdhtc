@@ -13,7 +13,6 @@ let idPenyakit = null;
 let idDiagnosis = null;
 let noHistoriDiagnosis = null;
 let diagnosed = false;
-let penyakitUndentified = false;
 let labelChart = null;
 let valueChart = null;
 let chartDiagnosisPenyakit = null;
@@ -29,11 +28,6 @@ function getPenyakitFromDiagnose(data, wasDiagnosed) {
     idPenyakit = data.idPenyakit;
     idDiagnosis = data.idDiagnosis;
     diagnosed = wasDiagnosed;
-    instanceDetailDiagnosisModal.show();
-}
-
-function getUndentifiedPenyakit(data) {
-    penyakitUndentified = data;
     instanceDetailDiagnosisModal.show();
 }
 
@@ -59,36 +53,43 @@ function ajaxRequestChartDiagnosisPenyakit() {
 
 detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
     try {
-        let response = await ajaxRequestDetailDiagnosis();
-        let response1 = await ajaxRequestChartDiagnosisPenyakit();
+        const response = await ajaxRequestDetailDiagnosis();
         drawDetailDiagnosis(response, diagnosed);
         drawDetailJawabanDiagnosis(response.answerLog);
-        drawChart(response1);
+    } catch (error) {
+        swalError(error.responseJSON);
+    }
+
+    try {
+        const chartData = await ajaxRequestChartDiagnosisPenyakit();
+        drawChart(chartData);
     } catch (error) {
         swalError(error.responseJSON);
     }
 });
 
 
-function drawDetailDiagnosis(response, wasDiagnosed) {
-    if (wasDiagnosed) {
+
+function drawDetailDiagnosis(response, diagnosed) {
+    if (diagnosed === false) {
+        titleDetailDiagnosisModal.innerText = 'Detail Diagnosis No. ' + noHistoriDiagnosis;
+    } else {
         titleDetailDiagnosisModal.innerText = 'Detail Diagnosis';
+    }
+
+    if (response.penyakit == null || response.penyakitUnidentified === true) {
+        headerDetailDiagnosis.innerText = "Penyakit Tidak Ditemukan!";
+        subheaderDetailDiagnosis.innerHTML = 'Tidak ada penyakit yang cocok dengan gejala yang anda masukkan.';
+        rowDetailPenyakit.classList.add('d-none');
+        headerDetailDiagnosis.classList.remove('d-none');
+        subheaderDetailDiagnosis.classList.remove('d-none');
+    } else {
         headerDetailDiagnosis.innerText = "Penyakit Ditemukan!";
         subheaderDetailDiagnosis.innerHTML = "Penyakit yang diderita adalah " + `<u>${response.penyakit.name}</u>`;
         headerDetailDiagnosis.classList.remove('d-none');
         subheaderDetailDiagnosis.classList.remove('d-none');
-    }
-    titleDetailDiagnosisModal.innerText = 'Detail Diagnosis No. ' + noHistoriDiagnosis;
-    if (response.penyakit == null || penyakitUndentified) {
-        headerDetailDiagnosis.innerText = "Penyakit Tidak Ditemukan!";
-        subheaderDetailDiagnosis.innerHTML = 'Tidak ada penyakit yang cocok dengan gejala yang anda masukkan.';
-        headerDetailDiagnosis.classList.remove('d-none');
-        subheaderDetailDiagnosis.classList.remove('d-none');
-        rowDetailPenyakit.classList.add('d-none');
-    } else {
-        if (rowDetailPenyakit.classList.contains('d-none')) {
-            rowDetailPenyakit.classList.remove('d-none');
-        }
+
+        rowDetailPenyakit.classList.remove('d-none');
         const penyakitName = document.getElementById('penyakitName');
         const penyakitReason = document.getElementById('penyakitReason');
         penyakitName.innerHTML = response.penyakit.name;
@@ -143,7 +144,7 @@ function drawDetailJawabanDiagnosis(data) {
     });
 }
 
-detailDiagnosisModal.addEventListener('hide.bs.modal', function (event) {
+detailDiagnosisModal.addEventListener('hide.bs.modal', () => {
     containerImagePenyakitDetailDiagnosisModal.innerHTML = '';
     if (headerPenyakitSolution.nextElementSibling) {
         headerPenyakitSolution.nextElementSibling.remove();
@@ -160,6 +161,14 @@ detailDiagnosisModal.addEventListener('hide.bs.modal', function (event) {
     }
 });
 
+detailDiagnosisModal.addEventListener('hidden.bs.modal', () => {
+    if (!document.body.classList.contains('modal-open')) {
+        document.body.classList.add('modal-open');
+    } else {
+        document.body.classList.remove('modal-open');
+    }
+});
+
 function drawChart(data) {
     let bobot = data;
     labelChart = Object.entries(bobot).map(([nama, nilai]) => nama);
@@ -171,7 +180,7 @@ function drawChart(data) {
         data: {
             labels: labelChart,
             datasets: [{
-                label: 'Statistics',
+                label: 'Persentase',
                 data: valueChart,
                 borderWidth: 2,
                 backgroundColor: '#6777ef',
@@ -214,5 +223,3 @@ function drawChart(data) {
         }
     });
 }
-
-
