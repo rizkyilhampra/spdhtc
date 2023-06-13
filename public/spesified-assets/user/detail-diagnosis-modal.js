@@ -171,6 +171,12 @@ detailDiagnosisModal.addEventListener('hide.bs.modal', () => {
     }
 });
 
+detailDiagnosisModal.addEventListener('hidden.bs.modal', () => {
+    if (!document.body.classList.contains('modal-open')) {
+        document.body.classList.add('modal-open');
+    }
+});
+
 function drawChart(data) {
     let bobot = data;
     labelChart = Object.entries(bobot).map(([nama, nilai]) => nama);
