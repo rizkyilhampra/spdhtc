@@ -137,7 +137,7 @@
         </div>
     </div>
     @can('asUser')
-        @section('title', 'User ' . html_entity_decode('&mdash;'))
+        @section('title', auth()->user()->name . html_entity_decode(' &mdash;'))
         @include('user.profile-modal')
         @include('user.detail-diagnosis-modal')
         @push('styleLibraries')
