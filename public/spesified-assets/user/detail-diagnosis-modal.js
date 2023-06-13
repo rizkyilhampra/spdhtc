@@ -61,39 +61,45 @@ function ajaxRequestChartDiagnosisPenyakit() {
 
 detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
     try {
-        let response = await ajaxRequestDetailDiagnosis();
-        let response1 = await ajaxRequestChartDiagnosisPenyakit();
+        const response = await ajaxRequestDetailDiagnosis();
         drawDetailDiagnosis(response, diagnosed, fromHistori);
         drawDetailJawabanDiagnosis(response.answerLog);
-        drawChart(response1);
     } catch (error) {
-        console.log(error);
+        swalError(error.responseJSON);
+    }
+
+    try {
+        const chartData = await ajaxRequestChartDiagnosisPenyakit();
+        drawChart(chartData);
+    } catch (error) {
         swalError(error.responseJSON);
     }
 });
 
 
+
 function drawDetailDiagnosis(response, wasDiagnosed, fromHistori) {
     titleDetailDiagnosisModal.innerText = 'Detail Diagnosis';
+
     if (wasDiagnosed) {
-        headerDetailDiagnosis.innerText = "Penyakit Ditemukan!";
-        subheaderDetailDiagnosis.innerHTML = "Penyakit yang diderita adalah " + `<u>${response.penyakit.name}</u>`;
-        headerDetailDiagnosis.classList.remove('d-none');
-        subheaderDetailDiagnosis.classList.remove('d-none');
+        if (response.penyakit != null || penyakitUndentified !== true) {
+            headerDetailDiagnosis.innerText = "Penyakit Ditemukan!";
+            subheaderDetailDiagnosis.innerHTML = "Penyakit yang diderita adalah " + `<u>${response.penyakit.name}</u>`;
+            headerDetailDiagnosis.classList.remove('d-none');
+            subheaderDetailDiagnosis.classList.remove('d-none');
+        }
     } else if (fromHistori) {
         titleDetailDiagnosisModal.innerText = 'Detail Diagnosis No. ' + noHistoriDiagnosis;
     }
 
-    if (response.penyakit == null || penyakitUndentified == true) {
+    if (response.penyakit == null || penyakitUndentified === true) {
         headerDetailDiagnosis.innerText = "Penyakit Tidak Ditemukan!";
         subheaderDetailDiagnosis.innerHTML = 'Tidak ada penyakit yang cocok dengan gejala yang anda masukkan.';
         rowDetailPenyakit.classList.add('d-none');
         headerDetailDiagnosis.classList.remove('d-none');
         subheaderDetailDiagnosis.classList.remove('d-none');
     } else {
-        if (rowDetailPenyakit.classList.contains('d-none')) {
-            rowDetailPenyakit.classList.remove('d-none');
-        }
+        rowDetailPenyakit.classList.remove('d-none');
         const penyakitName = document.getElementById('penyakitName');
         const penyakitReason = document.getElementById('penyakitReason');
         penyakitName.innerHTML = response.penyakit.name;
@@ -163,16 +169,6 @@ detailDiagnosisModal.addEventListener('hide.bs.modal', () => {
     if (chartDiagnosisPenyakit != null) {
         chartDiagnosisPenyakit.destroy();
     }
-
-    idPenyakit = null;
-    idDiagnosis = null;
-    noHistoriDiagnosis = null;
-    diagnosed = false;
-    penyakitUndentified = false;
-    labelChart = null;
-    valueChart = null;
-    fromHistori = false;
-    chartDiagnosisPenyakit = null;
 });
 
 function drawChart(data) {
@@ -186,7 +182,7 @@ function drawChart(data) {
         data: {
             labels: labelChart,
             datasets: [{
-                label: 'Statistics',
+                label: 'Persentase',
                 data: valueChart,
                 borderWidth: 2,
                 backgroundColor: '#6777ef',
@@ -229,5 +225,3 @@ function drawChart(data) {
         }
     });
 }
-
-
