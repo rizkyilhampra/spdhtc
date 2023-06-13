@@ -13,16 +13,14 @@ let idPenyakit = null;
 let idDiagnosis = null;
 let noHistoriDiagnosis = null;
 let diagnosed = false;
-let penyakitUndentified = false;
 let labelChart = null;
 let valueChart = null;
-let fromHistori = false;
 let chartDiagnosisPenyakit = null;
 
 function getPenyakitIdFromHistori(data, no) {
     idDiagnosis = data;
     noHistoriDiagnosis = no;
-    fromHistori = true;
+    diagnosed = false;
     instanceDetailDiagnosisModal.show();
 }
 
@@ -30,12 +28,6 @@ function getPenyakitFromDiagnose(data, wasDiagnosed) {
     idPenyakit = data.idPenyakit;
     idDiagnosis = data.idDiagnosis;
     diagnosed = wasDiagnosed;
-    instanceDetailDiagnosisModal.show();
-}
-
-function getUndentifiedPenyakit(data) {
-    idDiagnosis = data.idDiagnosis;
-    penyakitUndentified = data.penyakitUndentified;
     instanceDetailDiagnosisModal.show();
 }
 
@@ -62,7 +54,7 @@ function ajaxRequestChartDiagnosisPenyakit() {
 detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
     try {
         const response = await ajaxRequestDetailDiagnosis();
-        drawDetailDiagnosis(response, diagnosed, fromHistori);
+        drawDetailDiagnosis(response, diagnosed);
         drawDetailJawabanDiagnosis(response.answerLog);
     } catch (error) {
         swalError(error.responseJSON);
@@ -78,27 +70,25 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
 
 
 
-function drawDetailDiagnosis(response, wasDiagnosed, fromHistori) {
-    titleDetailDiagnosisModal.innerText = 'Detail Diagnosis';
-
-    if (wasDiagnosed) {
-        if (response.penyakit != null || penyakitUndentified !== true) {
-            headerDetailDiagnosis.innerText = "Penyakit Ditemukan!";
-            subheaderDetailDiagnosis.innerHTML = "Penyakit yang diderita adalah " + `<u>${response.penyakit.name}</u>`;
-            headerDetailDiagnosis.classList.remove('d-none');
-            subheaderDetailDiagnosis.classList.remove('d-none');
-        }
-    } else if (fromHistori) {
+function drawDetailDiagnosis(response, diagnosed) {
+    if (diagnosed === false) {
         titleDetailDiagnosisModal.innerText = 'Detail Diagnosis No. ' + noHistoriDiagnosis;
+    } else {
+        titleDetailDiagnosisModal.innerText = 'Detail Diagnosis';
     }
 
-    if (response.penyakit == null || penyakitUndentified === true) {
+    if (response.penyakit == null || response.penyakitUnidentified === true) {
         headerDetailDiagnosis.innerText = "Penyakit Tidak Ditemukan!";
         subheaderDetailDiagnosis.innerHTML = 'Tidak ada penyakit yang cocok dengan gejala yang anda masukkan.';
         rowDetailPenyakit.classList.add('d-none');
         headerDetailDiagnosis.classList.remove('d-none');
         subheaderDetailDiagnosis.classList.remove('d-none');
     } else {
+        headerDetailDiagnosis.innerText = "Penyakit Ditemukan!";
+        subheaderDetailDiagnosis.innerHTML = "Penyakit yang diderita adalah " + `<u>${response.penyakit.name}</u>`;
+        headerDetailDiagnosis.classList.remove('d-none');
+        subheaderDetailDiagnosis.classList.remove('d-none');
+
         rowDetailPenyakit.classList.remove('d-none');
         const penyakitName = document.getElementById('penyakitName');
         const penyakitReason = document.getElementById('penyakitReason');
@@ -174,6 +164,8 @@ detailDiagnosisModal.addEventListener('hide.bs.modal', () => {
 detailDiagnosisModal.addEventListener('hidden.bs.modal', () => {
     if (!document.body.classList.contains('modal-open')) {
         document.body.classList.add('modal-open');
+    } else {
+        document.body.classList.remove('modal-open');
     }
 });
 
