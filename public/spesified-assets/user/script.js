@@ -362,7 +362,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     icon: 'info',
                     showCancelButton: true,
                     confirmButtonText: 'Lanjutkan',
-                    cancelButtonText: 'Batal'
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
                 });
                 if (swalBeforeDiagnosis.isConfirmed) {
                     const swalLoading = Swal.fire({
@@ -412,11 +413,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const response = await ajaxRequestToDiagnosis(element.id, jawaban);
                             if (response.idPenyakit != null) {
                                 await Swal.close();
-                                getPenyakitFromDiagnose(response, true);
-                                break;
-                            } else if (response.penyakitUndentified) {
-                                getUndentifiedPenyakit(response.penyakitUndentified);
-                                break;
+                                return getPenyakitFromDiagnose(response, true);
+                            } else if (response.penyakitUnidentified === true) {
+                                return getPenyakitFromDiagnose(response, true);
                             }
                         } catch (error) {
                             swalError(error.responseJSON);
