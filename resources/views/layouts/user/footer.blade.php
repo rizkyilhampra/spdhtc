@@ -7,7 +7,7 @@
                 </p>
                 <p class="pt-3 pb-2">
                     <small>
-                        SPDHTC (Sistem Pakar Diagnosis Penyakit Tanaman Cabai) merupakan hasil dari tugas akhir tim
+                        SPDHTC (Sistem Pakar Diagnosis Penyakit Tanaman Cabai) merupakan hasil tugas akhir dari tim
                         pengembang di Prodi Teknik Informatika Politeknik negeri Banjarmasin. SPDHTC menggunakan data
                         yang diperoleh dari pakar yang berkompeten, sehingga keakuratan datanya dapat dipercaya. Latar
                         belakang mengapa SPDHTC dibangun adalah untuk membantu masyarakat, terutama para petani cabai,

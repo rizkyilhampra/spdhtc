@@ -29,14 +29,12 @@
                     <div class="card shadow border border-0">
                         <div class="card-body">
                             <div class="card-text">
-                                Sistem ini menggunakan metode forward chaining dalam mendiagnosis penyakit. Prosesnya
-                                dimulai dengan evaluasi gejala yang diberikan oleh pengguna, kemudian
-                                sistem akan mencocokkan dengan aturan yang ada. Jika terdapat aturan yang telah terpenuhi,
-                                sistem akan memberikan detail hasil diagnosis penyakit. Detail hasil diagnosis
-                                penyakit akan
-                                disimpan di
-                                dalam sistem. Pengguna dapat melihat kembali detail hasil diagnosis yang telah dilakukan
-                                pada histori diagnosis di menu profil.
+                                Sistem ini menggunakan metode forward chaining untuk mendiagnosis penyakit. Proses dimulai
+                                dengan mengevaluasi gejala yang diberikan oleh pengguna, kemudian sistem mencocokkannya
+                                dengan aturan yang ada. Jika terdapat aturan yang terpenuhi, sistem akan memberikan detail
+                                hasil diagnosis penyakit. Detail hasil diagnosis penyakit akan disimpan dalam sistem.
+                                Pengguna dapat melihat kembali detail hasil diagnosis yang telah dilakukan pada histori
+                                diagnosis di menu profil.
                             </div>
                             <div class="d-grid pt-3">
                                 <button id="btn-diagnosis" class="btn btn-custom1 py-2">
@@ -137,7 +135,7 @@
         </div>
     </div>
     @can('asUser')
-        @section('title', 'User ' . html_entity_decode('&mdash;'))
+        @section('title', auth()->user()->name . html_entity_decode(' &mdash;'))
         @include('user.profile-modal')
         @include('user.detail-diagnosis-modal')
         @push('styleLibraries')
