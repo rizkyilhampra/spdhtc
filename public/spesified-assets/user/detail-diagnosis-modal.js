@@ -8,6 +8,7 @@ const headerPenyakitSolution = document.getElementById('headerPenyakitSolution')
 const rowDetailPenyakit = document.getElementById('rowDetailPenyakit');
 const detailJawabanDiagnosisTable = document.getElementById('detailJawabanDiagnosisTable');
 const tableBody = detailJawabanDiagnosisTable.querySelector('tbody');
+const placeholder = document.querySelectorAll('.placeholder');
 
 let idPenyakit = null;
 let idDiagnosis = null;
@@ -73,8 +74,6 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
 function drawDetailDiagnosis(response, diagnosed) {
     if (diagnosed === false) {
         titleDetailDiagnosisModal.innerText = 'Detail Diagnosis No. ' + noHistoriDiagnosis;
-    } else {
-        titleDetailDiagnosisModal.innerText = 'Detail Diagnosis';
     }
 
     if (response.penyakit == null || response.penyakitUnidentified === true) {
@@ -89,7 +88,6 @@ function drawDetailDiagnosis(response, diagnosed) {
         headerDetailDiagnosis.classList.remove('d-none');
         subheaderDetailDiagnosis.classList.remove('d-none');
 
-        rowDetailPenyakit.classList.remove('d-none');
         const penyakitName = document.getElementById('penyakitName');
         const penyakitReason = document.getElementById('penyakitReason');
         penyakitName.innerHTML = response.penyakit.name;
@@ -117,13 +115,23 @@ function drawDetailDiagnosis(response, diagnosed) {
         });
 
         imagePenyakit.addEventListener('click', () => {
-            const chocolatInstance = Chocolat([{
-                src: assetStorage + '/' + response.penyakit.image,
-                title: response.penyakit.name,
-            }], {});
-            chocolatInstance.api.open();
+            const lebarLayar = window.innerWidth || document.documentElement.clientWidth || document
+                .body.clientWidth;
+
+            if (lebarLayar >= 992) {
+                const chocolatInstance = Chocolat([{
+                    src: assetStorage + '/' + response.penyakit.image,
+                    title: response.penyakit.name,
+                }], {});
+                chocolatInstance.api.open();
+            }
         });
     }
+
+    //remove class placeholder
+    placeholder.forEach((item) => {
+        item.classList.remove('placeholder');
+    });
 }
 
 function drawDetailJawabanDiagnosis(data) {
@@ -159,14 +167,21 @@ detailDiagnosisModal.addEventListener('hide.bs.modal', () => {
     if (chartDiagnosisPenyakit != null) {
         chartDiagnosisPenyakit.destroy();
     }
+
+    rowDetailPenyakit.classList.remove('d-none');
 });
 
 detailDiagnosisModal.addEventListener('hidden.bs.modal', () => {
+
     if (!document.body.classList.contains('modal-open')) {
         document.body.classList.add('modal-open');
     } else {
         document.body.classList.remove('modal-open');
     }
+    //add class placeholder
+    placeholder.forEach((item) => {
+        item.classList.add('placeholder');
+    });
 });
 
 function drawChart(data) {

@@ -220,11 +220,17 @@ function ajaxGetGejala() {
 document.addEventListener('DOMContentLoaded', async () => {
     const notyf = new Notyf({
         position: {
-            x: 'right',
+            x: 'center',
             y: 'top',
         },
         dismissible: true,
     });
+
+    if (isUser) {
+        if (login != false) {
+            notyf.success(login);
+        }
+    }
 
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(
@@ -435,15 +441,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             e.preventDefault();
             modalEditProfileInstance.show();
         })
-    }
-
-    if (isUser) {
-        if (login && !localStorage.getItem('notyfshown')) {
-            notyf.success(login);
-            localStorage.setItem('notyfshown', true);
-        } else {
-            localStorage.removeItem('notyfshown');
-        }
     }
 
     const openImageChocolat = document.querySelectorAll('.open-image-chocolat');
