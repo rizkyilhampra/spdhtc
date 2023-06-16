@@ -1,6 +1,6 @@
 const modalEditProfile = document.getElementById('editProfileModal');
 const modalEditProfileInstance = bootstrap.Modal.getOrCreateInstance(modalEditProfile);
-modalEditProfile.addEventListener('shown.bs.modal', async () => {
+modalEditProfile.addEventListener('show.bs.modal', async () => {
     drawHistoriDiagnosisTable();
 
     const btnSubmitEditProfile = document.getElementById('btnSubmitEditProfile');
@@ -80,15 +80,16 @@ modalEditProfile.addEventListener('shown.bs.modal', async () => {
                 profession: ''
             }
             optionKota = new Option('Pilih Provinsi terlebih dahulu', null, false, true);
+            $(elements.kotaSelect).append(optionKota).attr('disabled', true);
         } else {
             optionKota = new Option('Pilih Kota', null, false, true);
+            $(elements.kotaSelect).append(optionKota).attr('disabled', false);
+            optionKota.disabled = true;
         }
+
         setElementAttributes(elements.nameInput, response.user.name);
         setElementAttributes(elements.emailInput, response.user.email);
         setElementAttributes(elements.addressTextarea, response.user.profile.address);
-
-        $(elements.kotaSelect).append(optionKota).attr('disabled', false);
-        optionKota.disabled = true;
 
         $(elements.provinsiSelect).empty();
         optionProvinsi = new Option('Pilih Provinsi', null, false, true);
@@ -179,3 +180,10 @@ $(document).on('select2:open', () => {
         }
     }, true);
 });
+
+modalEditProfile.addEventListener('hide.bs.modal', async () => {
+    $('#provinsi').empty();
+    $('#kota').empty();
+    $('#profesi').empty();
+});
+
