@@ -69,10 +69,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::middleware('check.direct.access')->group(function () {
             Route::middleware('can:hasUserProfile')->group(function () {
                 Route::get('get-gejala', [UserController::class, 'getGejala'])->name('get-gejala');
-                Route::get('histori-diagnosis-user', [\App\Http\Controllers\UserController::class, 'historiDiagnosis'])->name('histori-diagnosis-user');
                 Route::get('detail-diagnosis', [UserController::class, 'detailDiagnosis'])->name('detail-diagnosis');
                 Route::get('chart-diagnosis-penyakit', [UserController::class, 'chartDiagnosisPenyakit'])->name('chart-diagnosis-penyakit');
             });
+            Route::get('histori-diagnosis-user', [\App\Http\Controllers\UserController::class, 'historiDiagnosis'])->name('histori-diagnosis-user');
             Route::get('edit-profile', [\App\Http\Controllers\UserProfileController::class, 'index'])->name('edit-profile');
             Route::get('provinsi', [\App\Http\Controllers\KotaProvinsiController::class, 'indexProvince'])->name('provinsi');
             Route::get('edit-profile/lokasi/kota/{id}', [\App\Http\Controllers\KotaProvinsiController::class, 'indexCity'])->name('kota');
