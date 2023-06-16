@@ -52,12 +52,6 @@ body.modal-open,
     margin-bottom: 10rem;
 }
 
-@media (min-width: 1400px) {
-    .min-vh-u-lg-85 {
-        min-height: auto !important;
-    }
-}
-
 @media (max-width: 992px) {
     .min-vh-u-lg-85 {
         min-height: 50vh !important;
