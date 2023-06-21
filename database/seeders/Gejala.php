@@ -21,137 +21,137 @@ class Gejala extends Seeder
 
         ModelsGejala::create([
             'name' => 'Helai daun mengalami vein clearing dimulai dari daun pucuk berkembang menjadi warna kuning jelas',
-            'image' => 'image1.jpg',
+            'image' => '2010365565.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Tulang daun menebal dan daun menggulung ke atas',
-            'image' => 'image1.jpg',
+            'image' => '666748744.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Daun mengecil dan berwarna kuning terang',
-            'image' => 'image1.jpg',
+            'image' => '1393673814.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Tanaman kerdil dan tidak berbuah',
-            'image' => 'image1.jpg',
+            'image' => '538842151.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Daun melengkung ke bawah',
-            'image' => 'image1.jpg',
+            'image' => '994293537.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Daun berwarna hijau pekat mengkilat dan permukaan tidak rata',
-            'image' => 'image1.jpg',
+            'image' => 'i1175992172.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Pertumbuhan terhambat, ruas jarak antara tangkai daun lebih pendek terutama di bagian pucuk, sehingga daun menumpuk dan bergumpal-gumpal berkesan regas seperti kerupuk',
-            'image' => 'image1.jpg',
+            'image' => '1202316589.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Daun gugur sehingga yang tinggal ranting dengan daun-daun menggulung diujung pucuk',
-            'image' => 'image1.jpg',
+            'image' => '1629543921.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Bercak coklat kehitaman pada permukaan buah, kemudian menjadi busuk lunak',
-            'image' => 'image1.jpg',
+            'image' => '302231025.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Pada bagian tengah bercak terdapat kumpulan titik hitam yang merupakan kelompok spora',
-            'image' => 'image1.jpg',
+            'image' => '1717037255.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Buah keriput dan mengering',
-            'image' => 'image1.jpg',
+            'image' => '1287292971.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Warna kulit buah seperti jerami padi',
-            'image' => 'image1.jpg',
+            'image' => '494455965.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Bercak kecil berbentuk bulat dan kering',
-            'image' => 'image1.jpg',
+            'image' => '371037560.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Bercak meluas sampai diameter sekitar 0,5 cm',
-            'image' => 'image1.jpg',
+            'image' => '634932613.png',
         ]);
 
         ModelsGejala::create([
             'name' => 'Pusat bercak berwarna pucat sampai putih dengan warna tepi lebih tua',
-            'image' => 'image1.jpg',
+            'image' => '549491915.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Bercak terdapat pada batang, tangkai daun maupun tangkai buah',
-            'image' => 'image1.jpg',
+            'image' => '945179807.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Leher batang menjadi busuk basah berwarna hijau setelah kering warna menjadi coklat/hitam',
-            'image' => 'image1.jpg',
+            'image' => '159922447.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Batang menjadi kering mengeras dan seluruh daun menjadi layu',
-            'image' => 'image1.jpg',
+            'image' => '1396971721.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Pada daun terdapat bercak putih seperti tersiram air panas berbentuk sirkuler atau tidak beraturan',
-            'image' => 'image1.jpg',
+            'image' => '1567186429.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Bercak melebar mengering seperti kertas dan akhirnya memutih',
-            'image' => 'image1.jpg',
+            'image' => '161942162.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Tanaman yang terserang menjadi layu, mulai dari daun bagian bawah dan anak tulang daun menguning',
-            'image' => 'image1.jpg',
+            'image' => '1689767428.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Warna jaringan akar dan batang menjadi coklat',
-            'image' => 'image1.jpg',
+            'image' => '423226577.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Tempat luka infeksi tertutup hifa yang berwarna putih seperti kapas',
-            'image' => 'image1.jpg',
+            'image' => '1662922346.png',
         ]);
 
         ModelsGejala::create([
             'name' => 'Warna daun tetap hijau tetapi tanaman layu',
-            'image' => 'image1.jpg',
+            'image' => '131427708.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Gejala layu tampak pada daun–daun yang terletak di bagian bawah',
-            'image' => 'image1.jpg',
+            'image' => '1133327384.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Jaringan vaskuler dari batang bagian bawah dan akar menjadi kecoklatan',
-            'image' => 'image1.jpg',
+            'image' => '608939258.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Apabila batang atau akar tersebut dipotong melintang dan dicelupkan ke dalam air jernih akan keluar cairan keruh koloni bakteri yang melayang dalam air menyerupai kepulan asap',
-            'image' => 'image1.jpg',
+            'image' => '1928027606.jpg',
         ]);
     }
 }
