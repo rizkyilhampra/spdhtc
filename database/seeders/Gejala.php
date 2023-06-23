@@ -36,7 +36,7 @@ class Gejala extends Seeder
 
         ModelsGejala::create([
             'name' => 'Tanaman kerdil dan tidak berbuah',
-            'image' => '994293537.jpg',
+            'image' => '312554642.jpg',
         ]);
 
         ModelsGejala::create([
@@ -51,7 +51,7 @@ class Gejala extends Seeder
 
         ModelsGejala::create([
             'name' => 'Pertumbuhan terhambat, ruas jarak antara tangkai daun lebih pendek terutama di bagian pucuk, sehingga daun menumpuk dan bergumpal-gumpal berkesan regas seperti kerupuk',
-            'image' => '1202316589.jpg',
+            'image' => '10451236.jpg',
         ]);
 
         ModelsGejala::create([
@@ -111,12 +111,12 @@ class Gejala extends Seeder
 
         ModelsGejala::create([
             'name' => 'Pada daun terdapat bercak putih seperti tersiram air panas berbentuk sirkuler atau tidak beraturan',
-            'image' => '1975078908.jpg',
+            'image' => '781410053.jpg',
         ]);
 
         ModelsGejala::create([
             'name' => 'Bercak melebar mengering seperti kertas dan akhirnya memutih',
-            'image' => '467561485.jpg',
+            'image' => '845929390.jpg',
         ]);
 
         ModelsGejala::create([
@@ -131,7 +131,7 @@ class Gejala extends Seeder
 
         ModelsGejala::create([
             'name' => 'Tempat luka infeksi tertutup hifa yang berwarna putih seperti kapas',
-            'image' => '1937060967.png',
+            'image' => '1618232509.jpg',
         ]);
 
         ModelsGejala::create([
