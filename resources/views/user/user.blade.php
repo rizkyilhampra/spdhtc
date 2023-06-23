@@ -162,6 +162,7 @@
         let login = @json(session('success') ?? false);
         const csrfToken = '{{ csrf_token() }}';
         const penyakitImage = @json($penyakit);
-        const assetStorage = '{{ asset('/storage/penyakit/') }}';
+        const assetStoragePenyakit = '{{ asset('/storage/penyakit/') }}';
+        const assetStorageGejala = '{{ asset('/storage/gejala/') }}';
     </script>
 @endpush

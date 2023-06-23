@@ -397,9 +397,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                             dismiss: dismissReason
                         } = await Swal.fire({
                             title: 'Pertanyaan ' + (i + 1),
+                            imageUrl: `${assetStorageGejala}/${element.image}`,
                             text: 'Apakah ' + element.name +
                                 '?',
-                            icon: 'question',
                             confirmButtonColor: '#3085d6',
                             confirmButtonText: 'Ya',
                             showDenyButton: true,
@@ -454,7 +454,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (lebarLayar >= 992) {
                 const instanceChocolat = await Chocolat([{
-                    src: `${assetStorage}/${penyakitImage[index].image}`,
+                    src: `${assetStoragePenyakit}/${penyakitImage[index].image}`,
                     title: penyakitImage[index].name
                 }], {});
 
