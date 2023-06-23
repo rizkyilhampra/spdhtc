@@ -119,7 +119,7 @@ class UserController extends Controller
 
     public function getGejala()
     {
-        $gejala = Gejala::get(['id', 'name']);
+        $gejala = Gejala::get(['id', 'name', 'image']);
         return response()->json($gejala);
     }
 
