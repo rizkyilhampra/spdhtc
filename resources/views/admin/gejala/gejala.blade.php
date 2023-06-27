@@ -18,6 +18,7 @@
     <!-- Page Specific JS File -->
     <script>
         const table = document.getElementById('table-1');
+        $('[data-toggle="tooltip"]').tooltip();
         const dataTable = $(table).DataTable({});
         $(document).on("click", "#table-1 #btnHapus", function(e) {
             e.preventDefault();
@@ -96,7 +97,7 @@
                                         </td>
                                         <td>{{ $p->name }}</td>
                                         <td>{{ $p->updated_at }}</td>
-                                        <td>
+                                        <td id="imageGejala">
                                             <img alt="image" src="{{ asset('storage/gejala/' . $p->image) }}"
                                                 class="" width="200" data-toggle="tooltip"
                                                 title="{{ $p->name }}">
