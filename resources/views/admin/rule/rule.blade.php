@@ -22,7 +22,6 @@
         $(document).on("click", "#table-1 #btnHapus", function(e) {
             e.preventDefault();
             var form = $(this).closest("td").find("form");
-            console.log(form);
             swal({
                     title: "Apakah Anda yakin?",
                     text: "Setelah dihapus, Anda tidak akan dapat memulihkan data ini!",
