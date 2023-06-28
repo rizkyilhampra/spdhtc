@@ -31,13 +31,13 @@
                                 <label for="password" class="control-label">Kata Sandi</label>
                                 <div class="float-right">
                                     <a href="{{ route('password.request') }}" class="text-small">
-                                        Lupa Kata Sandi?
+                                        Lupa kata sandi?
                                     </a>
                                 </div>
                             </div>
                             <input id="password" type="password"
                                 class="form-control @error('password') is-invalid @enderror" name="password"
-                                autocomplete="current-password" placeholder="Masukkan Password anda" required
+                                autocomplete="current-password" placeholder="Masukkan kata sandi anda" required
                                 tabindex="2">
                             <div class="invalid-feedback">
                                 @if ($errors->has('password'))
