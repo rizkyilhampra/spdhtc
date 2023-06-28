@@ -6,10 +6,6 @@ var notyf = new Notyf({
     dismissible: true
 });
 
-function cekSession() {
-    console.log(statusSession);
-}
-
 function emailHasSent() {
     let textStatusEmail = document.getElementById('textStatusEmail');
     if (statusSession == 'verification-link-sent') {
