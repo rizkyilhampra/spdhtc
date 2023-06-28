@@ -43,8 +43,8 @@
                         <div class="form-group">
                             <label for="password_confirmation">Konfirmasi Kata Sandi</label>
                             <input id="password_confirmation" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password_confirmation"
-                                tabindex="4" required>
+                                class="form-control @error('password') is-invalid @enderror" placeholder="Min. 8 karakter"
+                                name="password_confirmation" tabindex="4" required>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="5">
