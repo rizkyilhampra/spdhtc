@@ -134,7 +134,8 @@
             </div>
         </div>
     </div>
-    @can('asUser')
+
+    @if (Auth::check() && Auth::user()->email_verified_at != null && Gate::check('asUser'))
         @section('title', auth()->user()->name . html_entity_decode(' &mdash;'))
         @include('user.profile-modal')
         @include('user.detail-diagnosis-modal')
@@ -152,12 +153,12 @@
             <script src="{{ asset('spesified-assets/user/profile-modal.js') }}"></script>
             <script src="{{ asset('spesified-assets/user/detail-diagnosis-modal.js') }}"></script>
         @endpush
-    @endcan
+    @endif
 @endsection
 
 @push('scriptPerPage')
     <script type="text/javascript">
-        const isUser = @json(Auth::check());
+        const isUser = @json(Auth::check() && Auth::user()->email_verified_at != null && Gate::check('asUser'));
         const hasUserProfile = @json(Auth::user()->profile->id ?? false);
         let login = @json(session('success') ?? false);
         const csrfToken = '{{ csrf_token() }}';
