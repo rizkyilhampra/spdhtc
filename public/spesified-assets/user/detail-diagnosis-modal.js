@@ -58,7 +58,6 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
         drawDetailDiagnosis(response, diagnosed);
         drawDetailJawabanDiagnosis(response.answerLog);
     } catch (error) {
-        console.log(error);
         swalError(error.responseJSON);
     }
 
