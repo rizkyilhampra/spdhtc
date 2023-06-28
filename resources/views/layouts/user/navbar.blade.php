@@ -23,7 +23,7 @@
                     <a class="nav-link penyakit" href="#penyakit">Informasi Penyakit</a>
                 </li>
             </ul>
-            @can('asUser')
+            @if (Auth::check() && Auth::user()->email_verified_at != null && Gate::check('asUser'))
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a href="{{ route('edit-profile') }}" class="nav-link" id="btnNavLinkProfile">
@@ -44,7 +44,8 @@
                                 </button>
                             </div>
                         </a>
-                        <form action="{{ route('logout') }}" method="POST" id="formLogout" hidden style="display: none">
+                        <form action="{{ route('logout') }}" method="POST" id="formLogout" hidden
+                            style="display: none">
                             @csrf
                         </form>
                     </li>
@@ -71,7 +72,7 @@
                         </a>
                     </li>
                 </ul>
-            @endcan
+            @endif
         </div>
     </div>
 </nav>
