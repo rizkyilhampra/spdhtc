@@ -161,9 +161,7 @@ modalEditProfile.addEventListener('show.bs.modal', async () => {
                 $(elements.kotaSelect).append(option);
             });
         } catch (error) {
-            if (error.status == 404) {
-                console.log(error);
-            } else {
+            if (!error.status == 404) {
                 swalError(error.responseJSON);
             }
         }
