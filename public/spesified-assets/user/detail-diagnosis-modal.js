@@ -58,6 +58,7 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
         drawDetailDiagnosis(response, diagnosed);
         drawDetailJawabanDiagnosis(response.answerLog);
     } catch (error) {
+        console.log(error);
         swalError(error.responseJSON);
     }
 
@@ -104,7 +105,7 @@ function drawDetailDiagnosis(response, diagnosed) {
         headerPenyakitSolution.insertAdjacentHTML('afterend', nomorAsOlTag);
 
         const imagePenyakit = new Image();
-        imagePenyakit.src = assetStorage + '/' + response.penyakit.image;
+        imagePenyakit.src = assetStoragePenyakit + '/' + response.penyakit.image;
         imagePenyakit.alt = response.penyakit.name;
         imagePenyakit.id = 'imagePenyakit';
         imagePenyakit.classList.add('img-fluid');
@@ -120,7 +121,7 @@ function drawDetailDiagnosis(response, diagnosed) {
 
             if (lebarLayar >= 992) {
                 const chocolatInstance = Chocolat([{
-                    src: assetStorage + '/' + response.penyakit.image,
+                    src: assetStoragePenyakit + '/' + response.penyakit.image,
                     title: response.penyakit.name,
                 }], {});
                 chocolatInstance.api.open();

@@ -398,6 +398,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         } = await Swal.fire({
                             title: 'Pertanyaan ' + (i + 1),
                             imageUrl: `${assetStorageGejala}/${element.image}`,
+                            imageHeight: '300px',
+                            imageAlt: `Gambar Gejala ${element.name}`,
                             text: 'Apakah ' + element.name +
                                 '?',
                             confirmButtonColor: '#3085d6',

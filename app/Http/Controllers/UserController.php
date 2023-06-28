@@ -62,7 +62,7 @@ class UserController extends Controller
             $orderBy = $orderColumns[$orderColumn];
             $query->orderBy($orderBy, $orderDirection);
 
-            $no = ($orderDirection == 'asc') ? $start + 1 : $totalData - $start;
+            $no = ($orderDirection == 'asc') ? $totalData - $start : $start + 1;
         }
 
         $historiDiagnosis = $query
@@ -73,7 +73,7 @@ class UserController extends Controller
         $data = $historiDiagnosis->map(function ($item) use (&$no, $orderDirection) {
             $penyakit = Penyakit::find($item->penyakit_id, ['name']);
             $item->penyakit = $penyakit ? $penyakit->name : 'Tidak Diketahui';
-            $item->no = ($orderDirection == 'asc') ? $no++ : $no--;
+            $item->no = ($orderDirection == 'asc') ? $no-- : $no++;
             return $item;
         });
 
