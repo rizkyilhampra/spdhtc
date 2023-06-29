@@ -47,12 +47,13 @@ class UserCustomSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => bcrypt(env('ADMIN_ACCOUNT_PASSWORD', '12345678'))
             ],
-            [
-                'name' => 'user',
-                'email' => 'user@spdhtc.tech',
-                'email_verified_at' => now(),
-                'password' => bcrypt(env('USER_ACCOUNT_PASSWORD', '12345678'))
-            ],
         );
+
+        User::create([
+            'name' => 'user',
+            'email' => 'user@spdhtc.tech',
+            'email_verified_at' => now(),
+            'password' => bcrypt(env('USER_ACCOUNT_PASSWORD', '12345678'))
+        ]);
     }
 }
