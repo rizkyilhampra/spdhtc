@@ -148,7 +148,8 @@ const swalError = async (error) => {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Muat Ulang',
-        cancelButtonText: 'Tutup'
+        cancelButtonText: 'Tutup',
+        reverseButtons: true
     }).fire();
     if (result.isConfirmed) {
         window.location.reload();
@@ -327,7 +328,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Login',
-                cancelButtonText: 'Batal'
+                cancelButtonText: 'Batal',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = "/login";
@@ -342,7 +344,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Lengkapi Profil',
-                cancelButtonText: 'Batal'
+                cancelButtonText: 'Batal',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     modalEditProfileInstance.show();
