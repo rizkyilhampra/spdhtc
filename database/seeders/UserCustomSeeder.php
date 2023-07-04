@@ -15,23 +15,45 @@ class UserCustomSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('12345678'),
-        ]);
-        User::factory()->create([
+        /**
+         * Create Custom User with Factory
+         */
+        // User::factory()->create([
+        //     'name' => 'admin',
+        //     'email' => 'admin@example.com',
+        //     'email_verified_at' => now(),
+        //     'password' => bcrypt('12345678'),
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'user',
+        //     'email' => 'user@example.com',
+        //     'email_verified_at' => now(),
+        //     'password' => bcrypt('12345678'),
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'user2',
+        //     'email' => 'user2@example.com',
+        //     'email_verified_at' => now(),
+        //     'password' => bcrypt('12345678'),
+        // ]);
+
+        /**
+         * Create Custom User with Model
+         */
+        User::create(
+            [
+                'name' => 'admin',
+                'email' => 'admin@spdhtc.tech',
+                'email_verified_at' => now(),
+                'password' => bcrypt(env('ADMIN_ACCOUNT_PASSWORD', '12345678'))
+            ],
+        );
+
+        User::create([
             'name' => 'user',
-            'email' => 'user@example.com',
+            'email' => 'user@spdhtc.tech',
             'email_verified_at' => now(),
-            'password' => bcrypt('12345678'),
-        ]);
-        User::factory()->create([
-            'name' => 'user2',
-            'email' => 'user2@example.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt(env('USER_ACCOUNT_PASSWORD', '12345678'))
         ]);
     }
 }
