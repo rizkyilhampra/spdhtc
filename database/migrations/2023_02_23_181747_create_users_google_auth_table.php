@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('users_google_auth', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
             $table->unsignedSmallInteger('user_id')->unique();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('google_id');
             $table->string('avatar')->nullable();
             $table->timestamps();
