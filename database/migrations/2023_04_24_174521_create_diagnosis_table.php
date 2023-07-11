@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('diagnosis', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
             $table->unsignedSmallInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedSmallInteger('penyakit_id')->nullable();
             $table->foreign('penyakit_id')->references('id')->on('penyakit');
             $table->json('answer_log');
