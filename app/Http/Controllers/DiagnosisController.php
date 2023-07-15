@@ -10,36 +10,60 @@ use Illuminate\Http\Request;
 
 class DiagnosisController extends Controller
 {
+    private $allGejala;
+
+    public function __construct()
+    {
+        $this->allGejala =  Gejala::get('id')->count();
+    }
+
+    private function newDiagnosis()
+    {
+        $modelDiagnosis = new Diagnosis();
+        $modelDiagnosis->user_id = auth()->user()->id;
+        return $modelDiagnosis;
+    }
+
+    private function lastDiagnosis()
+    {
+        return Diagnosis::where('user_id',  auth()->user()->id)->get()->last();
+    }
+
+    private function checkDiagnosis($idGejala)
+    {
+        $lastDiagnosis = $this->lastDiagnosis();
+
+        if ($idGejala === 1) {
+            return $this->newDiagnosis();
+        }
+
+        if ($lastDiagnosis->penyakit_id === null) {
+            $answerLog = json_decode($lastDiagnosis->answer_log, true) ?? [];
+            $maxAnswerLog = max(array_keys($answerLog));
+
+            if ($maxAnswerLog === $this->allGejala) {
+                return $this->newDiagnosis();
+            }
+
+            return $lastDiagnosis;
+        }
+
+        return $this->newDiagnosis();
+    }
+
     public function diagnosis(Request $request)
     {
-        $allGejala = Gejala::get('id')->count();
-
         $request->validate([
-            'idgejala' => ['required', 'numeric', 'max:' . $allGejala, 'min:1'],
+            'idgejala' => ['required', 'numeric', 'max:' . $this->allGejala, 'min:1'],
         ]);
 
         $requestFakta = [
             $request->idgejala => filter_var($request->value, FILTER_VALIDATE_BOOLEAN)
         ];
 
-        $diagnosisCheck = Diagnosis::where('user_id', auth()->user()->id)->get()->last();
-        if ($diagnosisCheck == null) {
-            $modelDiagnosis = new Diagnosis();
-            $modelDiagnosis->user_id = auth()->user()->id;
-        } else if ($diagnosisCheck->penyakit_id == null) {
-            $maxAnswerlog = max(array_keys(json_decode($diagnosisCheck->answer_log, true) ?? []));
-            if ($maxAnswerlog == $allGejala) {
-                $modelDiagnosis = new Diagnosis();
-                $modelDiagnosis->user_id = auth()->user()->id;
-            } else {
-                $modelDiagnosis = $diagnosisCheck;
-            }
-        } else if ($diagnosisCheck->penyakit_id != null) {
-            $modelDiagnosis = new Diagnosis();
-            $modelDiagnosis->user_id = auth()->user()->id;
-        }
-        $decodeAnswerLog = json_decode($modelDiagnosis->answer_log, true) ?? [];
-        $answerLog = $decodeAnswerLog + $requestFakta;
+        $modelDiagnosis = $this->checkDiagnosis((int) $request->idgejala);
+        $answerLog = json_decode($modelDiagnosis->answer_log, true) ?? [];
+        $answerLog = $answerLog + $requestFakta;
         $modelDiagnosis->answer_log = json_encode($answerLog);
         $modelDiagnosis->save();
 
@@ -75,7 +99,7 @@ class DiagnosisController extends Controller
         }
 
         // Tidak ada penyakit yang terdeteksi
-        if (!$terdeteksi && $request->idgejala == $allGejala) {
+        if (!$terdeteksi && $request->idgejala == $this->allGejala) {
             return response()->json([
                 'penyakitUnidentified' => true,
                 'idPenyakit' => null,
