@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('gejala', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
-            $table->char('prefix', '1')->default('G');
             $table->string('name', '255');
             $table->string('image', '255')->nullable();
             $table->timestamps();
