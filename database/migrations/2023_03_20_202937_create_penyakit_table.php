@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('penyakit', function (Blueprint $table) {
             $table->smallInteger('id', true, true);
-            $table->char('prefix', '1')->default('P');
             $table->string('name', '255');
             $table->text('reason');
             $table->text('solution');
