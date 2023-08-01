@@ -30,7 +30,7 @@
                                     <option value="{{ $p->id }}">{{ $p->name }}</option>
                                 @endforeach
                             </select>
-                            @error('reason')
+                            @error('penyakit')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -44,7 +44,7 @@
                                     <option value="{{ $g->id }}">G{{ $g->id }}, {{ $g->name }}</option>
                                 @endforeach
                             </select>
-                            @error('reason')
+                            @error('gejala')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
