@@ -37,7 +37,7 @@ class UserProfileSeeder extends Seeder
          * Create Custom User Profile with Model
          */
         UserProfile::create([
-            'user_id' => 1,
+            'user_id' => 2,
             'address' => '',
             'city' => 144,
             'province' => 13,
