@@ -56,7 +56,7 @@ class GejalaController extends Controller
             $image->storeAs('public/gejala', $new_name);
 
             $form_data = array(
-                'gejala' => $request->gejala,
+                'name' => $request->gejala,
                 'image' => $new_name
             );
 
