@@ -16,9 +16,9 @@
                         @method('PUT')
                         <div class="form-group">
                             <label class="form-label">Gejala</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                                id="name" value="{{ old('name', $gejala->name) }}">
-                            @error('name')
+                            <input type="text" class="form-control @error('gejala') is-invalid @enderror" name="gejala"
+                                id="gejala" required value="{{ old('gejala', $gejala->name) }}">
+                            @error('gejala')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -26,7 +26,13 @@
                         </div>
                         <div class="form-group">
                             <label for="image" class="form-label">Gambar</label>
-                            <input type="file" class="form-control" name="image" id="image">
+                            <input type="file" required class="form-control @error('image') is-invalid @enderror"
+                                name="image" id="image">
+                            @error('gejala')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                             <div class="card card-body mt-3">
                                 <img class="img-fluid" width="300" id="imagePreview"
                                     src="{{ asset('storage/gejala/' . $gejala->image) }}">

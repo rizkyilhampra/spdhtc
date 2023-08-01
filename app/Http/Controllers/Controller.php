@@ -27,7 +27,7 @@ class Controller extends BaseController
         }
         return redirect('/');
     }
-    public function LoginDuration()
+    public static function LoginDuration()
     {
         $lastLogin = auth()->user()->last_login_at;
         $loginDuration = Carbon::parse($lastLogin)->diffInMinutes();
