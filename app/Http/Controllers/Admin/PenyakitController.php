@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Penyakit;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class PenyakitController extends Controller
@@ -15,11 +16,10 @@ class PenyakitController extends Controller
      */
     public function index()
     {
-
         $data = [
             'penyakit' => Penyakit::get(['id', 'name', 'reason', 'solution', 'image', 'updated_at']),
-            'loginDuration' =>  $this->LoginDuration()
         ];
+
         return view('admin.penyakit.penyakit', $data);
     }
 
@@ -30,8 +30,7 @@ class PenyakitController extends Controller
      */
     public function create()
     {
-        $loginDuration = $this->LoginDuration();
-        return view('admin.penyakit.tambah', compact('loginDuration'));
+        return view('admin.penyakit.tambah');
     }
 
     /**
@@ -43,10 +42,10 @@ class PenyakitController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'reason' => 'required',
-            'solution' => 'required',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'penyakit' => 'required|string',
+            'reason' => 'required|string',
+            'solution' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         //upload image
@@ -55,7 +54,7 @@ class PenyakitController extends Controller
         $image->storeAs('public/penyakit', $new_name);
 
         $form_data = array(
-            'name' => $request->name,
+            'name' => $request->penyakit,
             'reason' => $request->reason,
             'solution' => $request->solution,
             'image' => $new_name
@@ -67,17 +66,6 @@ class PenyakitController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -86,8 +74,7 @@ class PenyakitController extends Controller
     public function edit($id)
     {
         $penyakit = Penyakit::findOrFail($id);
-        $loginDuration = $this->LoginDuration();
-        return view('admin.penyakit.edit', compact('penyakit', 'loginDuration'));
+        return view('admin.penyakit.edit', compact('penyakit'));
     }
 
     /**
@@ -100,11 +87,12 @@ class PenyakitController extends Controller
     public function update(Request $request, $id)
     {
         $penyakit = Penyakit::findOrFail($id);
+
         $this->validate($request, [
-            'name' => 'required',
-            'reason' => 'required',
-            'solution' => 'required',
-            // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'penyakit' => 'required|string',
+            'reason' => 'required|string',
+            'solution' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
@@ -119,7 +107,7 @@ class PenyakitController extends Controller
         }
 
         $form_data = array(
-            'name' => $request->name,
+            'name' => $request->penyakit,
             'reason' => $request->reason,
             'solution' => $request->solution,
             'image' => $new_name ?? $penyakit->image,
@@ -138,21 +126,22 @@ class PenyakitController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $penyakit = Penyakit::findOrFail($id);
-            $old_image = $penyakit->image;
-            $image_path = "public/penyakit/" . $old_image;
-            if (file_exists($image_path)) {
-                try {
-                    unlink($image_path);
-                } catch (\Exception $th) {
-                    return redirect(route('admin.penyakit'))->with('error', 'Foto gagal dihapus!');
-                }
-            }
-            $penyakit->delete();
-            return redirect(route('admin.penyakit'))->with('success', 'Data berhasil dihapus!');
-        } catch (\Exception $th) {
-            return redirect(route('admin.penyakit'))->with('error', 'Data gagal dihapus!');
+        $penyakit = Penyakit::findOrFail($id);
+
+        $old_image = $penyakit->image;
+        $image_path = "public/penyakit/" . $old_image;
+        if (file_exists($image_path)) {
+            unlink($image_path);
         }
+
+        try {
+            $penyakit->delete();
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                return redirect()->route('admin.penyakit')->with('error', 'Data tidak dapat dihapus karena sedang digunakan!');
+            }
+        }
+
+        return redirect(route('admin.penyakit'))->with('success', 'Data berhasil dihapus!');
     }
 }
