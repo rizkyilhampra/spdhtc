@@ -44,42 +44,28 @@ class GejalaController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'gejala' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
         try {
-
-            $this->validate($request, [
-                'name' => 'required',
-                // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-
             //upload image
             $image = $request->file('image');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->storeAs('public/gejala', $new_name);
 
             $form_data = array(
-                'name' => $request->name,
+                'gejala' => $request->gejala,
                 'image' => $new_name
             );
 
             Gejala::create($form_data);
-            //isi dengan blok kode dari function
-            return redirect()->route('admin.gejala')->with('success', 'Berhasil');
         } catch (\Exception $e) {
             return redirect()->route('admin.gejala')->with('error', $e);
         }
 
-        //return redirect(route('admin.gejala'))->with('success', 'Data berhasil ditambahkan!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect(route('admin.gejala'))->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -107,10 +93,9 @@ class GejalaController extends Controller
         try {
             $gejala = Gejala::findOrFail($id);
             $this->validate($request, [
-                'name' => 'required',
-                // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'name' => 'required|string|strip_tags',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-
 
             if ($request->hasFile('image')) {
                 $old_image = $gejala->image;
@@ -129,14 +114,11 @@ class GejalaController extends Controller
             );
 
             $gejala->update($form_data);
-
-            return redirect()->route('admin.gejala')->with('success', 'Berhasil');
         } catch (\Exception $e) {
             return redirect()->route('admin.gejala')->with('error', $e);
         }
 
-
-        //return redirect(route('admin.gejala'))->with('success', 'Data berhasil diubah!');
+        return redirect(route('admin.gejala'))->with('success', 'Data berhasil diubah!');
     }
 
     /**
