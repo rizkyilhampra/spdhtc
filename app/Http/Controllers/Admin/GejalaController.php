@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Gejala;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class GejalaController extends Controller
@@ -16,12 +17,7 @@ class GejalaController extends Controller
     public function index()
     {
         $gejala = Gejala::get(['id', 'name', 'image', 'updated_at']);
-
-        $data = [
-            'gejala' => $gejala,
-            'loginDuration' =>  $this->LoginDuration()
-        ];
-        return view('admin.gejala.gejala', $data);
+        return view('admin.gejala.gejala', compact('gejala'));
     }
 
 
@@ -32,8 +28,7 @@ class GejalaController extends Controller
      */
     public function create()
     {
-        $loginDuration = $this->LoginDuration();
-        return view('admin.gejala.tambah', compact('loginDuration'));
+        return view('admin.gejala.tambah');
     }
 
     /**
@@ -46,24 +41,20 @@ class GejalaController extends Controller
     {
         $this->validate($request, [
             'gejala' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        try {
-            //upload image
-            $image = $request->file('image');
-            $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/gejala', $new_name);
+        //upload image
+        $image = $request->file('image');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $image->storeAs('public/gejala', $new_name);
 
-            $form_data = array(
-                'name' => $request->gejala,
-                'image' => $new_name
-            );
+        $form_data = array(
+            'name' => $request->gejala,
+            'image' => $new_name
+        );
 
-            Gejala::create($form_data);
-        } catch (\Exception $e) {
-            return redirect()->route('admin.gejala')->with('error', $e);
-        }
+        Gejala::create($form_data);
 
         return redirect(route('admin.gejala'))->with('success', 'Data berhasil ditambahkan!');
     }
@@ -77,8 +68,7 @@ class GejalaController extends Controller
     public function edit($id)
     {
         $gejala = gejala::findOrFail($id);
-        $loginDuration = $this->LoginDuration();
-        return view('admin.gejala.edit', compact('gejala', 'loginDuration'));
+        return view('admin.gejala.edit', compact('gejala'));
     }
 
     /**
@@ -97,27 +87,25 @@ class GejalaController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        try {
-            if ($request->hasFile('image')) {
-                $old_image = $gejala->image;
-                $image_path = "public/gejala/" . $old_image;
-                if (file_exists($image_path)) {
-                    unlink($image_path);
-                }
-                $image = $request->file('image');
-                $new_name = rand() . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('public/gejala', $new_name);
+        if ($request->hasFile('image')) {
+            $old_image = $gejala->image;
+            $image_path = "public/gejala/" . $old_image;
+
+            if (file_exists($image_path)) {
+                unlink($image_path);
             }
 
-            $form_data = array(
-                'name' => $request->gejala,
-                'image' => $new_name ?? $gejala->image
-            );
-
-            $gejala->where('id', $id)->update($form_data);
-        } catch (\Exception $e) {
-            return redirect()->route('admin.gejala')->with('error', $e);
+            $image = $request->file('image');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/gejala', $new_name);
         }
+
+        $form_data = array(
+            'name' => $request->gejala,
+            'image' => $new_name ?? $gejala->image
+        );
+
+        $gejala->update($form_data);
 
         return redirect(route('admin.gejala'))->with('success', 'Data berhasil diubah!');
     }
@@ -130,13 +118,23 @@ class GejalaController extends Controller
      */
     public function destroy($id)
     {
-        $gejala = Gejala::findOrFail($id);
+        $gejala = Gejala::find($id);
+
         $old_image = $gejala->image;
         $image_path = "public/gejala/" . $old_image;
+
         if (file_exists($image_path)) {
             unlink($image_path);
         }
-        $gejala->delete();
+
+        try {
+            $gejala->delete();
+        } catch (QueryException $q) {
+            if ($q->getCode() == 23000) {
+                return redirect()->route('admin.gejala')->with('error', 'Data tidak dapat dihapus karena sedang digunakan!');
+            }
+        }
+
         return redirect(route('admin.gejala'))->with('success', 'Data berhasil dihapus!');
     }
 }
