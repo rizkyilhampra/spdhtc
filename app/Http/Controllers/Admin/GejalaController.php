@@ -90,13 +90,14 @@ class GejalaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $gejala = Gejala::findOrFail($id);
-            $this->validate($request, [
-                'name' => 'required|string|strip_tags',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
+        $gejala = Gejala::findOrFail($id);
 
+        $this->validate($request, [
+            'gejala' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        try {
             if ($request->hasFile('image')) {
                 $old_image = $gejala->image;
                 $image_path = "public/gejala/" . $old_image;
@@ -109,11 +110,11 @@ class GejalaController extends Controller
             }
 
             $form_data = array(
-                'name' => $request->name,
+                'name' => $request->gejala,
                 'image' => $new_name ?? $gejala->image
             );
 
-            $gejala->update($form_data);
+            $gejala->where('id', $id)->update($form_data);
         } catch (\Exception $e) {
             return redirect()->route('admin.gejala')->with('error', $e);
         }
