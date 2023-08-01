@@ -17,21 +17,17 @@ class RuleController extends Controller
      */
     public function index()
     {
-        $data = [
-            'loginDuration' => $this->LoginDuration(),
-            'rules' => $this->getRule(),
-        ];
-        return view('admin.rule.rule', $data);
+        $rules = $this->getRule();
+        return view('admin.rule.rule', compact('rules'));
     }
 
-    public function getRule()
+    private function getRule()
     {
         $rules = Rule::with(['penyakit' => function ($query) {
             $query->select('id', 'name');
         }, 'gejala' => function ($query) {
             $query->select('id', 'name');
         }])->get(['id', 'penyakit_id', 'gejala_id', 'updated_at'])->map(function ($rule) {
-            $rule['updated_at'] = $rule['updated_at'];
             $rule['penyakit'] = $rule['penyakit']->toArray();
             $rule['gejala'] = $rule['gejala']->toArray();
             return [
@@ -56,7 +52,6 @@ class RuleController extends Controller
         $gejala = Gejala::select('id', 'name')->orderByDesc('updated_at')->get();
 
         $data = [
-            'loginDuration' => $this->LoginDuration(),
             'penyakit' => $penyakit,
             'gejala' => $gejala,
         ];
@@ -83,28 +78,13 @@ class RuleController extends Controller
         }
 
         foreach ($gejala as $key => $value) {
-            try {
-                Rule::create([
-                    'penyakit_id' => $request->input('penyakit'),
-                    'gejala_id' => $value,
-                ]);
-            } catch (\Exception $e) {
-                return redirect()->route('admin.rule')->with('error', 'Rule gagal ditambahkan');
-            }
+            Rule::create([
+                'penyakit_id' => $request->input('penyakit'),
+                'gejala_id' => $value,
+            ]);
         }
 
         return redirect()->route('admin.rule')->with('success', 'Rule berhasil ditambahkan');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -115,27 +95,22 @@ class RuleController extends Controller
      */
     public function edit($id)
     {
-        try {
-            $rule = Rule::with(['penyakit' => function ($query) {
-                $query->select('id', 'name');
-            }, 'gejala' => function ($query) {
-                $query->select('id', 'name');
-            }])->findOrFail($id, ['id', 'penyakit_id', 'gejala_id', 'updated_at'])->toArray();
+        $rule = Rule::with(['penyakit' => function ($query) {
+            $query->select('id', 'name');
+        }, 'gejala' => function ($query) {
+            $query->select('id', 'name');
+        }])->findOrFail($id, ['id', 'penyakit_id', 'gejala_id', 'updated_at'])->toArray();
 
-            $penyakit = Penyakit::select('id', 'name')->orderByDesc('updated_at')->get();
-            $gejala = Gejala::select('id', 'name')->orderByDesc('updated_at')->get();
+        $penyakit = Penyakit::select('id', 'name')->orderByDesc('updated_at')->get();
+        $gejala = Gejala::select('id', 'name')->orderByDesc('updated_at')->get();
 
-            $data = [
-                'loginDuration' => $this->LoginDuration(),
-                'penyakit' => $penyakit,
-                'gejala' => $gejala,
-                'rule' => $rule,
-            ];
+        $data = [
+            'penyakit' => $penyakit,
+            'gejala' => $gejala,
+            'rule' => $rule,
+        ];
 
-            return view('admin.rule.edit', $data);
-        } catch (\Exception $e) {
-            return redirect()->route('admin.rule')->with('error', 'Rule tidak ditemukan');
-        }
+        return view('admin.rule.edit', $data);
     }
 
     /**
@@ -147,14 +122,10 @@ class RuleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $rule = Rule::findOrFail($id);
-            $rule->penyakit_id = $request->input('penyakit');
-            $rule->gejala_id = $request->input('gejala');
-            $rule->save();
-        } catch (\Exception $e) {
-            return redirect()->route('admin.rule')->with('error', 'Rule gagal diubah');
-        }
+        $rule = Rule::findOrFail($id);
+        $rule->penyakit_id = $request->input('penyakit');
+        $rule->gejala_id = $request->input('gejala');
+        $rule->save();
 
         return redirect()->route('admin.rule')->with('success', 'Rule berhasil diubah');
     }
@@ -167,12 +138,8 @@ class RuleController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $rule = Rule::findOrFail($id);
-            $rule->delete();
-        } catch (\Exception $e) {
-            return redirect()->route('admin.rule')->with('error', 'Rule gagal dihapus');
-        }
+        $rule = Rule::findOrFail($id);
+        $rule->delete();
 
         return redirect()->route('admin.rule')->with('success', 'Rule berhasil dihapus');
     }
