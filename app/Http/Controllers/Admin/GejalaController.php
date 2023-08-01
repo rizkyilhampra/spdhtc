@@ -41,7 +41,7 @@ class GejalaController extends Controller
     {
         $this->validate($request, [
             'gejala' => 'required|string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         //upload image
