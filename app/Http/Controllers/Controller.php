@@ -24,9 +24,8 @@ class Controller extends BaseController
             return redirect()->intended(Fortify::redirects('home', route('admin.beranda')))->with('success-login-admin');
         } else if (FacadesGate::allows('asUser')) {
             return redirect()->intended(Fortify::redirects('home', route('index')))->with('success', 'Login berhasil, selamat datang ' . $user->name . '!');
-        } else {
-            return redirect('/');
         }
+        return redirect('/');
     }
     public function LoginDuration()
     {
