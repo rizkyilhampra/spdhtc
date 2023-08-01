@@ -16,9 +16,9 @@
                         @method('PUT')
                         <div class="form-group">
                             <label class="form-label">Nama Penyakit</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                                id="name" value="{{ old('name', $penyakit->name) }}">
-                            @error('name')
+                            <input type="text" class="form-control @error('penyakit') is-invalid @enderror"
+                                name="penyakit" id="penyakit" value="{{ old('penyakit', $penyakit->name) }}">
+                            @error('penyakit')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -36,7 +36,13 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Solusi</label>
-                            <textarea name="solution" class="form-control" id="solution" style="height: 200px">{{ old('solution', $penyakit->solution) }}</textarea>
+                            <textarea name="solution" class="form-control @error('solution') is-invalid @enderror" id="solution"
+                                style="height: 200px">{{ old('solution', $penyakit->solution) }}</textarea>
+                            @error('solution')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="image" class="form-label">Gambar</label>
