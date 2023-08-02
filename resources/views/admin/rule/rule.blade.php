@@ -88,7 +88,7 @@
                                 @foreach ($rules as $rule => $value)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $value['id'] }}
+                                            {{ $loop->iteration }}
                                         </td>
                                         <td>{{ $value['penyakit']['name'] }}</td>
                                         <td>{{ $value['gejala']['name'] }}</td>

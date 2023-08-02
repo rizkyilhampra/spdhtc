@@ -86,13 +86,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
                                 @foreach ($gejala as $p)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $no++ }}
+                                            {{ $loop->iteration}}
                                         </td>
                                         <td>{{ $p->name }}</td>
                                         <td>{{ $p->updated_at }}</td>

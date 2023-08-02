@@ -79,7 +79,7 @@
                                 @foreach ($diagnosis as $key => $value)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $value['id'] }}
+                                            {{ $loop->iteration }}
                                         </td>
                                         <td>{{ $value['user']['name'] }}</td>
                                         <td>{{ $value['user']['email'] }}</td>
