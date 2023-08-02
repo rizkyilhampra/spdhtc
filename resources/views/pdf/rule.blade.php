@@ -16,7 +16,7 @@
             @foreach ($rules as $rule)
                 <tr>
                     <td>
-                        {{ $rule['id'] }}
+                        {{ $loop->iteration }}
                     </td>
                     <td>{{ $rule['penyakit']['name'] }}</td>
                     <td>{{ $rule['gejala']['name'] }}</td>

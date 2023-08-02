@@ -15,7 +15,7 @@
             @foreach ($gejala as $p)
                 <tr>
                     <td>
-                        {{ $p['id'] }}
+                        {{ $loop->iteration }}
                     </td>
                     <td>{{ $p['name'] }}</td>
                     <td>{{ $p['updated_at'] }}</td>
