@@ -91,7 +91,7 @@
                                 @foreach ($penyakit as $p)
                                     <tr>
                                         <td class="text-center">
-                                            {{ $p->id }}
+                                            {{ $loop->iteration }}
                                         </td>
                                         <td>{{ $p->name }}</td>
                                         <td>{{ $p->reason }}</td>

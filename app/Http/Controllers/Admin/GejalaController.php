@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Gejala;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GejalaController extends Controller
 {
@@ -118,17 +119,12 @@ class GejalaController extends Controller
      */
     public function destroy($id)
     {
-        $gejala = Gejala::find($id);
-
-        $old_image = $gejala->image;
-        $image_path = "public/gejala/" . $old_image;
-
-        if (file_exists($image_path)) {
-            unlink($image_path);
-        }
+        $gejala = Gejala::findOrFail($id);
 
         try {
-            $gejala->delete();
+            if ($gejala->delete()) {
+                Storage::delete('public/gejala/' . $gejala->image);
+            }
         } catch (QueryException $q) {
             if ($q->getCode() == 23000) {
                 return redirect()->route('admin.gejala')->with('error', 'Data tidak dapat dihapus karena sedang digunakan!');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Penyakit;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PenyakitController extends Controller
 {
@@ -128,14 +129,10 @@ class PenyakitController extends Controller
     {
         $penyakit = Penyakit::findOrFail($id);
 
-        $old_image = $penyakit->image;
-        $image_path = "public/penyakit/" . $old_image;
-        if (file_exists($image_path)) {
-            unlink($image_path);
-        }
-
         try {
-            $penyakit->delete();
+            if ($penyakit->delete()) {
+                Storage::delete('public/penyakit/' . $penyakit->image);
+            }
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
                 return redirect()->route('admin.penyakit')->with('error', 'Data tidak dapat dihapus karena sedang digunakan!');
