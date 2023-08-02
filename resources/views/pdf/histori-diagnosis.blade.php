@@ -17,7 +17,7 @@
             @foreach ($historiDiagnosis as $key)
                 <tr>
                     <td>
-                        {{ $key['id'] }}
+                        {{ $loop->iteration }}
                     </td>
                     <td>{{ $key['user']['name'] }}</td>
                     <td>{{ $key['user']['email'] }}</td>
