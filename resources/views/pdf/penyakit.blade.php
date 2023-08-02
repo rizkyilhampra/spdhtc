@@ -17,7 +17,7 @@
             @foreach ($penyakit as $p)
                 <tr>
                     <td>
-                        {{ $p['id'] }}
+                        {{ $loop->iteration }}
                     </td>
                     <td>{{ $p['name'] }}</td>
                     <td>{{ $p['reason'] }}</td>
