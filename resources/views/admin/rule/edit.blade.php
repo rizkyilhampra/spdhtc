@@ -32,7 +32,7 @@
                                         {{ $p->name }}</option>
                                 @endforeach
                             </select>
-                            @error('reason')
+                            @error('penyakit')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -47,7 +47,7 @@
                                         G{{ $g->id }}, {{ $g->name }}</option>
                                 @endforeach
                             </select>
-                            @error('reason')
+                            @error('gejala')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
