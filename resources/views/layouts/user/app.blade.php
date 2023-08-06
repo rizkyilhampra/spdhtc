@@ -69,6 +69,7 @@
     @stack('scriptPerPage')
 
     <script type="text/javascript" src="{{ asset('/spesified-assets/user/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/spesified-assets/user/diagnosis.js') }}"></script>
 </body>
 
 </html>

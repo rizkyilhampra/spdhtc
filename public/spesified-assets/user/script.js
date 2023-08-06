@@ -200,24 +200,6 @@ function applyNavbarClassesLight() {
     });
 }
 
-
-function ajaxGetGejala() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: "/get-gejala",
-            type: "GET",
-            dataType: "json",
-            success: function (response) {
-                resolve(response);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                reject(xhr);
-            }
-        });
-    });
-}
-
-
 document.addEventListener('DOMContentLoaded', async () => {
     const notyf = new Notyf({
         position: {
@@ -352,91 +334,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         } else {
-            function ajaxRequestToDiagnosis(element, jawaban) {
-                return $.ajax({
-                    url: "/diagnosis",
-                    type: "POST",
-                    data: {
-                        _token: csrfToken,
-                        idgejala: element,
-                        value: jawaban
-                    },
-                });
-            }
-
-            async function showModal() {
-                const swalBeforeDiagnosis = await Swal.fire({
-                    title: 'Catatan',
-                    text: 'Sistem ini memiliki keterbatasan dalam cakupan data penyakit tanaman cabai, sehingga tidak semua penyakit dapat didiagnosis. Hanya penyakit yang terdapat dalam daftar penyakit yang dapat didiagnosis. Apakah Anda ingin melanjutkan proses diagnosis?',
-                    icon: 'info',
-                    showCancelButton: true,
-                    confirmButtonText: 'Lanjutkan',
-                    cancelButtonText: 'Batal',
-                    reverseButtons: true
-                });
-                if (swalBeforeDiagnosis.isConfirmed) {
-                    const swalLoading = Swal.fire({
-                        title: 'Mohon tunggu',
-                        allowOutsideClick: false,
-                        didOpen: () => {
-                            Swal.showLoading()
-                        },
-                    });
-                    let gejala, countGejala;
-                    try {
-                        gejala = await ajaxGetGejala();
-                        countGejala = gejala.length;
-                    } catch (error) {
-                        swalError(error.responseJSON);
-                    }
-                    swalLoading.close();
-
-                    //looping Swal sebanyak jumlah gejala
-                    var isClosed = false;
-                    for (let i = 0; i < countGejala; i++) {
-                        const element = gejala[i];
-                        const {
-                            value: jawaban,
-                            dismiss: dismissReason
-                        } = await Swal.fire({
-                            title: 'Pertanyaan ' + (i + 1),
-                            imageUrl: `${assetStorageGejala}/${element.image}`,
-                            imageHeight: '300px',
-                            imageAlt: `Gambar Gejala ${element.name}`,
-                            text: 'Apakah ' + element.name +
-                                '?',
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Ya',
-                            showDenyButton: true,
-                            denyButtonColor: '#d33',
-                            denyButtonText: 'Tidak',
-                            showCloseButton: true,
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            allowEnterKey: false,
-                            reverseButtons: true,
-                        });
-                        if (dismissReason == Swal.DismissReason.close) {
-                            isClosed = true;
-                            break;
-                        }
-                        try {
-                            const response = await ajaxRequestToDiagnosis(element.id, jawaban);
-                            if (response.idPenyakit != null) {
-                                await Swal.close();
-                                return getPenyakitFromDiagnose(response, true);
-                            } else if (response.penyakitUnidentified === true) {
-                                return getPenyakitFromDiagnose(response, true);
-                            }
-                        } catch (error) {
-                            swalError(error.responseJSON);
-                        }
-                    }
-                } else {
-                    Swal.close();
-                }
-            }
-            showModal();
+            new DiagnosisModal(assetStorageGejala, csrfToken).showModal();
         }
     });
 

@@ -25,4 +25,9 @@ class Rule extends Model
     {
         return $this->belongsTo(Gejala::class, 'gejala_id');
     }
+
+    public function nextGejala()
+    {
+        return $this->belongsTo(Gejala::class, 'next_first_gejala_id');
+    }
 }
