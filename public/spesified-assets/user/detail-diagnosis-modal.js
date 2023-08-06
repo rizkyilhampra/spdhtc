@@ -61,12 +61,13 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
         swalError(error.responseJSON);
     }
 
-    try {
-        const chartData = await ajaxRequestChartDiagnosisPenyakit();
-        drawChart(chartData);
-    } catch (error) {
-        swalError(error.responseJSON);
-    }
+    //Uncomment this if you want to draw chart
+    // try {
+    //     const chartData = await ajaxRequestChartDiagnosisPenyakit();
+    //     drawChart(chartData);
+    // } catch (error) {
+    //     swalError(error.responseJSON);
+    // }
 });
 
 
