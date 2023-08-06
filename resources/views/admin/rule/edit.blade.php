@@ -53,6 +53,25 @@
                                 </div>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label class="form-label">Gejala Pertama pada Rule Selanjutnya</label>
+                            <select name="nextGejala" id="nextGejala" required
+                                class="form-control select2 @error('nextGejala') is-invalid @enderror">
+                                <option value="">Pilih Gejala Selanjutnya</option>
+                                @foreach ($gejalaGroupBy as $key => $value)
+                                    <option value="{{ $value->id }}  "
+                                        @if ($value->id == $rule['next_first_gejala_id']) selected @endif>
+                                        R{{ $key }} :
+                                        G{{ $value->id }}, {{ $value->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('nextGejala')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>

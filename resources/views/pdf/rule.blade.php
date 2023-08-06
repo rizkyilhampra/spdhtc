@@ -9,6 +9,7 @@
                 </th>
                 <th>Penyakit</th>
                 <th>Gejala</th>
+                <th>Gejala Pertama pada Rule Selanjutnya</th>
                 <th>Tanggal Dibuat/Diubah</th>
             </tr>
         </thead>
@@ -20,6 +21,7 @@
                     </td>
                     <td>{{ $rule['penyakit']['name'] }}</td>
                     <td>{{ $rule['gejala']['name'] }}</td>
+                    <td>{{ $rule['nextGejala'] }}</td>
                     <td>{{ $rule['updated_at'] }}</td>
                 </tr>
             @endforeach

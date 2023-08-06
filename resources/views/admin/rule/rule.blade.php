@@ -80,6 +80,7 @@
                                     </th>
                                     <th>Penyakit</th>
                                     <th>Gejala</th>
+                                    <th>Gejala Pertama pada Rule Selanjutnya</th>
                                     <th>Tanggal Dibuat/Diubah</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -92,6 +93,7 @@
                                         </td>
                                         <td>{{ $value['penyakit']['name'] }}</td>
                                         <td>{{ $value['gejala']['name'] }}</td>
+                                        <td>{{ $value['nextGejala'] }}</td>
                                         <td>{{ $value['updated_at'] }}</td>
                                         <td>
                                             <div class="dropdown">
