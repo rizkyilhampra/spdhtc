@@ -61,12 +61,13 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
         swalError(error.responseJSON);
     }
 
-    try {
-        const chartData = await ajaxRequestChartDiagnosisPenyakit();
-        drawChart(chartData);
-    } catch (error) {
-        swalError(error.responseJSON);
-    }
+    //Uncomment this if you want to draw chart
+    // try {
+    //     const chartData = await ajaxRequestChartDiagnosisPenyakit();
+    //     drawChart(chartData);
+    // } catch (error) {
+    //     swalError(error.responseJSON);
+    // }
 });
 
 
@@ -141,8 +142,7 @@ function drawDetailJawabanDiagnosis(data) {
         const tableData = document.createElement('td');
         const tableData2 = document.createElement('td');
         const tableData3 = document.createElement('td');
-        let number = index + 1;
-        tableData.innerHTML = number;
+        tableData.innerHTML = item.id;
         tableData2.innerHTML = item.name;
         tableData3.innerHTML = item.answer;
         tableRow.appendChild(tableData);

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('penyakit_id')->references('id')->on('penyakit');
             $table->unsignedSmallInteger('gejala_id');
             $table->foreign('gejala_id')->references('id')->on('gejala');
+            $table->unsignedSmallInteger('next_first_gejala_id')->nullable();
+            $table->foreign('next_first_gejala_id')->references('id')->on('gejala');
             $table->timestamps();
         });
     }
