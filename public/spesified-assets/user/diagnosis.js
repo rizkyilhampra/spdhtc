@@ -51,7 +51,7 @@ class DiagnosisModal {
 
 
     async showModal() {
-        const swalBeforeDiagnosis = Swal.fire({
+        const swalBeforeDiagnosis = await Swal.fire({
             title: 'Catatan',
             text: 'Sistem ini memiliki keterbatasan dalam cakupan data penyakit tanaman cabai, sehingga tidak semua penyakit dapat didiagnosis. Hanya penyakit yang terdapat dalam daftar penyakit yang dapat didiagnosis. Apakah Anda ingin melanjutkan proses diagnosis?',
             icon: 'info',
