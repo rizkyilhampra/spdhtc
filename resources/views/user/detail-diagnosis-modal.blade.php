@@ -59,8 +59,6 @@
                                             <tr>
                                                 <th scope="col">No</th>
                                                 <th scope="col">Gejala</th>
-                                                {{-- Uncomment If want to show persentase --}}
-                                                {{-- <th scope="col">Bobot</th> --}}
                                                 <th scope="col">Jawaban</th>
                                             </tr>
                                         </thead>
@@ -71,8 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Uncomment If want to show persentase --}}
-                    {{-- <div class="row pb-5 ">
+                    <div class="row pb-5 ">
                         <h2 class="font-semibold pb-3 placeholder">
                             Persentase Penyakit
                         </h2>
@@ -81,7 +78,7 @@
                                 <canvas id="chartDiagnosisPenyakit" height="300"></canvas>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
