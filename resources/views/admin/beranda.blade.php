@@ -86,7 +86,7 @@
                         <h4>Provinsi Pengguna</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart1" height="200"></canvas>
+                        <canvas id="myChart1" ></canvas>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                         <h4>Kota Pengguna</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart2" height="200"></canvas>
+                        <canvas id="myChart2" ></canvas>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                         <h4>Profesi Pengguna</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart3" height="200"></canvas>
+                        <canvas id="myChart3" ></canvas>
                     </div>
                 </div>
             </div>
@@ -199,10 +199,11 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 legend: {
-                    position: 'bottom',
+                    display: false,
                 },
             }
         });
+
         var ctx = document.getElementById("myChart2").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'pie',
@@ -224,11 +225,11 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 legend: {
-                    position: 'bottom',
-
+                    display: false,
                 },
             }
         });
+
         var ctx = document.getElementById("myChart3").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'pie',
@@ -249,9 +250,8 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-
                 legend: {
-                    position: 'bottom',
+                    display: false,
                 },
             }
         });
