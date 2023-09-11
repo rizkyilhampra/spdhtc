@@ -35,7 +35,10 @@ class RuleController extends Controller
                 'updated_at' => $rule['updated_at'],
                 'penyakit' => $rule['penyakit'],
                 'gejala' => $rule['gejala'],
-                'nextGejala' => $rule['next_first_gejala_id'] ?? '',
+                'nextGejala' => [
+                    'id' => $rule['next_first_gejala_id'],
+                    'name' => $rule['next_first_gejala_id'] ? Gejala::find($rule['next_first_gejala_id'])->name : ''
+                ]
             ];
         })->values()->toArray();
 
