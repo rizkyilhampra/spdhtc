@@ -79,7 +79,9 @@
                                         No
                                     </th>
                                     <th>Penyakit</th>
+                                    <th>Id Gejala</th>
                                     <th>Gejala</th>
+                                    <th>Id Gejala Pertama pada Rule Selanjutnya</th>
                                     <th>Gejala Pertama pada Rule Selanjutnya</th>
                                     <th>Tanggal Dibuat/Diubah</th>
                                     <th>Aksi</th>
@@ -92,8 +94,10 @@
                                             {{ $loop->iteration }}
                                         </td>
                                         <td>{{ $value['penyakit']['name'] }}</td>
+                                        <td>{{$value['gejala']['id']}}</td>
                                         <td>{{ $value['gejala']['name'] }}</td>
-                                        <td>{{ $value['nextGejala'] }}</td>
+                                        <td>{{ $value['nextGejala']['id'] }}</td>
+                                        <td>{{ $value['nextGejala']['name'] }}</td>
                                         <td>{{ $value['updated_at'] }}</td>
                                         <td>
                                             <div class="dropdown">
