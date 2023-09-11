@@ -66,7 +66,6 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
         drawChart(chartData);
     } catch (error) {
         swalError(error.responseJSON);
-        console.log(error);
     }
 });
 
