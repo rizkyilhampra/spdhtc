@@ -1,0 +1,30 @@
+name: deploy
+
+on:
+  push:
+    branches: [master]
+
+concurrency: production_environment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          extensions: csv, mbstring, bcmath, xml, gd
+
+      - name: Install dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Deploy
+        uses: deployphp/action@v1
+        with:
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          dep: deploy
