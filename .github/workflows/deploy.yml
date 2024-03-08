@@ -23,17 +23,8 @@ jobs:
       - name: Install dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Check SSH Connection
-        env:
-          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          eval $(ssh-agent)
-          echo "$SSH_KEY" | base 64
-          ssh -Tv rizkyilhampra-spdhtc@209.97.169.80
-
       - name: Deploy
         uses: deployphp/action@v1
         with:
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
           dep: deploy
