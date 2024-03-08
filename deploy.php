@@ -19,7 +19,7 @@ add('writable_dirs', [
 
 // Hosts
 
-host('spdhtc.rizkyilhampra.me')
+host('209.97.169.80')
     ->set('remote_user', 'rizkyilhampra-spdhtc')
     ->set('deploy_path', '~/htdocs/spdhtc.rizkyilhampra.me');
 
