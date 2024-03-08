@@ -6,7 +6,6 @@ require 'recipe/laravel.php';
 // Config
 
 set('repository', 'git@github.com:rizkyilhampra/spdhtc.git');
-set('forward_agent', false);
 
 add('shared_files', ['.env']);
 add('shared_dirs', ['storage']);
@@ -20,7 +19,8 @@ add('writable_dirs', [
 
 // Hosts
 
-host('209.97.169.80')
+host('spdhtc.rizkyilhampra.me')
+    ->set('hostname', '209.97.169.80')
     ->set('remote_user', 'rizkyilhampra-spdhtc')
     ->set('deploy_path', '~/htdocs/spdhtc.rizkyilhampra.me');
 
