@@ -6,6 +6,7 @@ use App\Models\AuthGroupUser;
 use App\Models\GoogleAuth;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Laravel\Fortify\Fortify;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,8 @@ class SocialAuthController extends Controller
             $userFromGoogle = Socialite::driver('google')->user();
         } catch (Exception $th) {
             //return 500 Internal Server Error
-            throw new Exception('Terjadi kesalahan saat mengambil data dari Google. Silahkan coba beberapa saat lagi. Jika masalah terus berlanjut, hubungi Administrator/Pengembang', 500);
+            Log::error($th);
+            abort(500, 'Terjadi kesalahan saat mengambil data dari Google. Silahkan coba beberapa saat lagi. Jika masalah terus berlanjut, hubungi Administrator/Pengembang');
         }
         //check if user_id exists in users_google_auth table
         $usersGoogleAuth = GoogleAuth::where('google_id', $userFromGoogle->id)->first();
