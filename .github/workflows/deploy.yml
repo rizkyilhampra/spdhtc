@@ -24,8 +24,6 @@ jobs:
 
       - name: Deploy
         uses: deployphp/action@v1
-        env:
-          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          private-key: $private-key
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           dep: deploy
