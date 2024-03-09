@@ -6,6 +6,8 @@ require 'recipe/laravel.php';
 // Config
 
 set('repository', 'git@github.com:rizkyilhampra/spdhtc.git');
+set('ssh_multiplexing', false);
+
 
 add('shared_files', ['.env']);
 add('shared_dirs', ['storage']);

@@ -27,4 +27,3 @@ jobs:
         with:
           dep: deploy
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          skip-ssh-setup: true
