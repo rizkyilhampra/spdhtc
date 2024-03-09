@@ -27,3 +27,4 @@ jobs:
         with:
           dep: deploy
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
