@@ -17,7 +17,7 @@ add('writable_dirs', []);
 
 host('spdhtc.rizkyilhampra.me')
     ->set('hostname', '209.97.169.80')
-    ->set('remote_user', 'deployer')
+    ->set('remote_user', 'rizkyilhampra-spdhtc')
     ->set('deploy_path', '~/htdocs/spdhtc.rizkyilhampra.me');
 
 // Tasks
