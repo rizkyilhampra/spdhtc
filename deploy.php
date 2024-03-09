@@ -16,9 +16,9 @@ add('writable_dirs', []);
 // Hosts
 
 host('spdhtc.rizkyilhampra.me')
-    ->set('hostname', '209.97.169.80')
-    ->set('remote_user', 'rizkyilhampra-spdhtc')
-    ->set('deploy_path', '~/htdocs/spdhtc.rizkyilhampra.me');
+    ->set('hostname', getenv('HOSTNAME'))
+    ->set('remote_user', getenv('REMOTE_USER'))
+    ->set('deploy_path', getenv('DEPLOY_PATH'));
 
 // Tasks
 
@@ -32,10 +32,7 @@ task('deploy', [
     'deploy:secrets',
     'deploy:vendors',
     'artisan:storage:link',
-    'artisan:config:cache',
-    'artisan:route:cache',
-    'artisan:view:cache',
-    'artisan:event:cache',
+    'artisan:optimize:clear',
     'deploy:publish',
 ]);
 

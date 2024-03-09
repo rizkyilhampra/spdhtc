@@ -27,6 +27,9 @@ jobs:
         uses: deployphp/action@v1
         env:
           DOT_ENV: ${{ secrets.DOT_ENV }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          HOSTNAME: ${{ secrets.HOSTNAME }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         with:
           dep: deploy
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
