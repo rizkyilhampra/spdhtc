@@ -1,4 +1,4 @@
-name: Deployment
+name: Deploy to production
 
 on:
   push:
@@ -9,6 +9,7 @@ concurrency: production_environment
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - uses: actions/checkout@v4
@@ -22,9 +23,10 @@ jobs:
       - name: Install dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Deploy
+      - name: Deploy with deployer
         uses: deployphp/action@v1
+        env:
+          DOT_ENV: ${{ secrets.DOT_ENV }}
         with:
           dep: deploy
           private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
