@@ -11,7 +11,8 @@
                     <form action="{{ route('register') }}" class="needs-validation" novalidate="" method="POST">
                         <div class="alert alert-warning alert-dismissible show fade">
                             <div class="alert-body">
-                                Mohon maaf, pendaftaran akun untuk sementara hanya bisa menggunakan google.
+                                Mohon maaf, pendaftaran akun untuk sementara hanya bisa menggunakan google. Jika anda memperhatikan bagimana data anda anda akan kami simpan? Lihat kebijakan privasi
+                                <a href="https://github.com/rizkyilhampra/spdhtc/blob/master/privacy.md" style="text-decoration: underline;">disini</a>
                             </div>
                         </div>
                         <!-- @csrf -->
