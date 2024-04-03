@@ -1,10 +1,8 @@
 name: Deploy to production
 
 on:
-  # release:
-  #   types: [published]
-  push:
-    branches: [master]
+  release:
+    types: [published]
 
 concurrency: production_environment
 
