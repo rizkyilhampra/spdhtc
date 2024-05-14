@@ -1,15 +1,24 @@
-# Sistem Pakar Deteksi Penyakit pada Tanaman Cabai | SPDHTC
-> [!NOTE] 
-> Working on progress to make nicer documentation about this web app.
+# SPDHTC
+> [!NOTE]
+> Dokumentasi ini masih belum lengkap dan akan terus di-*update*
 
-## Sebelum menjalankan aplikasi
+Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosis penyakit yang menyerang tanaman cabai. Sistem ini menggunakan algoritma *forward chaining* sebagai metode inteferensi. Data yang digunakan dalam proses diagnosis bersumber dari sebuah instansi pemerintah dan berdasarkan jurnal jurnal resmi.
+
+## Teknologi yang digunakan
+- Laravel 9
+- JQuery
+- Bootstrap 5
+- dan beberapa *library* lainnya
+
+## Sebelum menjalankan aplikasi di local
 Terdapat dua versi algoritma dalam aplikasi ini.
 - [v2.1-beta(latest)](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.1-beta)
   - TL;DR Tidak semua pertanyaann akan tampil, jika jawabannya `tidak` maka akan langsung lompat ke pertanyaan selanjutnya.
 - [v1.3](https://github.com/rizkyilhampra/spdhtc/releases/tag/v1.3)
   - TL;DR Semua pertanyaan akan tampil, jika jawabannya `tidak` maka akan tetap menampilkan pertanyaan selanjutnya.
 
-Gunakan salah satu dari dua versi tersebut dan **tidak direkomendasikan** untuk *cloning* langsung dari `master` *branch*. Karena disana terdapat pipeline CI/CD untuk deployment, sehingga terjadi kemungkinan beberapa fitur ter-*disable*.
+> [!WARNING]
+> Gunakan salah satu dari dua versi tersebut dan **tidak direkomendasikan** untuk *cloning* langsung dari `master` *branch*. Karena disana terdapat pipeline CI/CD untuk deployment, sehingga terjadi kemungkinan beberapa fitur ter-*disable*. Lihat juga bagian [FAQ terkait beta version](#faq)
 
 > [!NOTE]
 > Jika menggunakan Git, anda bisa berpindah ke versi yang diinginkan dengan menggunakan perintah `git checkout <tag>`. Contohnya `git checkout v2.1-beta`
@@ -45,7 +54,7 @@ Gunakan salah satu dari dua versi tersebut dan **tidak direkomendasikan** untuk 
     ```bash
     cp .env.example .env
     ```
-    atau
+    atau di windows (powershell)
     ```powershell
     Copy-Item .env.example .env
     ```
@@ -134,6 +143,10 @@ Gunakan salah satu dari dua versi tersebut dan **tidak direkomendasikan** untuk 
 6. Copy file `.env.example` menjadi `.env`
     ```bash
     cp .env.example .env
+    ```
+    atau di windows (powershell)
+    ```powershell
+    Copy-Item .env.example .env
     ```
 7. Buat *database* baru
     1. Dengan CLI
