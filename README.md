@@ -45,6 +45,10 @@ Gunakan salah satu dari dua versi tersebut dan **tidak direkomendasikan** untuk 
     ```bash
     cp .env.example .env
     ```
+    atau
+    ```powershell
+    Copy-Item .env.example .env
+    ```
 6. Buat *database* baru
     1. Dengan CLI
         ```bash
