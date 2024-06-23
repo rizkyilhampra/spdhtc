@@ -1,7 +1,24 @@
 # SPDHTC
 > [!NOTE]
 > Dokumentasi ini masih belum lengkap dan akan terus di-*update*
+## Table Of Content
+- [Deskripsi](#deskripsi)
+- [Teknologi yang digunakan](#teknologi-yang-digunakan)
+- [Sebelum menjalankan aplikasi di local](#sebelum-menjalankan-aplikasi-di-local)
+- [Cara menjalankan aplikasi di local](#cara-menjalankan-aplikasi-di-local)
+    * [Menjalankan dengan XAMPP/Laragon](#menjalankan-dengan-xampplaragon)
+        - [Persyaratan](#persyaratan)
+        - [Langkah-langkah](#langkah-langkah)
+    * [Menjalankan dengan `php artisan serve`](#menjalankan-dengan-php-artisan-serve)
+        - [Persyaratan](#persyaratan-1)
+        - [Langkah-langkah](#langkah-langkah-1)
+    * [Menjalankan dengan Docker/Sail](#menjalankan-dengan-docker-sail)
+      - [Persyaratan](#persyaratan-2)
+      - [Langkah-langkah](#langkah-langkah-2)
+- [Setelah aplikasi berjalan](#setelah-aplikasi-berjalan)
+- [FAQ](#faq)
 
+## Deskripsi
 Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosis penyakit yang menyerang tanaman cabai. Sistem ini menggunakan algoritma *forward chaining* sebagai metode inteferensi. Data yang digunakan dalam proses diagnosis bersumber dari sebuah instansi pemerintah dan berdasarkan jurnal jurnal resmi.
 
 ## Teknologi yang digunakan
@@ -25,7 +42,7 @@ Terdapat dua versi algoritma dalam aplikasi ini.
 
 
 ## Cara menjalankan aplikasi di local
-### Menjalankan dengan web server atau dengan *local development environment* (XAMPP/Laragon)
+### Menjalankan dengan XAMPP/Laragon
 #### Persyaratan
 - Git (opsional)
 - PHP 8.0 (minimal)
@@ -133,22 +150,21 @@ Terdapat dua versi algoritma dalam aplikasi ini.
     </summary>
 
 #### Persyaratan 
-- Git (opsional)
+- Git 
 - PHP 8.0 (minimal)
 - Composer
 - MySQL atau MariaDB
 
 #### Langkah-langkah
-1. Clone repositori atau download ZIP di [sini](https://github.com/rizkyilhampra/spdhtc/releases) kemudian ekstraksi
-    1. Menggunakan Git
-        ```bash
-        git clone https://github.com/rizkyilhampra/spdhtc.git spdhtc
-        ```
+1. Clone repositori 
+    ```bash
+    git clone https://github.com/rizkyilhampra/spdhtc.git spdhtc
+    ```
 2. Masuk ke direktori/folder `spdhtc`
     ```bash
     cd spdhtc
     ```
-3. *Checkout* ke versi yang diinginkan (jika menggunakan Git)
+3. *Checkout* ke versi yang diinginkan
     ```bash
     git checkout v2.1-beta
     ```
@@ -160,20 +176,7 @@ Terdapat dua versi algoritma dalam aplikasi ini.
     ```bash
     cp .env.example .env
     ```
-    atau di windows (powershell)
-    ```powershell
-    Copy-Item .env.example .env
-    ```
-6. Buat *database* baru
-    1. Dengan CLI
-        ```bash
-        mysql -u root -p
-        ```
-        ```sql
-        CREATE DATABASE spdhtc;
-        exit;
-        ```
-7. Konfigurasi *database* pada file `.env`
+6. Konfigurasi *database* pada file `.env`
     ```diff
     DB_CONNECTION=mysql
     DB_HOST=128.0.0.1
@@ -183,35 +186,36 @@ Terdapat dua versi algoritma dalam aplikasi ini.
     DB_USERNAME=root #sesuaikan dengan username MySQL
     DB_PASSWORD= #sesuaikan dengan password MySQL (kosongkan jika tidak ada)
     ```
-8. Tambahkan Google kredensial pada file `.env` (Opsional)
+7. Tambahkan Google kredensial pada file `.env` (Opsional)
     > Ini akan berhubungan dengan fitur login dan register. Mengabaikan ini maka login dan register dengan akun Google tidak akan berjalan.
     ```bash
     # NOTE: dapatkan dari https://console.cloud.google.com
     GOOGLE_CLIENT_ID= #isi dengan client id google
     GOOGLE_CLIENT_SECRET= #isi dengan client secret google
     ```
-9. Tambahkan Rajaongkir kredensial pada file `.env` (Opsional dengan [catatan](https://github.com/rizkyilhampra/spdhtc/discussions/71))
+8. Tambahkan Rajaongkir kredensial pada file `.env` (Opsional dengan [catatan](https://github.com/rizkyilhampra/spdhtc/discussions/71))
     ```bash
     # NOTE: dapatkan dari https://rajaongkir.com/dokumentasi
     RAJAONGKIR_API_KEY= #isi
     ```
-10. Generate key aplikasi
+9. Generate key aplikasi
     ```bash
     php artisan key:generate
     ```
-11. Migrasi *database* dan *seed* data
+10. Migrasi *database* dan *seed* data
+    > Pada umumnya, perintah ini akan membuat datatabase secara otomatis tanpa perlu membuat terlebih dahulu, jika mengalami kendala,  buat database manual
     ```bash
     php artisan migrate:fresh --seed
     ```
-12. Link storage
+11. Link storage
     ```bash
     php artisan storage:link
     ```
-13. Jalankan aplikasi
+12. Jalankan aplikasi
     ```bash
     php artisan serve
     ```
-14. Buka browser dan akses `http://localhost:8000`
+13. Buka browser dan akses `http://localhost:8000`
 
 </details>
 
@@ -225,20 +229,19 @@ Terdapat dua versi algoritma dalam aplikasi ini.
     </summary>
 
 #### Persyaratan
-- Git (opsional)
+- Git 
 - Docker Desktop (Windows/Mac) atau Docker Engine (Linux)
 
 #### Langkah-langkah
-1. Clone repositori atau download ZIP di [sini](https://github.com/rizkyilhampra/spdhtc/releases) kemudian ekstraksi
-    1. Menggunakan Git
-        ```bash
-        git clone https://github.com/rizkyilhampra/spdhtc.git spdhtc
-        ```
+1. Clone repositori 
+    ```bash
+    git clone https://github.com/rizkyilhampra/spdhtc.git spdhtc
+    ```
 2. Masuk ke direktori/folder `spdhtc`
     ```bash
     cd spdhtc
     ```
-3. *Checkout* ke versi yang diinginkan (jika menggunakan Git)
+3. *Checkout* ke versi yang diinginkan
     ```bash
     git checkout v2.1-beta
     ```
@@ -289,7 +292,7 @@ Terdapat dua versi algoritma dalam aplikasi ini.
 </details>
 
 ## Setelah aplikasi berjalan
-Secara default saat *seeding* data, akan membawa 2 akun pengguna yang telah terdaftar di dalam aplikasi. Sehingga untuk dapat login ke dalam aplikasi, dapat menggunakan data akun berikut.
+Secara default saat *seeding* data, akan dibuatkan 2 akun pengguna. Sehingga untuk dapat login ke dalam aplikasi, dapat menggunakan data berikut.
 
 https://github.com/rizkyilhampra/spdhtc/blob/15a0ce9725473d6682703894bcd1e999ef15fd93/database/seeders/UserCustomSeeder.php#L43-L57
 
