@@ -20,6 +20,7 @@
 - [Setelah aplikasi berjalan](#setelah-aplikasi-berjalan)
 - [FAQ](#faq)
 - [TODO](#todo)
+- [Kebijakan Privasi](#kebijakan-privasi)
 
 ## Deskripsi
 Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosis penyakit yang menyerang tanaman cabai. Sistem ini menggunakan algoritma *forward chaining* sebagai metode inteferensi. 
@@ -309,7 +310,11 @@ https://github.com/rizkyilhampra/spdhtc/blob/0081ff84f6ef768d62db6873f118f2eae17
     - **A**: Karena beberapa kode dan algoritma untuk mencapai tujuan tersebut, kami rasa kurang sempurna. 
 
 Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
+
 ## TODO
 - [ ] Write better documentation (in progress)
 - [ ] Release v2.0 (stable)
 - [ ] Upgrade to Laravel 11
+
+## Kebijakan Privasi
+Kebijakan privasi di [SPDHTC](https://spdhtc.rizkyilhampra.me) dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/blob/master/privacy.md)
