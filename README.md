@@ -36,12 +36,14 @@ Dataset yang digunakan dapat dilihat di [sini](https://github.com/rizkyilhampra/
 ## Sebelum menjalankan aplikasi di local
 Terdapat dua versi algoritma dalam aplikasi ini.
 - [v2.1-beta(latest)](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.1-beta)
+  > Lihat bagian [FAQ terkait beta version](#faq)
+  
   - TL;DR Tidak semua pertanyaann akan tampil, jika jawabannya `tidak` maka akan langsung lompat ke pertanyaan selanjutnya.
 - [v1.3](https://github.com/rizkyilhampra/spdhtc/releases/tag/v1.3)
   - TL;DR Semua pertanyaan akan tampil, jika jawabannya `tidak` maka akan tetap menampilkan pertanyaan selanjutnya.
 
 > [!WARNING]
-> Gunakan salah satu dari dua versi tersebut dan **tidak direkomendasikan** untuk *cloning* langsung dari `master` *branch*. Karena disana terdapat pipeline CI/CD untuk deployment, sehingga terjadi kemungkinan beberapa fitur ter-*disable*. Lihat juga bagian [FAQ terkait beta version](#faq)
+> Gunakan salah satu dari dua versi tersebut dan **tidak direkomendasikan** untuk *cloning* langsung dari `master` *branch*. Karena disana terdapat pipeline CI/CD untuk deployment, sehingga terjadi kemungkinan beberapa fitur ter-*disable*.
 
 > [!NOTE]
 > Jika menggunakan Git, anda bisa berpindah ke versi yang diinginkan dengan menggunakan perintah `git checkout <tag>`. Contohnya `git checkout v2.1-beta`
