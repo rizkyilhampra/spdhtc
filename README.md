@@ -1,7 +1,4 @@
 # SPDHTC
-> [!NOTE]
-> Dokumentasi ini masih belum lengkap dan akan terus di-*update*
-
 ## Table Of Content
 - [Deskripsi](#deskripsi)
 - [Dataset](#dataset)
@@ -312,7 +309,7 @@ https://github.com/rizkyilhampra/spdhtc/blob/0081ff84f6ef768d62db6873f118f2eae17
 Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
 
 ## TODO
-- [ ] Write better documentation (in progress)
+- [x] Write better documentation
 - [ ] Release v2.0 (stable)
 - [ ] Upgrade to Laravel 11
 
