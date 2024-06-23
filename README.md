@@ -4,6 +4,7 @@
 
 ## Table Of Content
 - [Deskripsi](#deskripsi)
+- [Dataset](#dataset)
 - [Teknologi yang digunakan](#teknologi-yang-digunakan)
 - [Sebelum menjalankan aplikasi di local](#sebelum-menjalankan-aplikasi-di-local)
 - [Cara menjalankan aplikasi di local](#cara-menjalankan-aplikasi-di-local)
@@ -21,7 +22,10 @@
 - [TODO](#todo)
 
 ## Deskripsi
-Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosis penyakit yang menyerang tanaman cabai. Sistem ini menggunakan algoritma *forward chaining* sebagai metode inteferensi. Data yang digunakan dalam proses diagnosis bersumber dari sebuah instansi pemerintah dan berdasarkan jurnal jurnal resmi.
+Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosis penyakit yang menyerang tanaman cabai. Sistem ini menggunakan algoritma *forward chaining* sebagai metode inteferensi. 
+
+## Dataset
+Dataset yang digunakan dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/blob/master/dataset.md). Dataset ini bersumber atau berdasarkan dari suatu instansi dan jurnal jurnal resmi. 
 
 ## Teknologi yang digunakan
 - Laravel 9
