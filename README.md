@@ -294,10 +294,10 @@ Terdapat dua versi algoritma dalam aplikasi ini.
 ## Setelah aplikasi berjalan
 Secara default saat *seeding* data, akan dibuatkan 2 akun pengguna. Sehingga untuk dapat login ke dalam aplikasi, dapat menggunakan data berikut.
 
-https://github.com/rizkyilhampra/spdhtc/blob/15a0ce9725473d6682703894bcd1e999ef15fd93/database/seeders/UserCustomSeeder.php#L43-L57
+https://github.com/rizkyilhampra/spdhtc/blob/0081ff84f6ef768d62db6873f118f2eae1730726/database/seeders/UserCustomSeeder.php#L19-L28
 
 ## FAQ
 - **Q**: Mengapa versi terakhir 2.1 termasuk *beta version*?
     - **A**: Karena beberapa kode dan algoritma untuk mencapai tujuan tersebut, kami rasa kurang sempurna. 
 
-Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, [disini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
+Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
