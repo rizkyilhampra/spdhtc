@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserCustomSeeder extends Seeder
@@ -19,18 +18,17 @@ class UserCustomSeeder extends Seeder
             [
                 'name' => 'admin',
                 'email' => 'admin@spdhtc.tech',
-                'password' => bcrypt(env('ADMIN_ACCOUNT_PASSWORD', '12345678')) //12345678
+                'password' => bcrypt(env('ADMIN_ACCOUNT_PASSWORD', '12345678')), //12345678
             ],
             [
                 'name' => 'user',
                 'email' => 'user@spdhtc.tech',
-                'password' => bcrypt(env('USER_ACCOUNT_PASSWORD', '12345678')) //12345678
-            ]
+                'password' => bcrypt(env('USER_ACCOUNT_PASSWORD', '12345678')), //12345678
+            ],
         ];
 
-
         foreach ($data as $user) {
-            User::query()->create($user);
+            User::factory()->create($user);
         }
     }
 }
