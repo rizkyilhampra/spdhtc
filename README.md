@@ -300,7 +300,7 @@ https://github.com/rizkyilhampra/spdhtc/blob/0081ff84f6ef768d62db6873f118f2eae17
 
 ## FAQ
 - **Q**: Mengapa versi terakhir 2.1 termasuk *beta version*?
-    - **A**: Karena beberapa kode dan algoritma untuk mencapai tujuan tersebut, kami rasa kurang sempurna. 
+    - **A**: Karena beberapa kode dan algoritma untuk mencapai tujuan tersebut, kami rasa kurang sempurna. Kemudian terdapat beberapa masalah yang belum terselesaikan, salah satunya dari Q/A diskusi berikut https://github.com/rizkyilhampra/spdhtc/discussions/74
 
 Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
 
