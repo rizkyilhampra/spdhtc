@@ -12,7 +12,8 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.6",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "resend/resend-laravel": "^0.10.0"
     },
     "require-dev": {
         "deployer/deployer": "^7.3",
