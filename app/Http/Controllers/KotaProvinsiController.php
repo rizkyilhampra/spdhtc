@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Exceptions\EmptyRajaOngkirAPIException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class KotaProvinsiController extends Controller
 {
+    private $apiKey;
+
+    public function __construct()
+    {
+        $this->apiKey = env('RAJAONGKIR_API_KEY');
+        if(empty($this->apiKey)) throw new EmptyRajaOngkirAPIException();
+    }
+
     public function indexProvince()
     {
         $cacheKey = 'provinces';
@@ -17,19 +27,20 @@ class KotaProvinsiController extends Controller
         $provinces = Cache::remember($cacheKey, $cacheTime, function () {
             try {
                 $client = new Client();
+
                 $response = $client->request('GET', 'https://api.rajaongkir.com/starter/province', [
                     'headers' => [
-                        'key' => env('RAJAONGKIR_API_KEY'),
-                        'content-type' => 'application/x-www-form-urlencoded'
+                        'key' => $this->apiKey,
+                        'content-type' => 'application/x-www-form-urlencoded',
                     ],
                 ]);
 
                 $provinces = json_decode($response->getBody())->rajaongkir->results;
             } catch (GuzzleException $e) {
-                // Handle any exception from Guzzle
-                $provinces = [$e->getMessage()];
-            }
+                Log::debug('Error: ' . json_encode($e->getMessage()));
 
+                $provinces = [];
+            }
             return $provinces;
         });
 
@@ -38,7 +49,7 @@ class KotaProvinsiController extends Controller
 
     public function indexCity(Request $request, $id)
     {
-        $cacheKey = 'cities_' . $id;
+        $cacheKey = 'cities_'.$id;
         $cacheTime = 60 * 60 * 24; // Cache for 24 hours
 
         $cities = Cache::remember($cacheKey, $cacheTime, function () use ($id) {
@@ -46,8 +57,8 @@ class KotaProvinsiController extends Controller
                 $client = new Client();
                 $response = $client->request('GET', 'https://api.rajaongkir.com/starter/city', [
                     'headers' => [
-                        'key' => env('RAJAONGKIR_API_KEY'),
-                        'content-type' => 'application/x-www-form-urlencoded'
+                        'key' => $this->apiKey,
+                        'content-type' => 'application/x-www-form-urlencoded',
                     ],
                     'query' => [
                         'province' => $id,
@@ -56,8 +67,9 @@ class KotaProvinsiController extends Controller
 
                 $cities = json_decode($response->getBody())->rajaongkir->results;
             } catch (GuzzleException $e) {
-                // Handle any exception from Guzzle
-                $cities = [$e->getMessage()];
+                Log::debug('Error: ' . json_encode($e->getMessage()));
+
+                $cities = [];
             }
 
             return $cities;
