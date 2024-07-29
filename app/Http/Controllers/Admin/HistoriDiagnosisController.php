@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Diagnosis;
 use App\Models\Gejala;
-use Illuminate\Http\Request;
 
 class HistoriDiagnosisController extends Controller
 {
@@ -30,7 +29,9 @@ class HistoriDiagnosisController extends Controller
             $query->select('id', 'name', 'email');
         }, 'penyakit' => function ($query) {
             $query->select('id', 'name');
-        }])->get(['id', 'user_id', 'penyakit_id', 'updated_at'])->map(function ($diagnosis) {
+        }])
+        ->orderBy('updated_at', 'desc')
+        ->get(['id', 'user_id', 'penyakit_id', 'updated_at'])->map(function ($diagnosis) {
             if ($diagnosis['penyakit'] == null) {
                 $diagnosis['penyakit'] = [
                     'id' => null,
@@ -40,6 +41,7 @@ class HistoriDiagnosisController extends Controller
             $diagnosis['updated_at'] = $diagnosis['updated_at'];
             $diagnosis['user'] = $diagnosis['user']->toArray();
             $diagnosis['penyakit'] = $diagnosis['penyakit'];
+
             return [
                 'id' => $diagnosis['id'],
                 'updated_at' => $diagnosis['updated_at'],
