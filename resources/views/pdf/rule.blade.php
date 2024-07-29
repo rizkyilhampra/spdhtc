@@ -21,7 +21,7 @@
                     </td>
                     <td>{{ $rule['penyakit']['name'] }}</td>
                     <td>{{ $rule['gejala']['name'] }}</td>
-                    <td>{{ $rule['nextGejala'] }}</td>
+                    <td>{{ $rule['nextGejala']['name'] }}</td>
                     <td>{{ $rule['updated_at'] }}</td>
                 </tr>
             @endforeach
