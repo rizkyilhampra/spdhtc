@@ -27,18 +27,22 @@ class Controller extends BaseController
         }
         return redirect('/');
     }
-    public static function LoginDuration()
+
+    public static function loginDuration()
     {
         $lastLogin = auth()->user()->last_login_at;
-        $loginDuration = Carbon::parse($lastLogin)->diffInMinutes();
-        if ($loginDuration < 60) {
-            $loginDuration = $loginDuration . ' menit';
-        } else if ($loginDuration >= 60 && $loginDuration < 1440) {
-            $loginDuration = Carbon::parse($lastLogin)->diffInHours() . ' jam';
-        } else if ($loginDuration >= 1440) {
-            $loginDuration = Carbon::parse($lastLogin)->diffInDays() . ' hari';
+        $diffInMinutes = Carbon::parse($lastLogin)->diffInMinutes();
+
+        if ($diffInMinutes < 60) {
+            return floor($diffInMinutes) . ' menit';
         }
 
-        return $loginDuration;
+        if ($diffInMinutes < 1440) {
+            $diffInHours = floor($diffInMinutes / 60);
+            return $diffInHours . ' jam';
+        }
+
+        $diffInDays = floor($diffInMinutes / 1440);
+        return $diffInDays . ' hari';
     }
 }
