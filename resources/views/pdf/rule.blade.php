@@ -8,8 +8,8 @@
                     No
                 </th>
                 <th>Penyakit</th>
+                <th>No Gejala</th>
                 <th>Gejala</th>
-                <th>Gejala Pertama pada Rule Selanjutnya</th>
                 <th>Tanggal Dibuat/Diubah</th>
             </tr>
         </thead>
@@ -20,8 +20,8 @@
                         {{ $loop->iteration }}
                     </td>
                     <td>{{ $rule['penyakit']['name'] }}</td>
+                    <td>{{ $rule['no_gejala'] }}</td>
                     <td>{{ $rule['gejala']['name'] }}</td>
-                    <td>{{ $rule['nextGejala']['name'] }}</td>
                     <td>{{ $rule['updated_at'] }}</td>
                 </tr>
             @endforeach
