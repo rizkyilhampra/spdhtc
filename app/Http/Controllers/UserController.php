@@ -163,13 +163,12 @@ class UserController extends Controller
         return response()->json($bobot);
     }
 
-    public function aturanWithNextGejala()
+    public function getAturan()
     {
-        $aturanWithNextGejala = Rule::get(['penyakit_id', 'gejala_id', 'next_first_gejala_id']);
-        $aturanMap = [];
-        foreach ($aturanWithNextGejala as $value) {
-            $aturanMap[$value->penyakit_id][$value->gejala_id] = $value->next_first_gejala_id;
-        }
-        return response()->json($aturanMap);
+        $aturan = Rule::get(['penyakit_id', 'gejala_id'])->groupBy('penyakit_id')->map(function ($item) {
+            return $item->pluck('gejala_id');
+        });
+
+        return response()->json($aturan);
     }
 }
