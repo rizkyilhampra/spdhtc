@@ -27,7 +27,7 @@ class RuleController extends Controller
             $query->select('id', 'name');
         }, 'gejala' => function ($query) {
             $query->select('id', 'name');
-        }])->get(['id', 'penyakit_id', 'gejala_id', 'next_first_gejala_id', 'updated_at'])->map(function ($rule) {
+        }])->get(['id', 'penyakit_id', 'gejala_id', 'updated_at'])->map(function ($rule) {
             $rule['penyakit'] = $rule['penyakit']->toArray();
             $rule['gejala'] = $rule['gejala']->toArray();
             return [
@@ -35,10 +35,7 @@ class RuleController extends Controller
                 'updated_at' => $rule['updated_at'],
                 'penyakit' => $rule['penyakit'],
                 'gejala' => $rule['gejala'],
-                'nextGejala' => [
-                    'id' => $rule['next_first_gejala_id'],
-                    'name' => $rule['next_first_gejala_id'] ? Gejala::find($rule['next_first_gejala_id'])->name : ''
-                ]
+                'no_gejala' => 'G'.str_pad($rule['gejala']['id'], 2, '0', STR_PAD_LEFT),
             ];
         })->values()->toArray();
 
@@ -58,25 +55,9 @@ class RuleController extends Controller
         $data = [
             'penyakit' => $penyakit,
             'gejala' => $gejala,
-            'gejalaGroupBy' => $this->getGejalaGroupBy(),
         ];
 
         return view('admin.rule.tambah', $data);
-    }
-
-    /**
-     * getGejalaGroupBy
-     *
-     * @return void
-     */
-    private static function getGejalaGroupBy()
-    {
-        $gejalaGroupBy = Rule::select('id', 'penyakit_id', 'gejala_id')->with(['gejala' => function ($query) {
-            $query->select('id', 'name');
-        }])->get()->groupBy('penyakit_id')->map(function ($item) {
-            return $item->first()->gejala;
-        });
-        return $gejalaGroupBy;
     }
 
     /**
@@ -90,7 +71,6 @@ class RuleController extends Controller
         $request->validate([
             'penyakit' => 'required',
             'gejala' => 'required',
-            'nextGejala'  => 'required'
         ]);
 
         $gejala = $request->input('gejala');
@@ -102,7 +82,6 @@ class RuleController extends Controller
             Rule::create([
                 'penyakit_id' => (int) $request->input('penyakit'),
                 'gejala_id' => $value,
-                'next_first_gejala_id' => (int) $request->input('nextGejala'),
             ]);
         }
 
@@ -121,7 +100,7 @@ class RuleController extends Controller
             $query->select('id', 'name');
         }, 'gejala' => function ($query) {
             $query->select('id', 'name');
-        }])->findOrFail($id, ['id', 'penyakit_id', 'gejala_id', 'next_first_gejala_id', 'updated_at'])->toArray();
+        }])->findOrFail($id, ['id', 'penyakit_id', 'gejala_id','updated_at'])->toArray();
 
         $penyakit = Penyakit::select('id', 'name')->orderByDesc('updated_at')->get();
         $gejala = Gejala::select('id', 'name')->orderByDesc('updated_at')->get();
@@ -130,7 +109,6 @@ class RuleController extends Controller
             'penyakit' => $penyakit,
             'gejala' => $gejala,
             'rule' => $rule,
-            'gejalaGroupBy' => $this->getGejalaGroupBy(),
         ];
 
         return view('admin.rule.edit', $data);
@@ -148,7 +126,6 @@ class RuleController extends Controller
         $rule = Rule::findOrFail($id);
         $rule->penyakit_id = $request->input('penyakit');
         $rule->gejala_id = $request->input('gejala');
-        $rule->next_first_gejala_id = $request->input('nextGejala');
         $rule->save();
 
         return redirect()->route('admin.rule')->with('success', 'Rule berhasil diubah');
