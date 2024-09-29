@@ -63,7 +63,7 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
 
     try {
         const chartData = await ajaxRequestChartDiagnosisPenyakit();
-        drawChart(chartData);
+        await drawChart(chartData);
     } catch (error) {
         swalError(error.responseJSON);
     }
@@ -183,7 +183,7 @@ detailDiagnosisModal.addEventListener('hidden.bs.modal', () => {
     });
 });
 
-function drawChart(data) {
+async function drawChart(data) {
     let bobot = data;
     labelChart = Object.entries(bobot).map(([nama, nilai]) => nama);
     valueChart = Object.entries(bobot).map(([nama, nilai]) => nilai);
