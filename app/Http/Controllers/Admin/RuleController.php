@@ -27,7 +27,7 @@ class RuleController extends Controller
             $query->select('id', 'name');
         }, 'gejala' => function ($query) {
             $query->select('id', 'name');
-        }])->get(['id', 'penyakit_id', 'gejala_id', 'next_first_gejala_id', 'updated_at'])->map(function ($rule) {
+        }])->get(['id', 'penyakit_id', 'gejala_id', 'updated_at'])->map(function ($rule) {
             $rule['penyakit'] = $rule['penyakit']->toArray();
             $rule['gejala'] = $rule['gejala']->toArray();
             return [
@@ -35,10 +35,7 @@ class RuleController extends Controller
                 'updated_at' => $rule['updated_at'],
                 'penyakit' => $rule['penyakit'],
                 'gejala' => $rule['gejala'],
-                'nextGejala' => [
-                    'id' => $rule['next_first_gejala_id'],
-                    'name' => $rule['next_first_gejala_id'] ? Gejala::find($rule['next_first_gejala_id'])->name : ''
-                ]
+                'no_gejala' => 'G'.str_pad($rule['gejala']['id'], 2, '0', STR_PAD_LEFT),
             ];
         })->values()->toArray();
 
