@@ -100,7 +100,7 @@ class RuleController extends Controller
             $query->select('id', 'name');
         }, 'gejala' => function ($query) {
             $query->select('id', 'name');
-        }])->findOrFail($id, ['id', 'penyakit_id', 'gejala_id', 'next_first_gejala_id', 'updated_at'])->toArray();
+        }])->findOrFail($id, ['id', 'penyakit_id', 'gejala_id','updated_at'])->toArray();
 
         $penyakit = Penyakit::select('id', 'name')->orderByDesc('updated_at')->get();
         $gejala = Gejala::select('id', 'name')->orderByDesc('updated_at')->get();
@@ -109,7 +109,6 @@ class RuleController extends Controller
             'penyakit' => $penyakit,
             'gejala' => $gejala,
             'rule' => $rule,
-            'gejalaGroupBy' => $this->getGejalaGroupBy(),
         ];
 
         return view('admin.rule.edit', $data);
@@ -127,7 +126,6 @@ class RuleController extends Controller
         $rule = Rule::findOrFail($id);
         $rule->penyakit_id = $request->input('penyakit');
         $rule->gejala_id = $request->input('gejala');
-        $rule->next_first_gejala_id = $request->input('nextGejala');
         $rule->save();
 
         return redirect()->route('admin.rule')->with('success', 'Rule berhasil diubah');
