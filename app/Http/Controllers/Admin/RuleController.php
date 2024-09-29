@@ -55,25 +55,9 @@ class RuleController extends Controller
         $data = [
             'penyakit' => $penyakit,
             'gejala' => $gejala,
-            'gejalaGroupBy' => $this->getGejalaGroupBy(),
         ];
 
         return view('admin.rule.tambah', $data);
-    }
-
-    /**
-     * getGejalaGroupBy
-     *
-     * @return void
-     */
-    private static function getGejalaGroupBy()
-    {
-        $gejalaGroupBy = Rule::select('id', 'penyakit_id', 'gejala_id')->with(['gejala' => function ($query) {
-            $query->select('id', 'name');
-        }])->get()->groupBy('penyakit_id')->map(function ($item) {
-            return $item->first()->gejala;
-        });
-        return $gejalaGroupBy;
     }
 
     /**
@@ -87,7 +71,6 @@ class RuleController extends Controller
         $request->validate([
             'penyakit' => 'required',
             'gejala' => 'required',
-            'nextGejala'  => 'required'
         ]);
 
         $gejala = $request->input('gejala');
@@ -99,7 +82,6 @@ class RuleController extends Controller
             Rule::create([
                 'penyakit_id' => (int) $request->input('penyakit'),
                 'gejala_id' => $value,
-                'next_first_gejala_id' => (int) $request->input('nextGejala'),
             ]);
         }
 
