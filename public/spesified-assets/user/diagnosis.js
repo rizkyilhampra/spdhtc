@@ -12,9 +12,9 @@ class DiagnosisModal {
         });
     }
 
-    async ajaxGetAturanWithNextGejala() {
+    async ajaxGetAturan() {
         return $.ajax({
-            url: '/get-aturan-with-next-gejala',
+            url: '/get-aturan',
             method: 'GET',
         });
     }
@@ -73,8 +73,7 @@ class DiagnosisModal {
         });
 
         try {
-            const gejala = await this.ajaxGetGejala();
-            const aturan = await this.ajaxGetAturanWithNextGejala();
+            const [gejala, aturan] = await Promise.all([this.ajaxGetGejala(), this.ajaxGetAturan()]);
 
             let isClosed = false;
 
@@ -113,15 +112,17 @@ class DiagnosisModal {
                     }
 
                     if (!jawaban) {
-                        for (const [key, value] of Object.entries(aturan)) {
-                            for (const [key2, value2] of Object.entries(value)) {
-                                if (key2 == element.id) {
-                                    if (value2 == null) {
+                        for(let j in aturan) {
+                            for(let k in aturan[j]) {
+                                if(aturan[j][k] == element.id) {
+                                    const iteration = parseInt(j) + 1;
+
+                                    if(aturan[iteration] == null) {
                                         await Swal.close();
                                         return getPenyakitFromDiagnose(response, true);
                                     }
 
-                                    i = value2 - 2;
+                                    i = aturan[iteration][0] - 2;
                                     break;
                                 }
                             }
