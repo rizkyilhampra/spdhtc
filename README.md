@@ -1,7 +1,11 @@
 # SPDHTC
-## Table Of Content
+## Deskripsi
+Sistem pakar (*web based*) dengan *forward chaining algorithm* sebagai *inference engine* untuk diagnosis penyakit pada tanaman cabai. Menerima masukan berupa gejala-gejala yang dapat di amati dan memberikan hasil diagnosis penyakit beserta penyebab dan solusinya.
+
+## Daftar Isi
 - [Deskripsi](#deskripsi)
 - [Teknologi yang digunakan](#teknologi-yang-digunakan)
+- [Fitur](#fitur)
 - [Cara menjalankan aplikasi di local](#cara-menjalankan-aplikasi-di-local)
     * [Menjalankan dengan XAMPP/Laragon](#menjalankan-dengan-xampplaragon)
         - [Persyaratan](#persyaratan)
@@ -25,6 +29,15 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
 - JQuery
 - Bootstrap 5
 - dan *library pre-existing* lainnya
+
+## Fitur
+- [x] Login dan Register (termasuk penggunaan OAuth Google)
+- [x] Email Verification
+- [x] Forgot Password
+- [x] Manajemen dataset
+- [x] Integrasi dengan API pihak ketiga
+- [x] Riwayat diagnosis
+- [x] Manajemen profil
 
 ## Cara menjalankan aplikasi
 ### Menjalankan dengan XAMPP/Laragon
@@ -260,13 +273,13 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
 ## Setelah aplikasi berjalan
 Secara default saat *seeding* data, akan dibuatkan 2 akun pengguna. Sehingga untuk dapat login ke dalam aplikasi, dapat menggunakan data berikut.
 
-https://github.com/rizkyilhampra/spdhtc/blob/565a8e31dbf0c34761c994d328973c44b5182c1e/database/seeders/UserCustomSeeder.php#L18-L26
+https://github.com/rizkyilhampra/spdhtc/blob/565a8e31dbf0c34761c994d328973c44b5182c1e/database/seeders/UserCustomSeeder.php#L18-L25
 
 > [!NOTE]
 > *password* untuk masing-masing akun adalah `password`. Lihat di [`UserFactory.php`](https://github.com/rizkyilhampra/spdhtc/blob/master/database/factories/UserFactory.php)
 
 ## FAQ
-Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
+Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, [disini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
 
 ## TODO
 - [x] Write better documentation
@@ -274,4 +287,4 @@ Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [si
 - [x] Upgrade to Laravel 11
 
 ## Kebijakan Privasi
-Kebijakan privasi di [SPDHTC](https://spdhtc.rizkyilhampra.me) dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/blob/master/privacy.md)
+Kebijakan privasi di [SPDHTC](https://spdhtc.rizkyilhampra.me) dapat dilihat [disini](https://github.com/rizkyilhampra/spdhtc/blob/master/privacy.md)
