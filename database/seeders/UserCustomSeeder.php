@@ -17,13 +17,11 @@ class UserCustomSeeder extends Seeder
         $data = [
             [
                 'name' => 'admin',
-                'email' => 'admin@spdhtc.tech',
-                'password' => bcrypt(env('ADMIN_ACCOUNT_PASSWORD', '12345678')), //12345678
+                'email' => 'admin@example.com',
             ],
             [
                 'name' => 'user',
-                'email' => 'user@spdhtc.tech',
-                'password' => bcrypt(env('USER_ACCOUNT_PASSWORD', '12345678')), //12345678
+                'email' => 'user@example.com',
             ],
         ];
 
