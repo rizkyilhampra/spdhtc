@@ -153,7 +153,7 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
 #### Persyaratan
 
 -   Git
--   PHP 8.0 (minimal)
+-   PHP 8.2 (minimal)
 -   Composer
 -   MySQL atau MariaDB
 
