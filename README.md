@@ -300,12 +300,6 @@ https://github.com/rizkyilhampra/spdhtc/blob/565a8e31dbf0c34761c994d328973c44b51
 
 Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
 
-## TODO
-
--   [x] Write better documentation
--   [x] Release v2.0 (stable)
--   [x] Upgrade to Laravel 11
-
 ## Kebijakan Privasi
 
 Hal-hal yang berkaitan dengan privasi dan data di [SPDHTC](https://spdhtc.rizkyilhampra.me), dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/blob/master/privacy.md)
