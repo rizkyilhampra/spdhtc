@@ -17,7 +17,6 @@ Sistem pakar (_web based_) dengan _forward chaining algorithm_ sebagai _inferenc
     -   [Menjalankan dengan Docker/Sail](#menjalankan-dengan-docker-sail)
 -   [Setelah aplikasi berjalan](#setelah-aplikasi-berjalan)
 -   [FAQ](#faq)
--   [TODO](#todo)
 -   [Kebijakan Privasi](#kebijakan-privasi)
 -   [Lisensi](#lisensi)
 
@@ -302,12 +301,6 @@ https://github.com/rizkyilhampra/spdhtc/blob/565a8e31dbf0c34761c994d328973c44b51
 ## FAQ
 
 Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
-
-## TODO
-
--   [x] Write better documentation
--   [x] Release v2.0 (stable)
--   [x] Upgrade to Laravel 11
 
 ## Kebijakan Privasi
 
