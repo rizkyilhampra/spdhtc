@@ -311,10 +311,8 @@ Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [si
 
 ## Kebijakan Privasi
 
-Kebijakan privasi di [SPDHTC](https://spdhtc.rizkyilhampra.me) dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a?discussions_q=category%3AQ%26A+)
+Hal-hal yang berkaitan dengan privasi dan kebijakannya di [SPDHTC](https://spdhtc.rizkyilhampra.me), dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a?discussions_q=category%3AQ%26A+)
 
 ## Lisensi
 
-Per rilis dari _initial release_ sampai [v2.0-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.0-beta), aplikasi ini juga di bawah hak cipta suatu instansi atau bersifat _dual license_. Dikarenakan terdapat beberapa perubahan dari [v2.0-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.0-beta) sampai pada [v2.0-stable](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.0) dan seterusnya. Maka, kami sebagai pengembang aplikasi dan _stakeholder_ pertama, menempatkan aplikasi ini **hanya di bawah lisensi [WTFPL](https://github.com/rizkyilhampra/spdhtc/blob/master/COPYING)**. Adapun yang di maksud dari lisensi tersebut adalah bahwa aplikasi ini dapat digunakan, dimodifikasi, dan didistribusikan secara bebas tanpa ada batasan apapun. Untuk hal-hal lainnya yang memiliki lisensinya masing-masing, 
-kami teruskan kepada _stakeholder_ yang bersangkutan.
-
+Per rilis dari _initial release_ sampai [v2.0-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.0-beta), aplikasi ini juga di bawah hak cipta suatu instansi atau bersifat _dual license_. Dikarenakan terdapat beberapa perubahan dari [v2.0-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.0-beta) sampai pada [v2.0-stable](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.0) dan seterusnya. Maka, kami sebagai pengembang aplikasi dan _stakeholder_ pertama, menempatkan aplikasi ini **hanya di bawah lisensi [WTFPL](https://github.com/rizkyilhampra/spdhtc/blob/master/COPYING)**. Adapun yang di maksud dari lisensi tersebut adalah bahwa aplikasi ini dapat digunakan, dimodifikasi, dan didistribusikan secara bebas tanpa ada batasan apapun. Untuk hal-hal lainnya yang memiliki lisensinya masing-masing, kami teruskan kepada _stakeholder_ yang bersangkutan.
