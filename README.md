@@ -308,7 +308,7 @@ Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [si
 
 ## Kebijakan Privasi
 
-Hal-hal yang berkaitan dengan privasi dan kebijakannya di [SPDHTC](https://spdhtc.rizkyilhampra.me), dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a?discussions_q=category%3AQ%26A+)
+Hal-hal yang berkaitan dengan privasi dan kebijakannya di [SPDHTC](https://spdhtc.rizkyilhampra.me), dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/blob/master/privacy.md)
 
 ## Lisensi
 
