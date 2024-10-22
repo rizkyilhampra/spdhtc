@@ -156,7 +156,7 @@ _Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](
 #### Persyaratan
 
 -   Git
--   PHP 8.0 (minimal)
+-   PHP 8.2 (minimal)
 -   Composer
 -   MySQL atau MariaDB
 
