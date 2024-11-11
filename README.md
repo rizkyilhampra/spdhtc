@@ -16,6 +16,7 @@ Sistem pakar (_web based_) dengan _forward chaining algorithm_ sebagai _inferenc
     -   [Menjalankan dengan `php artisan serve`](#menjalankan-dengan-php-artisan-serve)
     -   [Menjalankan dengan Docker/Sail](#menjalankan-dengan-docker-sail)
 -   [Setelah aplikasi berjalan](#setelah-aplikasi-berjalan)
+    -   [Email Verification](#email-verification)
 -   [FAQ](#faq)
 -   [Kebijakan Privasi](#kebijakan-privasi)
 -   [Lisensi](#lisensi)
@@ -300,7 +301,10 @@ https://github.com/rizkyilhampra/spdhtc/blob/565a8e31dbf0c34761c994d328973c44b51
 
 ### Email Verification
 
-Secara *default* pada [`.env.example`](./.env.example), Mailer yang digunakan adalah `log` yang berarti email tidak akan terkirim ke alamat email yang didaftarkan atau hanya dikirim ke dalam log aplikasi saja yaitu di `laravel.log`. Untuk informasi lebih lengkap beserta Mailer apa saja yang tersedia, dapat di baca pada [dokumentasi Laravel terkait Mail](https://laravel.com/docs/11.x/mail).
+Saat melakukan registrasi manual dengan pergi ke `/register`, aplikasi akan mengirimkan email yang berisi link/url untuk verifikasi. Secara *default* ketika meng-*copy* *environment file* dari [`.env.example`](./.env.example), Mailer yang digunakan adalah `log` yang berarti email tidak akan terkirim ke alamat email yang didaftarkan, atau hanya dikirim ke dalam log aplikasi saja yaitu di [`laravel.log`](./storage/logs/laravel.log). Jika ingin mengubah *behavior* ini atau ingin email terkirim ke alamat email yang didaftarkan, kita perlu mengubah nilai *environment variable* di `.env`, mulai dari konfigurasi `MAIL_MAILER=` kemudian diikuti dengan konfigurasi lainnya menyesuaikan opsi Mailer yang dipilih. Untuk informasi lebih lengkap beserta Mailer apa saja yang tersedia, dapat di lihat pada [dokumentasi Laravel terkait Mail](https://laravel.com/docs/11.x/mail).
+
+> [!NOTE]
+> [SPDHTC](https://spdhtc.rizkyilhampra.me) per versi [v2.2-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.2-beta) telah membawa [Resend](https://resend.com/) SDK sebagai opsi Mailer di *production* menggantikan `SMTP`, dengan ini kami bisa mengirimkan email yang berisi Email Verification ke seluruh alamat email yang mendaftar di SPDHTC. Per rilis [v2.2-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.2-beta), kami juga mengubah nilai *default* pada [`.env.example`](./.env.example) untuk Mailer menjadi `log`. 
 
 ## FAQ
 
