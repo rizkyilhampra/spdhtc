@@ -10,6 +10,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/fortify": "^1.16",
         "laravel/framework": "^11.18.0",
+        "laravel/pail": "^1.2",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.7",
