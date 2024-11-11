@@ -288,6 +288,8 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
 
 ## Setelah aplikasi berjalan
 
+### Akun Pengguna
+
 Secara default saat _seeding_ data, akan dibuatkan 2 akun pengguna. Sehingga untuk dapat login ke dalam aplikasi, dapat menggunakan data berikut.
 
 https://github.com/rizkyilhampra/spdhtc/blob/565a8e31dbf0c34761c994d328973c44b5182c1e/database/seeders/UserCustomSeeder.php#L18-L25
