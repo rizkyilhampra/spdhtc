@@ -186,7 +186,7 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
     DB_PASSWORD= #sesuaikan dengan password MySQL (kosongkan jika tidak ada)
     ```
 6. Tambahkan Google kredensial pada file `.env` (Opsional)
-    > Ini akan berhubungan dengan fitur login dan register. Mengabaikan ini maka login dan register dengan akun Google tidak akan berjalan.
+    > Ini berhubungan dengan Login/Register via OAuth Google. Mengabaikan ini maka *login/register* dengan akun Google tidak akan berfungsi.
     ```bash
     # NOTE: dapatkan dari https://console.cloud.google.com
     GOOGLE_CLIENT_ID= #isi dengan client id google
@@ -259,7 +259,7 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
     DB_PORT=3306
     ```
 5. Tambahkan Google kredensial pada file `.env` (Opsional)
-    > Ini berhubungan dengan fitur login dan register. Mengabaikan ini maka login dan register dengan akun Google tidak akan berjalan.
+    > Ini berhubungan dengan Login/Register via OAuth Google. Mengabaikan ini maka *login/register* dengan akun Google tidak akan berfungsi.
     ```bash
     # NOTE: dapatkan dari https://console.cloud.google.com
     GOOGLE_CLIENT_ID= #isi dengan client id google
@@ -298,10 +298,10 @@ https://github.com/rizkyilhampra/spdhtc/blob/565a8e31dbf0c34761c994d328973c44b51
 
 ### Email Verification
 
-Saat melakukan registrasi manual dengan pergi ke `/register`, aplikasi akan mengirimkan email yang berisi link/url untuk verifikasi. Secara *default* ketika meng-*copy* *environment file* dari [`.env.example`](./.env.example), Mailer yang digunakan adalah `log` yang berarti email tidak akan terkirim ke alamat email yang didaftarkan, atau hanya dikirim ke dalam log aplikasi saja yaitu di [`laravel.log`](./storage/logs/laravel.log). Jika ingin mengubah *behavior* ini atau ingin email terkirim ke alamat email yang didaftarkan, kita perlu mengubah nilai *environment variable* di `.env`, mulai dari konfigurasi `MAIL_MAILER=` kemudian diikuti dengan konfigurasi lainnya menyesuaikan opsi Mailer yang dipilih. Untuk informasi lebih lengkap beserta Mailer apa saja yang tersedia, dapat di lihat pada [dokumentasi Laravel terkait Mail](https://laravel.com/docs/11.x/mail).
+Saat melakukan registrasi manual dengan pergi ke `/register`, aplikasi akan mengirimkan email yang berisi link/url untuk verifikasi. Secara *default* ketika meng-*copy* *environment file* dari [`.env.example`](./.env.example), Mailer yang digunakan adalah `log` yang berarti email tidak akan terkirim ke alamat email yang didaftarkan, atau hanya dikirim ke dalam log aplikasi saja yaitu di `./storage/logs/laravel.log`. Jika ingin mengubah *behavior* ini atau ingin email terkirim ke alamat email yang didaftarkan, kita perlu mengubah nilai *environment variable* pada *file* `.env`, mulai dari konfigurasi `MAIL_MAILER=` kemudian diikuti dengan konfigurasi lainnya menyesuaikan opsi Mailer yang dipilih. Untuk informasi lebih lengkap beserta Mailer apa saja yang tersedia, dapat di lihat pada [dokumentasi Laravel terkait Mail](https://laravel.com/docs/11.x/mail).
 
 > [!NOTE]
-> [SPDHTC](https://spdhtc.rizkyilhampra.me) per versi [v2.2-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.2-beta) telah membawa [Resend](https://resend.com/) SDK sebagai opsi Mailer di *production* menggantikan `SMTP`, dengan ini kami bisa mengirimkan email yang berisi Email Verification ke seluruh alamat email yang mendaftar di SPDHTC. Per rilis [v2.2-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.2-beta), kami juga mengubah nilai *default* pada [`.env.example`](./.env.example) untuk Mailer menjadi `log`. 
+> [SPDHTC](https://spdhtc.rizkyilhampra.me) per versi [v2.2-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.2-beta) telah membawa [Resend](https://resend.com/) SDK sebagai opsi Mailer di *production* menggantikan `SMTP`, dengan ini kami dapat mengirimkan email yang berisi Email Verification ke seluruh alamat email yang mendaftar di [SPDHTC](https://spdhtc.rizkyilhampra.me). Per rilis [v2.2-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.2-beta), kami juga mengubah nilai *default* pada [`.env.example`](./.env.example) untuk Mailer menjadi `log` menggantikan `SMTP` dengan host [Mailhog](https://github.com/mailhog/MailHog) untuk Development *phase*. 
 
 ## FAQ
 
