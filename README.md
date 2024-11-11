@@ -105,7 +105,7 @@ _Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](
         - Buat _database_ baru dengan nama `spdhtc`
 7. Konfigurasi _database_ pada file `.env`
 
-    > Buka file `.env` menggunakan _text editor_ (Visual Studio Code, Notepad/Notepad++, VIM/Neovim, Atom, Jetbrains, Zed, Helix, dan lain sebagainya) kemudian ubah konfigurasi _database_ sesuai dengan konfigurasi _database_ yang telah dibuat sebelumnya
+    > Buka file `.env` menggunakan _text editor_ (Visual Studio Code, Notepad/Notepad++, VIM/Neovim, atau lainnya) kemudian ubah konfigurasi _database_ sesuai dengan konfigurasi _database_ yang telah dibuat sebelumnya
 
     ```diff
     DB_CONNECTION=mysql
@@ -118,7 +118,7 @@ _Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](
     ```
 
 8. Tambahkan Google kredensial (Opsional)
-    > Ini berhubungan dengan fitur login dan register. Mengabaikan ini maka login dan register dengan akun Google tidak akan berjalan.
+    > Ini berhubungan dengan Login/Register via OAuth Google. Mengabaikan ini maka *login/register* dengan akun Google tidak akan berfungsi.
     ```bash
     # NOTE: dapatkan dari https://console.cloud.google.com
     GOOGLE_CLIENT_ID= #isi dengan client id google
@@ -298,10 +298,19 @@ https://github.com/rizkyilhampra/spdhtc/blob/565a8e31dbf0c34761c994d328973c44b51
 > [!NOTE]
 > _Password_ untuk masing-masing akun adalah `password`. Lihat di [`UserFactory.php`](https://github.com/rizkyilhampra/spdhtc/blob/master/database/factories/UserFactory.php)
 
+### Email Verification
+
+Secara *default* pada [`.env.example`](./.env.example), Mailer yang digunakan adalah `log` yang berarti email tidak akan terkirim ke alamat email yang didaftarkan atau hanya dikirim ke dalam log aplikasi saja yaitu di `laravel.log`. Untuk informasi lebih lengkap beserta Mailer apa saja yang tersedia, dapat di baca pada [dokumentasi Laravel terkait Mail](https://laravel.com/docs/11.x/mail).
+
 ## FAQ
 
-Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a)
+Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a).
 
 ## Kebijakan Privasi
 
-Hal-hal yang berkaitan dengan privasi dan data di [SPDHTC](https://spdhtc.rizkyilhampra.me), dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/blob/master/privacy.md)
+Hal-hal yang berkaitan dengan privasi dan data di [SPDHTC](https://spdhtc.rizkyilhampra.me), dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/blob/master/privacy.md).
+
+## Lisensi
+
+Lisensi dari aplikasi ini adalah [WTFPL](./COPYING).
+
