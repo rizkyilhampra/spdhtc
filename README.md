@@ -16,6 +16,7 @@ Sistem pakar (_web based_) dengan _forward chaining algorithm_ sebagai _inferenc
     -   [Menjalankan dengan `php artisan serve`](#menjalankan-dengan-php-artisan-serve)
     -   [Menjalankan dengan Docker/Sail](#menjalankan-dengan-docker-sail)
 -   [Setelah aplikasi berjalan](#setelah-aplikasi-berjalan)
+    -   [Akun Pengguna](#akun-pengguna)
     -   [Email Verification](#email-verification)
 -   [FAQ](#faq)
 -   [Kebijakan Privasi](#kebijakan-privasi)
@@ -290,6 +291,8 @@ _Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](
 </details>
 
 ## Setelah aplikasi berjalan
+
+### Akun Pengguna
 
 Secara default saat _seeding_ data, akan dibuatkan 2 akun pengguna. Sehingga untuk dapat login ke dalam aplikasi, dapat menggunakan data berikut.
 
