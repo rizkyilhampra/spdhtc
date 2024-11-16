@@ -305,15 +305,32 @@ Saat melakukan registrasi manual dengan pergi ke `/register`, aplikasi akan meng
 > [!NOTE]
 > [SPDHTC](https://spdhtc.rizkyilhampra.me) per versi [v2.2-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.2-beta) telah membawa [Resend](https://resend.com/) SDK sebagai opsi Mailer di *production* menggantikan `SMTP`, dengan ini kami dapat mengirimkan email yang berisi Email Verification ke seluruh alamat email yang mendaftar di [SPDHTC](https://spdhtc.rizkyilhampra.me). Per rilis [v2.2-beta](https://github.com/rizkyilhampra/spdhtc/releases/tag/v2.2-beta), kami juga mengubah nilai *default* pada [`.env.example`](./.env.example) untuk Mailer menjadi `log` menggantikan `SMTP` dengan host [Mailhog](https://github.com/mailhog/MailHog) untuk Development *phase*. 
 
-## FAQ
+## Bantuan & Kontak
 
-Cek beberapa pertanyaan lainnya atau buat pertanyaan baru jika belum ada, di [sini](https://github.com/rizkyilhampra/spdhtc/discussions/categories/q-a).
+Jika Anda menghadapi masalah atau memiliki pertanyaan, Anda dapat:
+- Memeriksa diskusi yang sudah ada atau membuat diskusi baru [di sini](https://github.com/rizkyilhampra/spdhtc/discussions?discussions_q=)
+- Menghubungi kami melalui [Instagram](https://instagram.com/rizkyilhampra) atau [Email](mailto:rizkyilhamp16@gmail.com)
 
-## Kebijakan Privasi
+## Roadmap
 
-Hal-hal yang berkaitan dengan privasi dan data di [SPDHTC](https://spdhtc.rizkyilhampra.me), dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/blob/master/privacy.md).
+- [ ] *Implement scheduled command for RajaOngkir API re-caching*
+- [ ] *Allow guests to access Admin Panel with restricted features for security purposes*
+
+## Next
+
+*Coming soon:* [SPDPTC](https://github.com/SPDPTC/SPDPTC) - *the next evolution and rebrand of* SPDHTC. 
+
+SPDPTC *brings you:*
+- *Decoupled architecture*
+- SaaS-*based platform*
+- *Modern UI design*
+- *Enhanced performance*
+- SPA *with reactive components*
+- *Comprehensive testing*
+- *Open source licensed*
+
+*If you appreciate* SPDHTC *and want to support our next development, please consider* [becoming a sponsor](https://github/sponsors/rizkyilhampra). *For roadmap and more details, check the* [SPDPTC](https://github.com/SPDPTC/SPDPTC) *README file.*
 
 ## Lisensi
 
-Lisensi dari aplikasi ini adalah [WTFPL](./COPYING).
-
+Lisensi dari proyek/aplikasi ini di bawah [WTFPL](./COPYING).
