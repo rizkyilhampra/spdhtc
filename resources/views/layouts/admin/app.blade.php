@@ -17,8 +17,8 @@
     @stack('cssLibraries')
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/stisla/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/stisla/css/components.css') }}">
 </head>
 
 <body>
@@ -51,13 +51,13 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="{{ asset('assets/js/stisla.js') }}"></script>
+    <script src="{{ asset('assets/vendor/stisla/js/stisla.js') }}"></script>
 
     <!-- JS Libraies -->
     @stack('jsLibraries')
 
     <!-- Template JS File -->
-    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script src="{{ asset('assets/vendor/stisla/js/scripts.js') }}"></script>
 
     <!-- Page Specific JS File -->
     @stack('jsCustom')

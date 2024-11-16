@@ -59,11 +59,11 @@
 @endsection
 
 @push('jsPage')
-    <script src="{{ asset('assets/js/page/auth-register.js') }}"></script>
+    <script src="{{ asset('assets/vendor/stisla/js/page/auth-register.js') }}"></script>
 @endpush
 
 @push('jsLibraries')
-    <script src="{{ asset('spesified-assets/jquery.pwstrength.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery.pwstrength/jquery.pwstrength.min.js') }}"></script>
 @endpush
 @push('jsCustom')
     <script>

@@ -18,8 +18,8 @@
     @stack('cssLibraries')
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/stisla/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/stisla/css/components.css') }}">
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -49,17 +49,17 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="{{ asset('assets/js/stisla.js') }}"></script>
+    <script src="{{ asset('assets/vendor/stisla/js/stisla.js') }}"></script>
 
     <!-- JS Libraies -->
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     @stack('jsLibraries')
 
     <!-- Template JS File -->
-    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script src="{{ asset('assets/vendor/stisla/js/scripts.js') }}"></script>
 
     <!-- Page Specific JS File -->
-    <script src="{{ asset('spesified-assets/auth-pages.js') }}"></script>
+    <script src="{{ asset('assets/js/auth/auth.js') }}"></script>
     @stack('jsPage')
     @stack('jsCustom')
 </body>

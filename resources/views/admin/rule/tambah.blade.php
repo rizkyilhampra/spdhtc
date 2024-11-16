@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
 
 @push('cssLibraries')
-    <link rel="stylesheet" href="{{ asset('assets/select2/dist/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/select2/dist/css/select2.min.css') }}">
 @endpush
 
 @push('jsLibraries')
-    <script src="{{ asset('assets/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/select2/dist/js/select2.full.min.js') }}"></script>
 @endpush
 
 @section('content')
