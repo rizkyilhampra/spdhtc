@@ -1,22 +1,19 @@
 @extends('layouts.admin.app')
 
 @push('cssLibraries')
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('assets/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
 @endpush
 
 @push('jsLibraries')
-    <!-- JS Libraies -->
-    <script src="{{ asset('assets/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
 @endpush
 
 
 @push('jsCustom')
-    <!-- Page Specific JS File -->
     <script>
         const table = document.getElementById('table-1');
         const dataTable = $(table).DataTable({});
