@@ -12,22 +12,22 @@
     <link rel="icon" href="{{ asset('favicon-cabai.ico') }}">
     <title>@yield('title') SPDHTC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preload" as="style" href="{{ asset('/spesified-assets/splash-screen.css') }}">
-    <link rel="stylesheet" href="{{ asset('/spesified-assets/splash-screen.css') }}">
+    <link rel="preload" as="style" href="{{ asset('/assets/css/user/splash-screen.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/user/splash-screen.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="preload"
         as="style" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
         crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="preload" as="style" href="{{ asset('/spesified-assets/user/style.css') }}">
+    <link rel="preload" as="style" href="{{ asset('/assets/css/user/style.css') }}">
     @stack('styleLibraries')
 
-    <link rel="stylesheet" href="{{ asset('/spesified-assets/user/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/user/style.css') }}">
     <script defer src="https://kit.fontawesome.com/06b8a1e79b.js" type="text/javascript" crossorigin="anonymous"></script>
-    <link rel="preload" as="style" href="{{ asset('/spesified-assets/aos.css') }}" />
-    <link rel="stylesheet" href="{{ asset('/spesified-assets/aos.css') }}" />
+    <link rel="preload" as="style" href="{{ asset('/assets/vendor/aos/aos.css') }}" />
+    <link rel="stylesheet" href="{{ asset('/assets/vendor/aos/aos.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <link rel="stylesheet" href="{{ asset('/spesified-assets/chocolat.css') }}" type="text/css" media="screen">
+    <link rel="stylesheet" href="{{ asset('/assets/vendor/chocolat/chocolat.css') }}" type="text/css" media="screen">
     @stack('stylePerPage')
 </head>
 
@@ -62,14 +62,14 @@
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.5.1/dist/simpleParallax.min.js" async
         type="text/javascript"></script>
-    <script src="{{ asset('/spesified-assets/aos.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/vendor/aos/aos.js') }}" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script async type="text/javascript" src="{{ asset('/spesified-assets/chocolat.js') }}"></script>
+    <script async type="text/javascript" src="{{ asset('/assets/vendor/chocolat/chocolat.js') }}"></script>
 
     @stack('scriptPerPage')
 
-    <script type="text/javascript" src="{{ asset('/spesified-assets/user/script.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/spesified-assets/user/diagnosis.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/user/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/js/user/diagnosis.js') }}"></script>
 </body>
 
 </html>
