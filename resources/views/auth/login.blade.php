@@ -84,5 +84,5 @@
     </script>
 @endpush
 @push('cssLibraries')
-    <link rel="stylesheet" href="{{ asset('spesified-assets/bootstrap-social.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-social/bootstrap-social.css') }}">
 @endpush
