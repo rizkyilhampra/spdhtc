@@ -1,0 +1,8 @@
+apps:
+  - name: schedule
+    interpreter: php
+    script: artisan
+    exec_mode: fork
+    instances: 1
+    args:
+      - schedule:run
