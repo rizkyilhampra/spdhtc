@@ -15,7 +15,7 @@ class KotaProvinsiController extends Controller
 
     public function __construct()
     {
-        $this->apiKey = env('RAJAONGKIR_API_KEY');
+        $this->apiKey = config('services.rajaongkir.key');
         if(empty($this->apiKey)) throw new EmptyRajaOngkirAPIException();
     }
 
