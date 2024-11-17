@@ -27,12 +27,18 @@ task('deploy:secrets', function () {
     upload('.env', get('deploy_path').'/shared');
 });
 
+task('pm2', function() {
+    cd('{{release_path}}');
+    run('pm2 restart pm2-worker.yml');
+});
+
 task('deploy', [
     'deploy:prepare',
     'deploy:secrets',
     'deploy:vendors',
     'artisan:storage:link',
     'artisan:optimize:clear',
+    'pm2',
     'deploy:publish',
 ]);
 
