@@ -318,8 +318,7 @@ Jika Anda menghadapi masalah atau memiliki pertanyaan, Anda dapat:
 
 ## Roadmap
 
-- [ ] *Implement scheduled command for RajaOngkir API re-caching*
-- [ ] *Allow guests to access Admin Panel with restricted features for security purposes*
+- [x] *Implement scheduled command for RajaOngkir API re-caching*
 
 ## Next
 
