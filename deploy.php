@@ -39,6 +39,8 @@ task('deploy', [
     'artisan:storage:link',
     'artisan:optimize:clear',
     'pm2',
+    'artisan:migrate',
+    'artisan:optimize',
     'deploy:publish',
 ]);
 
