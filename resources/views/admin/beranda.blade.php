@@ -144,7 +144,7 @@
 @endsection
 
 @push('jsLibraries')
-    <script src="{{ asset('assets/vendor/chart/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/chart.js/dist/Chart.min.js') }}"></script>
 @endpush
 
 @push('jsCustom')
