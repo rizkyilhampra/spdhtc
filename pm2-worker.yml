@@ -4,5 +4,9 @@ apps:
     script: artisan
     exec_mode: fork
     instances: 1
+    autorestart: false
+    cron_restart: "* * * * *"
+    combine_logs: true
+    max_memory_restart:  "100M"
     args:
       - schedule:run
