@@ -124,13 +124,13 @@ _Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](
     > Ini berhubungan dengan Login/Register via OAuth Google. Mengabaikan ini maka *login/register* dengan akun Google tidak akan berfungsi.
     ```bash
     # NOTE: dapatkan dari https://console.cloud.google.com
-    GOOGLE_CLIENT_ID= #isi dengan client id google
-    GOOGLE_CLIENT_SECRET= #isi dengan client secret google
+    GOOGLE_CLIENT_ID=
+    GOOGLE_CLIENT_SECRET=
     ```
 9. Tambahkan Rajaongkir kredensial (Opsional dengan [**catatan**](https://github.com/rizkyilhampra/spdhtc/discussions/71))
     ```bash
     # NOTE: dapatkan dari https://rajaongkir.com/dokumentasi
-    RAJAONGKIR_API_KEY= #isi
+    RAJAONGKIR_API_KEY=
     ```
 10. _Generate key_ aplikasi
     > Jalankan melalui terminal
@@ -194,13 +194,13 @@ _Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](
     > Ini berhubungan dengan Login/Register via OAuth Google. Mengabaikan ini maka *login/register* dengan akun Google tidak akan berfungsi.
     ```bash
     # NOTE: dapatkan dari https://console.cloud.google.com
-    GOOGLE_CLIENT_ID= #isi dengan client id google
-    GOOGLE_CLIENT_SECRET= #isi dengan client secret google
+    GOOGLE_CLIENT_ID=
+    GOOGLE_CLIENT_SECRET=
     ```
 7. Tambahkan Rajaongkir kredensial pada file `.env` (Opsional dengan [catatan](https://github.com/rizkyilhampra/spdhtc/discussions/71))
     ```bash
     # NOTE: dapatkan dari https://rajaongkir.com/dokumentasi
-    RAJAONGKIR_API_KEY= #isi
+    RAJAONGKIR_API_KEY=
     ```
 8. Generate key aplikasi
     ```bash
@@ -267,13 +267,13 @@ _Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](
     > Ini berhubungan dengan Login/Register via OAuth Google. Mengabaikan ini maka *login/register* dengan akun Google tidak akan berfungsi.
     ```bash
     # NOTE: dapatkan dari https://console.cloud.google.com
-    GOOGLE_CLIENT_ID= #isi dengan client id google
-    GOOGLE_CLIENT_SECRET= #isi dengan client secret google
+    GOOGLE_CLIENT_ID=
+    GOOGLE_CLIENT_SECRET=
     ```
 6. Tambahkan Rajaongkir kredensial pada file `.env` (Opsional dengan [catatan](https://github.com/rizkyilhampra/spdhtc/discussions/71))
     ```bash
     # NOTE: dapatkan dari https://rajaongkir.com/dokumentasi
-    RAJAONGKIR_API_KEY= #isi
+    RAJAONGKIR_API_KEY=
     ```
 7. Jalankan _container_
     ```bash
