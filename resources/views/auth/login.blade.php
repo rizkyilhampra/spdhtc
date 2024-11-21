@@ -71,6 +71,8 @@
             </div>
             <div class="mt-3 text-muted text-center">
                 Belum punya akun? <a href="{{ route('register') }}">Daftar disini </a>
+                <br>
+                atau <a href="{{ route('login-as-guest') }}">Masuk sebagai Tamu</a>
             </div>
         </div>
     </div>

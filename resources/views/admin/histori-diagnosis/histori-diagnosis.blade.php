@@ -66,7 +66,9 @@
                                         No
                                     </th>
                                     <th>Nama Pengguna</th>
-                                    <th>Email Pengguna</th>
+                                    @auth
+                                        <th>Email Pengguna</th>
+                                    @endauth
                                     <th>Nama Penyakit</th>
                                     <th>Tanggal Dibuat/Diubah</th>
                                     <th>Aksi</th>
@@ -79,7 +81,9 @@
                                             {{ $loop->iteration }}
                                         </td>
                                         <td>{{ $value['user']['name'] }}</td>
-                                        <td>{{ $value['user']['email'] }}</td>
+                                        @auth
+                                            <td>{{ $value['user']['email'] }}</td>
+                                        @endauth
                                         @if ($value['penyakit']['id'] == null)
                                             <td><span class="badge bg-danger text-white">Penyakit tidak ditemukan</span>
                                             </td>
