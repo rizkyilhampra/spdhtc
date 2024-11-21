@@ -314,6 +314,7 @@ Jika Anda menghadapi masalah atau memiliki pertanyaan, Anda dapat:
 ## Roadmap
 
 - [x] *Implement scheduled command for RajaOngkir API re-caching*
+- [x] *Allow guests to access Admin Panel*
 
 ## Next
 

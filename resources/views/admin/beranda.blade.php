@@ -10,7 +10,11 @@
                 <div class="col-12 mb-4">
                     <div class="hero bg-primary text-white">
                         <div class="hero-inner">
-                            <h2>Selamat datang kembali, {{ auth()->user()->name }}!</h2>
+                            @auth
+                                <h2>Selamat datang kembali, {{ auth()->user()->name }}!</h2>
+                            @else
+                                <h2>Selamat datang!</h2>
+                            @endauth
                             <p class="lead">Disini adalah tempat untuk mengelola penyakit, gejala, rule, dan diagnosis</p>
                         </div>
                     </div>
@@ -86,7 +90,7 @@
                         <h4>Provinsi Pengguna</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart1" ></canvas>
+                        <canvas id="myChart1"></canvas>
                     </div>
                 </div>
             </div>
@@ -96,7 +100,7 @@
                         <h4>Kota Pengguna</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart2" ></canvas>
+                        <canvas id="myChart2"></canvas>
                     </div>
                 </div>
             </div>
@@ -106,7 +110,7 @@
                         <h4>Profesi Pengguna</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart3" ></canvas>
+                        <canvas id="myChart3"></canvas>
                     </div>
                 </div>
             </div>
