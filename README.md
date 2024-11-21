@@ -47,6 +47,7 @@ _Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](
 -   [x] Integrasi dengan API pihak ketiga
 -   [x] Riwayat diagnosis
 -   [x] Manajemen profil
+-   [x] (*New*) Login sebagai Tamu
 
 ## Cara menjalankan aplikasi
 
