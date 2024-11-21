@@ -42,6 +42,7 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
 -   [x] Integrasi dengan API pihak ketiga
 -   [x] Riwayat diagnosis
 -   [x] Manajemen profil
+-   [x] (*New*) Login sebagai Tamu
 
 ## Cara menjalankan aplikasi
 
