@@ -32,12 +32,19 @@ task('pm2', function() {
     run('pm2 restart pm2-worker.yml');
 });
 
+task('re-caching', function() {
+    cd('{{release_path}}');
+    run('php artisan cache:provinces');
+    run('php artisan cache:cities');
+});
+
 task('deploy', [
     'deploy:prepare',
     'deploy:secrets',
     'deploy:vendors',
     'artisan:storage:link',
     'artisan:optimize:clear',
+    're-caching',
     'pm2',
     'artisan:migrate',
     'artisan:optimize',
