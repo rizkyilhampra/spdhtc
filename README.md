@@ -35,14 +35,14 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
 
 ## Fitur
 
--   [x] Login dan Register (termasuk penggunaan OAuth Google)
--   [x] Email Verification
--   [x] Forgot Password
--   [x] Manajemen dataset
--   [x] Integrasi dengan API pihak ketiga
--   [x] Riwayat diagnosis
--   [x] Manajemen profil
--   [x] (*New*) Login sebagai Tamu
+-   ✅ Login dan Register (termasuk penggunaan OAuth Google)
+-   ✅ Email Verification
+-   ✅ Forgot Password
+-   ✅ Manajemen dataset
+-   ✅ Integrasi dengan API pihak ketiga
+-   ✅ Riwayat diagnosis
+-   ✅ Manajemen profil
+-   ✅ Login sebagai Tamu (***New*** 🎉) 
 
 ## Cara menjalankan aplikasi
 
@@ -314,8 +314,8 @@ Jika Anda menghadapi masalah atau memiliki pertanyaan, Anda dapat:
 
 ## Roadmap
 
-- [x] *Implement scheduled command for RajaOngkir API re-caching*
-- [x] *Allow guests to access Admin Panel*
+- ✅ *Implement scheduled command for RajaOngkir API re-caching*
+- ✅ *Allow guests to access Admin Panel*
 
 ## Next
 
