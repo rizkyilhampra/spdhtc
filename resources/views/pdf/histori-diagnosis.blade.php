@@ -8,7 +8,9 @@
                     No
                 </th>
                 <th>Nama Pengguna</th>
-                <th>Email Pengguna</th>
+                @auth
+                    <th>Email Pengguna</th>
+                @endauth
                 <th>Nama Penyakit</th>
                 <th>Tanggal Dibuat/Diubah</th>
             </tr>
@@ -19,8 +21,10 @@
                     <td>
                         {{ $loop->iteration }}
                     </td>
-                    <td>{{ $key['user']['name'] }}</td>
-                    <td>{{ $key['user']['email'] }}</td>
+                    <td>{{$key['user']['name']}}</td>
+                    @auth
+                        <td>{{ $key['user']['email'] }}</td>
+                    @endauth
                     <td>{{ $key['penyakit']['name'] }}</td>
                     <td>{{ $key['updated_at'] }}</td>
                 </tr>

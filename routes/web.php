@@ -2,63 +2,63 @@
 
 use App\Http\Controllers\Admin\BerandaController;
 use App\Http\Controllers\DiagnosisController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\ShowPdfController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', [UserController::class, 'index'])->name('index');
+
+Route::get('/login-as-guest', GuestController::class)->name('login-as-guest')->middleware('guest');
+
+Route::prefix('admin')->group(function () {
+    Route::get('beranda', [BerandaController::class, 'index'])->name('admin.beranda');
+    Route::prefix('penyakit')->group(function () {
+        Route::middleware(['auth', 'verified', 'can:asAdmin'])->group(function () {
+            Route::post('store', [\App\Http\Controllers\Admin\PenyakitController::class, 'store'])->name('admin.penyakit.store');
+            Route::put('update/{id}', [\App\Http\Controllers\Admin\PenyakitController::class, 'update'])->name('admin.penyakit.update');
+            Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\PenyakitController::class, 'destroy'])->name('admin.penyakit.destroy');
+            Route::get('tambah', [\App\Http\Controllers\Admin\PenyakitController::class, 'create'])->name('admin.penyakit.tambah');
+        });
+        Route::get('/', [\App\Http\Controllers\Admin\PenyakitController::class, 'index'])->name('admin.penyakit');
+        Route::get('edit/{id}', [\App\Http\Controllers\Admin\PenyakitController::class, 'edit'])->name('admin.penyakit.edit');
+        Route::get('pdf', [ShowPdfController::class, 'penyakitPdf'])->name('penyakit.pdf');
+    });
+    Route::prefix('gejala')->group(function () {
+        Route::middleware(['auth', 'verified', 'can:asAdmin'])->group(function () {
+            Route::post('store', [\App\Http\Controllers\Admin\GejalaController::class, 'store'])->name('admin.gejala.store');
+            Route::put('update/{id}', [\App\Http\Controllers\Admin\GejalaController::class, 'update'])->name('admin.gejala.update');
+            Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\GejalaController::class, 'destroy'])->name('admin.gejala.destroy');
+        });
+        Route::get('/', [\App\Http\Controllers\Admin\GejalaController::class, 'index'])->name('admin.gejala');
+        Route::get('tambah', [\App\Http\Controllers\Admin\GejalaController::class, 'create'])->name('admin.gejala.tambah');
+        Route::get('edit/{id}', [\App\Http\Controllers\Admin\GejalaController::class, 'edit'])->name('admin.gejala.edit');
+        Route::get('pdf', [ShowPdfController::class, 'gejalaPdf'])->name('gejala.pdf');
+    });
+    Route::prefix('rule')->group(function () {
+        Route::middleware(['auth', 'verified', 'can:asAdmin'])->group(function () {
+            Route::post('store', [\App\Http\Controllers\Admin\RuleController::class, 'store'])->name('admin.rule.store');
+            Route::put('update/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'update'])->name('admin.rule.update');
+            Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'destroy'])->name('admin.rule.destroy');
+        });
+        Route::get('/', [\App\Http\Controllers\Admin\RuleController::class, 'index'])->name('admin.rule');
+        Route::get('tambah', [\App\Http\Controllers\Admin\RuleController::class, 'create'])->name('admin.rule.tambah');
+        Route::get('edit/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'edit'])->name('admin.rule.edit');
+        Route::get('pdf', [ShowPdfController::class, 'rulePdf'])->name('rule.pdf');
+    });
+    Route::prefix('histori-diagnosis')->group(function () {
+        Route::middleware(['auth', 'verified', 'can:asAdmin'])->group(function () {
+            Route::delete('destroy', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'destroy'])->name('admin.diagnosis.destroy');
+        });
+        Route::get('/', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'index'])->name('admin.histori.diagnosis');
+        Route::get('detail/{id}', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'detail'])->name('admin.histori.diagnosis.detail');
+        Route::get('pdf', [ShowPdfController::class, 'historiDiagnosisPdf'])->name('histori.diagnosis.pdf');
+    });
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', [\App\Http\Controllers\Controller::class, 'authenticated'])->name('home');
-
-    Route::prefix('admin')->middleware('can:asAdmin')->group(function () {
-        Route::get('beranda', [BerandaController::class, 'index'])->name('admin.beranda');
-        Route::prefix('penyakit')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\PenyakitController::class, 'index'])->name('admin.penyakit');
-            Route::get('tambah', [\App\Http\Controllers\Admin\PenyakitController::class, 'create'])->name('admin.penyakit.tambah');
-            Route::post('store', [\App\Http\Controllers\Admin\PenyakitController::class, 'store'])->name('admin.penyakit.store');
-            Route::get('edit/{id}', [\App\Http\Controllers\Admin\PenyakitController::class, 'edit'])->name('admin.penyakit.edit');
-            Route::put('update/{id}', [\App\Http\Controllers\Admin\PenyakitController::class, 'update'])->name('admin.penyakit.update');
-            Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\PenyakitController::class, 'destroy'])->name('admin.penyakit.destroy');
-            Route::get('pdf', [ShowPdfController::class, 'penyakitPdf'])->name('penyakit.pdf');
-        });
-        Route::prefix('gejala')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\GejalaController::class, 'index'])->name('admin.gejala');
-            Route::get('tambah', [\App\Http\Controllers\Admin\GejalaController::class, 'create'])->name('admin.gejala.tambah');
-            Route::post('store', [\App\Http\Controllers\Admin\GejalaController::class, 'store'])->name('admin.gejala.store');
-            Route::get('edit/{id}', [\App\Http\Controllers\Admin\GejalaController::class, 'edit'])->name('admin.gejala.edit');
-            Route::put('update/{id}', [\App\Http\Controllers\Admin\GejalaController::class, 'update'])->name('admin.gejala.update');
-            Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\GejalaController::class, 'destroy'])->name('admin.gejala.destroy');
-            Route::get('pdf', [ShowPdfController::class, 'gejalaPdf'])->name('gejala.pdf');
-        });
-        Route::prefix('rule')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\RuleController::class, 'index'])->name('admin.rule');
-            Route::get('tambah', [\App\Http\Controllers\Admin\RuleController::class, 'create'])->name('admin.rule.tambah');
-            Route::post('store', [\App\Http\Controllers\Admin\RuleController::class, 'store'])->name('admin.rule.store');
-            Route::get('edit/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'edit'])->name('admin.rule.edit');
-            Route::put('update/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'update'])->name('admin.rule.update');
-            Route::delete('destroy/{id}', [\App\Http\Controllers\Admin\RuleController::class, 'destroy'])->name('admin.rule.destroy');
-            Route::get('pdf', [ShowPdfController::class, 'rulePdf'])->name('rule.pdf');
-        });
-        Route::prefix('histori-diagnosis')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'index'])->name('admin.histori.diagnosis');
-            Route::get('detail/{id}', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'detail'])->name('admin.histori.diagnosis.detail');
-            Route::delete('destroy', [\App\Http\Controllers\Admin\HistoriDiagnosisController::class, 'destroy'])->name('admin.diagnosis.destroy');
-            Route::get('pdf', [ShowPdfController::class, 'historiDiagnosisPdf'])->name('histori.diagnosis.pdf');
-        });
-    });
 
     Route::middleware('can:asUser')->group(function () {
         Route::post('diagnosis', [DiagnosisController::class, 'diagnosis'])
