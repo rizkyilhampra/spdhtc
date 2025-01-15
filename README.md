@@ -29,7 +29,7 @@ Sistem pakar (_web based_) dengan _forward chaining algorithm_ sebagai _inferenc
 
 [^1]: https://en.wikipedia.org/wiki/Data_set#cite_ref-Editorial_2-0
 
-_Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](https://github.com/rizkyilhampra/spdhtc/blob/master/COPYING)
+_Dataset_ yang digunakan dalam aplikasi atau sistem ini dapat dilihat di [sini](./dataset.md)
 
 ## Teknologi yang digunakan
 
