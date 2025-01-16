@@ -316,6 +316,7 @@ Jika Anda menghadapi masalah atau memiliki pertanyaan, Anda dapat:
 
 - ✅ *Implement scheduled command for RajaOngkir API re-caching*
 - ✅ *Allow guests to access Admin Panel*
+- [ ] *Improve Manage Rule*
 
 ## Next
 
