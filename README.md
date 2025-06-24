@@ -1,5 +1,10 @@
 # SPDHTC
 
+> [!WARNING]
+> Proyek ini menggunakan RajaOngkir API v1 yang mana sekarang sudah tidak di dukung lagi. Kedepannya untuk fitur berkaitan dengan profil dan domisili akan menggunakan API lain. Sayangnya saya tidak tahu kapan ini akan selesai. Jika berkenanan untuk membantu, silahkan buat PR dan saya akan dengan senang hati untuk me-_review_. Namun jika anda membutuhkan _key_ API RajaOngkir v1 ini silakan hubungi kontak yang tertera di bawah. 
+>
+> Dan lagi, akses ke https://spdhtc.rizkyilhampra.me sudah tidak bisa dilakukan. Ini karena saya memutuskan untuk mengakhirinya. Per sampai tulisan ini di tulis, saya masih belum ada rencana untuk meng-_online_-kan proyek ini kembali.   
+
 ## Deskripsi
 
 Sistem pakar (_web based_) dengan _forward chaining algorithm_ sebagai _inference engine_ untuk diagnosis penyakit pada tanaman cabai. Menerima masukan berupa gejala-gejala yang dapat di amati dan memberikan hasil diagnosis penyakit beserta penyebab dan solusinya.
