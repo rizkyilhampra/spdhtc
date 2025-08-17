@@ -340,7 +340,9 @@ SPDPTC *brings you:*
 
 ## Lisensi
 
-Lisensi dari proyek/aplikasi ini di bawah [WTFPL](./COPYING).
+Proyek ini dilisensikan di bawah [Apache License 2.0](./LICENSE).
+
+> Sebelumnya proyek ini menggunakan lisensi WTFPL. Mulai dari commit [`ccfec66755dc28786f1fad8308e529550b37d55b`](https://github.com/rizkyilhampra/spdhtc/commit/ccfec66755dc28786f1fad8308e529550b37d55b) berlaku Apache 2.0.
 
 ## Star History
 
