@@ -5,10 +5,6 @@
 >
 > Dan lagi, akses ke https://spdhtc.rizkyilhampra.me sudah tidak bisa dilakukan. Ini karena saya memutuskan untuk mengakhirinya. Per sampai tulisan ini di tulis, saya masih belum ada rencana untuk meng-_online_-kan proyek ini kembali.   
 
-## Deskripsi
-
-Sistem pakar (_web based_) dengan _forward chaining algorithm_ sebagai _inference engine_ untuk diagnosis penyakit pada tanaman cabai. Menerima masukan berupa gejala-gejala yang dapat di amati dan memberikan hasil diagnosis penyakit beserta penyebab dan solusinya.
-
 ## Daftar Isi
 - [Deskripsi](#deskripsi)
 - [Teknologi yang digunakan](#teknologi-yang-digunakan)
