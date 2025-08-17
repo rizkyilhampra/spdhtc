@@ -60,13 +60,6 @@ detailDiagnosisModal.addEventListener('show.bs.modal', async () => {
     } catch (error) {
         swalError(error.responseJSON);
     }
-
-    try {
-        const chartData = await ajaxRequestChartDiagnosisPenyakit();
-        await drawChart(chartData);
-    } catch (error) {
-        swalError(error.responseJSON);
-    }
 });
 
 
@@ -170,8 +163,16 @@ detailDiagnosisModal.addEventListener('hide.bs.modal', () => {
     rowDetailPenyakit.classList.remove('d-none');
 });
 
-detailDiagnosisModal.addEventListener('hidden.bs.modal', () => {
+detailDiagnosisModal.addEventListener('shown.bs.modal', async () => {
+    try {
+        const chartData = await ajaxRequestChartDiagnosisPenyakit();
+        drawChart(chartData);
+    } catch (error) {
+        swalError(error.responseJSON);
+    }
+});
 
+detailDiagnosisModal.addEventListener('hidden.bs.modal', () => {
     if (!document.body.classList.contains('modal-open')) {
         document.body.classList.add('modal-open');
     } else {
