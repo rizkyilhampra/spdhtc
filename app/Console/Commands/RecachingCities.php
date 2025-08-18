@@ -10,7 +10,7 @@ class RecachingCities extends Command
 {
     protected $signature = 'cache:cities';
 
-    protected $description = 'Recache cities data for chart from RajaOngkir API to local cache';
+    protected $description = 'Recache cities data for chart from 3rd party API';
 
     public function handle()
     {

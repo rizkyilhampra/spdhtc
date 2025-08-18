@@ -33,7 +33,7 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT', env('APP_URL') . '/auth/google/callback'),
     ],
-    'rajaongkir' => [
-        'key' => env('RAJAONGKIR_API_KEY'),
+    'idn_area' => [
+        'base_url' => env('IDN_AREA_BASE_URL', 'https://api-idnarea.fityan.tech'),
     ],
 ];
