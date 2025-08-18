@@ -18,7 +18,7 @@
                                 <form action="{{ route('update-profile') }}" method="POST">
                                     @method('PUT')
                                     @csrf
-                                    <div class="row pb-3">
+                                    <div class="row pb-3 gy-3">
                                         <div class="col-lg-6 col-12">
                                             <label for="name" class="form-label font-medium">Nama</label>
                                             <input type="text" class="form-control" name="name" id="name"
