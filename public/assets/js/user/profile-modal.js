@@ -1,5 +1,9 @@
 const modalEditProfile = document.getElementById('editProfileModal');
 const modalEditProfileInstance = bootstrap.Modal.getOrCreateInstance(modalEditProfile);
+
+// Initialize ProfileSelectManager
+let profileSelectManager = null;
+
 modalEditProfile.addEventListener('show.bs.modal', async () => {
     drawHistoriDiagnosisTable();
 
@@ -39,133 +43,59 @@ modalEditProfile.addEventListener('show.bs.modal', async () => {
         nameInput: document.querySelector('input[name="name"]'),
         emailInput: document.querySelector('input[name="email"]'),
         addressTextarea: document.querySelector('textarea[name="address"]'),
-        provinsiSelect: document.querySelector('#provinsi'),
-        profesiInput: document.querySelector('#profesi'),
-        kotaSelect: document.querySelector('#kota')
     };
+    
+    // Initialize ProfileSelectManager if not already created
+    if (!profileSelectManager) {
+        try {
+            profileSelectManager = new ProfileSelectManager({
+                provinceSelector: '#provinsi',
+                regencySelector: '#kota',
+                professionSelector: '#profesi',
+                modalSelector: '#editProfileModal',
+                theme: 'bootstrap-5'
+            });
+        } catch (error) {
+            console.error('Failed to initialize ProfileSelectManager:', error);
+            swalError({ message: 'Gagal menginisialisasi form provinsi dan kota' });
+            return;
+        }
+    }
 
+    // Set loading state for basic form elements
     setElementAttributes(elements.nameInput, 'Mohon Tunggu...', true);
     setElementAttributes(elements.emailInput, 'Mohon Tunggu...', true);
     setElementAttributes(elements.addressTextarea, 'Mohon Tunggu...', true);
-    let optionProvinsi = new Option('Mohon Tunggu', null, false, false);
-    let optionKota = new Option('Mohon Tunggu', null, false, false);
-    let optionProfesi = new Option('Mohon Tunggu', null, false, false);
-    $(elements.provinsiSelect).append(optionProvinsi).attr('disabled', true);
-    $(elements.kotaSelect).append(optionKota).attr('disabled', true);
-    $(elements.profesiInput).append(optionProfesi).attr('disabled', true);
-
-    $(elements.provinsiSelect).select2({
-        theme: 'bootstrap-5',
-        dropdownParent: $('#editProfileModal'),
-    });
-
-    $(elements.kotaSelect).select2({
-        theme: 'bootstrap-5',
-        dropdownParent: $('#editProfileModal'),
-    });
-    $(elements.profesiInput).select2({
-        theme: 'bootstrap-5',
-        dropdownParent: $('#editProfileModal'),
-    });
 
     try {
         const response = await ajaxRequestEditProfile();
-        $(elements.kotaSelect).empty();
-
+        
+        // Ensure user profile exists
         if (response.user.profile == null) {
             response.user.profile = {
                 address: '',
                 province: '',
                 city: '',
                 profession: ''
-            }
-            optionKota = new Option('Pilih Provinsi terlebih dahulu', null, false, true);
-            $(elements.kotaSelect).append(optionKota).attr('disabled', true);
-        } else {
-            optionKota = new Option('Pilih Kota', null, false, true);
-            $(elements.kotaSelect).append(optionKota).attr('disabled', false);
-            optionKota.disabled = true;
+            };
         }
 
+        // Set basic form values
         setElementAttributes(elements.nameInput, response.user.name);
         setElementAttributes(elements.emailInput, response.user.email);
         setElementAttributes(elements.addressTextarea, response.user.profile.address);
 
-        $(elements.provinsiSelect).empty();
-        optionProvinsi = new Option('Pilih Provinsi', null, false, true);
-        $(elements.provinsiSelect).append(optionProvinsi).attr('disabled', false);
-        optionProvinsi.disabled = true;
-
-        $(elements.profesiInput).empty();
-        optionProfesi = new Option('Pilih Profesi', null, false, true);
-        $(elements.profesiInput).append(optionProfesi).attr('disabled', false);
-        optionProfesi.disabled = true;
-
-
-        response.provinsi.forEach((value) => {
-            if (value.province_id == response.user.profile.province) {
-                const option = new Option(value.province, value.province_id, true, true);
-                $(elements.provinsiSelect).append(option);
-            } else {
-                const option = new Option(value.province, value.province_id, false, false);
-                $(elements.provinsiSelect).append(option);
-            }
-        });
-        response.profesi.forEach(value => {
-            if (value == response.user.profile.profession) {
-                const option = new Option(value, value, true, true);
-                $(elements.profesiInput).append(option);
-            } else {
-                const option = new Option(value, value, false, false);
-                $(elements.profesiInput).append(option);
-            }
-        });
-        try {
-            const response2 = await ajaxCityRequest($(elements.provinsiSelect).val());
-            response2.forEach(value => {
-                if (value.city_id == response.user.profile.city) {
-                    const option = new Option(value.city_name, value.city_id, true,
-                        true);
-                    $(elements.kotaSelect).append(option);
-                } else {
-                    const option = new Option(value.city_name, value.city_id, false,
-                        false);
-                    $(elements.kotaSelect).append(option);
-                }
-            });
-        } catch (error) {
-            if (!error.status == 404) {
-                swalError(error.responseJSON);
-            }
-        }
+        // Load data using ProfileSelectManager
+        await profileSelectManager.loadInitialData(response);
 
     } catch (error) {
-        swalError(error.responseJSON);
+        console.error('Failed to load profile data:', error);
+        swalError(error.responseJSON || { message: 'Gagal memuat data profil' });
     }
 
 
-    $(elements.provinsiSelect).on('select2:select', async (e) => {
-        $(elements.kotaSelect).empty();
-        optionKota = new Option('Mohon Tunggu', null, false, false);
-        $(elements.kotaSelect).append(optionKota).attr('disabled', true);
-        try {
-            const response = await ajaxCityRequest(e.params.data.id);
-            $(elements.kotaSelect).empty();
-            optionKota = new Option('Pilih Kota', null, false, true);
-            optionKota.disabled = true;
-            $(elements.kotaSelect).append(optionKota).attr('disabled', false);
-            response.forEach(value => {
-                const option = new Option(value.city_name, value.city_id,
-                    false,
-                    false);
-                $(elements.kotaSelect).append(option);
-            });
-        } catch (error) {
-            if (!error.status == 404) {
-                swalError(error.responseJSON);
-            }
-        }
-    });
+    // Province/regency selection is now handled by ProfileSelectManager
+    // No additional event handlers needed here
 });
 
 $(document).on('select2:open', () => {
@@ -180,8 +110,9 @@ $(document).on('select2:open', () => {
 });
 
 modalEditProfile.addEventListener('hide.bs.modal', async () => {
-    $('#provinsi').empty();
-    $('#kota').empty();
-    $('#profesi').empty();
+    // Reset ProfileSelectManager state when modal closes
+    if (profileSelectManager) {
+        profileSelectManager.reset();
+    }
 });
 
