@@ -1,10 +1,5 @@
 # SPDHTC
 
-> [!WARNING]
-> Proyek ini menggunakan RajaOngkir API v1 yang mana sekarang sudah tidak di dukung lagi. Kedepannya untuk fitur berkaitan dengan profil dan domisili akan menggunakan API lain. Sayangnya saya tidak tahu kapan ini akan selesai. Jika berkenanan untuk membantu, silahkan buat PR dan saya akan dengan senang hati untuk me-_review_. Namun jika anda membutuhkan _key_ API RajaOngkir v1 ini silakan hubungi kontak yang tertera di bawah. 
->
-> Dan lagi, akses ke https://spdhtc.rizkyilhampra.me sudah tidak bisa dilakukan. Ini karena saya memutuskan untuk mengakhirinya. Per sampai tulisan ini di tulis, saya masih belum ada rencana untuk meng-_online_-kan proyek ini kembali.   
-
 ## Daftar Isi
 - [Deskripsi](#deskripsi)
 - [Teknologi yang digunakan](#teknologi-yang-digunakan)
@@ -124,26 +119,21 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
     GOOGLE_CLIENT_ID=
     GOOGLE_CLIENT_SECRET=
     ```
-9. Tambahkan Rajaongkir kredensial (Opsional dengan [**catatan**](https://github.com/rizkyilhampra/spdhtc/discussions/71))
-    ```bash
-    # NOTE: dapatkan dari https://rajaongkir.com/dokumentasi
-    RAJAONGKIR_API_KEY=
-    ```
-10. _Generate key_ aplikasi
+9. _Generate key_ aplikasi
     > Jalankan melalui terminal
     ```bash
     php artisan key:generate
     ```
-11. Migrasi _database_ dan _seed_ data
+10. Migrasi _database_ dan _seed_ data
     ```bash
     php artisan migrate:fresh --seed
     ```
-12. _Link storage_
+11. _Link storage_
     > Ini berfungsi untuk mengakses file yang ada di direktori `storage/app/public` atau dalam kata lain untuk menampilkan gambar penyakit
     ```bash
     php artisan storage:link
     ```
-13. Buka browser dan akses `http://localhost/spdhtc/public` atau `http://spdhtc.test`
+12. Buka browser dan akses `http://localhost/spdhtc/public` atau `http://spdhtc.test`
 
 ### Menjalankan dengan `php artisan serve`
 
@@ -194,29 +184,24 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
     GOOGLE_CLIENT_ID=
     GOOGLE_CLIENT_SECRET=
     ```
-7. Tambahkan Rajaongkir kredensial pada file `.env` (Opsional dengan [catatan](https://github.com/rizkyilhampra/spdhtc/discussions/71))
-    ```bash
-    # NOTE: dapatkan dari https://rajaongkir.com/dokumentasi
-    RAJAONGKIR_API_KEY=
-    ```
-8. Generate key aplikasi
+7. Generate key aplikasi
     ```bash
     php artisan key:generate
     ```
-9. Migrasi _database_ dan _seed_ data
+8. Migrasi _database_ dan _seed_ data
     > Pada umumnya, perintah ini akan membuat datatabase secara otomatis tanpa perlu membuat terlebih dahulu, jika mengalami kendala, buat database manual
     ```bash
     php artisan migrate:fresh --seed
     ```
-10. Link storage
+9. Link storage
     ```bash
     php artisan storage:link
     ```
-11. Jalankan aplikasi
+10. Jalankan aplikasi
     ```bash
     php artisan serve
     ```
-12. Buka browser dan akses `http://localhost:8000`
+11. Buka browser dan akses `http://localhost:8000`
 
 </details>
 
@@ -267,24 +252,19 @@ Sistem pakar atau sistem pengambilan keputusan untuk mendeteksi atau mendiagnosi
     GOOGLE_CLIENT_ID=
     GOOGLE_CLIENT_SECRET=
     ```
-6. Tambahkan Rajaongkir kredensial pada file `.env` (Opsional dengan [catatan](https://github.com/rizkyilhampra/spdhtc/discussions/71))
-    ```bash
-    # NOTE: dapatkan dari https://rajaongkir.com/dokumentasi
-    RAJAONGKIR_API_KEY=
-    ```
-7. Jalankan _container_
+6. Jalankan _container_
     ```bash
     ./vendor/bin/sail up -d
     ```
-8. Migrasi _database_ dan _seed_ data
+7. Migrasi _database_ dan _seed_ data
     ```bash
     ./vendor/bin/sail artisan migrate:fresh --seed
     ```
-9. Link storage
+8. Link storage
     ```bash
     ./vendor/bin/sail artisan storage:link
     ```
-10. Buka browser dan akses `http://localhost`
+9. Buka browser dan akses `http://localhost`
 
 </details>
 
@@ -315,8 +295,9 @@ Jika Anda menghadapi masalah atau memiliki pertanyaan, Anda dapat:
 
 ## Roadmap
 
-- ✅ *Implement scheduled command for RajaOngkir API re-caching*
+- ✅ *Implement scheduled command for 3rd party API re-caching*
 - ✅ *Allow guests to access Admin Panel*
+- ✅ *Migrate to IDN Area API from Rajaongkir*
 - [ ] *Improve Manage Rule*
 
 ## Next

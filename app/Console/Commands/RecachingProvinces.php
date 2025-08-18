@@ -9,7 +9,7 @@ class RecachingProvinces extends Command
 {
     protected $signature = 'cache:provinces';
 
-    protected $description = 'Recache provinces data from RajaOngkir API to local cache';
+    protected $description = 'Recache provinces data for chart from 3rd party API';
 
     public function handle()
     {
