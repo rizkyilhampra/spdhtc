@@ -1,0 +1,2 @@
+# Runs every minute, logs to stdout/stderr
+* * * * * cd /var/www/html && php artisan schedule:run -vvv --no-ansi

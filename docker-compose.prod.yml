@@ -1,0 +1,104 @@
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  db_root_password:
+    file: ./secrets/db_root_password.txt
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.fpm
+    env_file: .env.production
+    environment:
+      CACHE_ON_START: "${CACHE_ON_START:-1}"
+      MIGRATE_ON_START: "${MIGRATE_ON_START:-0}"
+    depends_on:
+      db:
+        condition: service_healthy
+    user: "82:82"
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /run/php
+      - /var/www/html/bootstrap/cache:mode=1777
+    volumes:
+      - app_storage:/var/www/html/storage:rw
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+    expose:
+      - "9000"
+    healthcheck:
+      test: ["CMD-SHELL", "SCRIPT_NAME=/ping SCRIPT_FILENAME=/ping REQUEST_METHOD=GET cgi-fcgi -bind -connect 127.0.0.1:9000 | grep -q pong"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+  scheduler:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.fpm
+    env_file: .env.production
+    environment:
+      CACHE_ON_START: "0"
+      MIGRATE_ON_START: "0"
+    depends_on:
+      app:
+        condition: service_started
+    command: [ "supercronic", "/etc/cron.d/laravel" ]
+    user: "82:82"
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /run/php
+    volumes:
+      - app_storage:/var/www/html/storage:rw
+    restart: unless-stopped
+    security_opt: [ "no-new-privileges:true" ]
+    cap_drop: [ "ALL" ]
+  web:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.nginx
+    env_file: .env.production
+    depends_on:
+      app:
+        condition: service_started
+    ports:
+      - "${APP_PORT:-80}:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:noexec,nosuid,size=100m
+      - /var/run
+    volumes:
+      - app_storage:/var/www/html/storage:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/ping >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    security_opt: [ "no-new-privileges:true" ]
+    cap_drop: [ "ALL" ]
+  db:
+    image: mariadb:10.11
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-spdhtc}
+      MYSQL_USER: ${DB_USERNAME:-spdhtc}
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    secrets:
+      - db_password
+      - db_root_password
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u ${DB_USERNAME:-spdhtc} -p\"$(cat /run/secrets/db_password)\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+volumes:
+  app_storage:
+  db_data:

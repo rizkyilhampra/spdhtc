@@ -1,0 +1,17 @@
+FROM nginxinc/nginx-unprivileged:stable-alpine
+WORKDIR /var/www/html
+
+COPY --chmod=755 .docker/entrypoint.d/09-make-nginx-tmp.sh /docker-entrypoint.d/09-make-nginx-tmp.sh
+
+USER root
+RUN rm -f /etc/nginx/conf.d/default.conf || true
+USER nginx
+
+COPY .docker/nginx/nginx.conf /etc/nginx/nginx.conf
+
+COPY --chown=nginx:nginx public/ /var/www/html/public/
+
+RUN ln -s /var/www/html/storage/app/public /var/www/html/public/storage || true
+
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
