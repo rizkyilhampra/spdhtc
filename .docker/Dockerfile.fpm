@@ -1,0 +1,37 @@
+FROM php:8.3-fpm-alpine AS base
+WORKDIR /var/www/html
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+RUN apk add --no-cache icu-dev libzip-dev oniguruma-dev zlib-dev unzip git curl wget fcgi \
+    && docker-php-ext-install pdo_mysql intl opcache mbstring zip
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+ENV SUPERCRONIC_VERSION=v0.2.29
+RUN wget -qO /usr/local/bin/supercronic \
+    "https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-amd64" \
+    && chmod +x /usr/local/bin/supercronic
+
+COPY .docker/php/conf.d/php.ini /usr/local/etc/php/conf.d/zz-custom.ini
+COPY .docker/php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
+
+COPY composer.json composer.lock ./
+RUN composer install --no-interaction --prefer-dist --no-progress --no-scripts
+COPY . ./
+
+RUN composer install --no-dev --no-interaction --prefer-dist --no-progress --optimize-autoloader --classmap-authoritative
+
+RUN id www-data || (addgroup -g 82 -S www-data && adduser -u 82 -D -S -G www-data www-data) \
+    && chown -R www-data:www-data storage bootstrap/cache
+
+COPY .docker/cron/laravel /etc/cron.d/laravel
+RUN chmod 0644 /etc/cron.d/laravel
+
+COPY .docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+USER www-data
+EXPOSE 9000
+CMD ["php-fpm", "-F"]

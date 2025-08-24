@@ -1,0 +1,27 @@
+# Git
+.git
+.gitignore
+
+# Node / frontend
+node_modules
+public/hot
+public/storage
+
+# Composer caches
+vendor/
+
+# OS / editor noise
+.DS_Store
+*.log
+
+# Docker artifacts (keep docker/ for build configs)
+docker-compose*.yml
+Dockerfile
+
+# Tests and misc
+tests
+phpunit.xml
+
+# Env files (do not send secrets to build context)
+.env
+.env.*
