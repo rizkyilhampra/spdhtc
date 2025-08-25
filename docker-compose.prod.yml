@@ -19,9 +19,9 @@ services:
     user: "82:82"
     read_only: true
     tmpfs:
-      - /tmp
-      - /run/php
-      - /var/www/html/bootstrap/cache:mode=1777
+      - /tmp:noexec,nosuid,size=100m
+      - /run/php:uid=82,gid=82,mode=755
+      - /var/www/html/bootstrap/cache:mode=1777,uid=82,gid=82
     volumes:
       - app_storage:/var/www/html/storage:rw
     security_opt:
@@ -51,8 +51,8 @@ services:
     user: "82:82"
     read_only: true
     tmpfs:
-      - /tmp
-      - /run/php
+      - /tmp:noexec,nosuid,size=100m
+      - /run/php:uid=82,gid=82,mode=755
     volumes:
       - app_storage:/var/www/html/storage:rw
     restart: unless-stopped
