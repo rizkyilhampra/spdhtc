@@ -199,7 +199,7 @@ class ProfileSelectManager {
             $select.append(option);
         });
         
-        $select.prop('disabled', false).trigger('change.select2');
+        $select.prop('disabled', false).val('').trigger('change');
     }
     
     /**
@@ -218,10 +218,10 @@ class ProfileSelectManager {
                 const option = new Option(regency.city_name, regency.city_id, false, false);
                 $select.append(option);
             });
-            $select.prop('disabled', false);
+            $select.prop('disabled', false).val('').trigger('change');
         }
         
-        $select.trigger('change.select2');
+        $select.trigger('change');
     }
     
     /**
@@ -236,7 +236,7 @@ class ProfileSelectManager {
             $select.append(option);
         });
         
-        $select.prop('disabled', false).trigger('change.select2');
+        $select.prop('disabled', false).val('').trigger('change');
     }
     
     /**
