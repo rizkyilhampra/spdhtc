@@ -39,7 +39,7 @@ class UserProfileSeeder extends Seeder
         UserProfile::create([
             'user_id' => 2,
             'address' => '',
-            'city' => 144,
+            'city' => '13.77',
             'province' => 13,
             'profession' => $profession[rand(0, 1)],
         ]);
