@@ -36,6 +36,11 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
   scheduler:
     build:
       context: .
@@ -58,6 +63,11 @@ services:
     restart: unless-stopped
     security_opt: [ "no-new-privileges:true" ]
     cap_drop: [ "ALL" ]
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
   web:
     build:
       context: .
@@ -82,6 +92,11 @@ services:
     restart: unless-stopped
     security_opt: [ "no-new-privileges:true" ]
     cap_drop: [ "ALL" ]
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
   db:
     image: mariadb:10.11
     environment:
@@ -99,6 +114,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
 volumes:
   app_storage:
   db_data:
