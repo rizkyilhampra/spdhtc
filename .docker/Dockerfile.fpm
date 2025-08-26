@@ -2,8 +2,9 @@ FROM php:8.3-fpm-alpine AS base
 WORKDIR /var/www/html
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV TZ=Asia/Makassar
 
-RUN apk add --no-cache icu-dev libzip-dev oniguruma-dev zlib-dev unzip git curl wget fcgi \
+RUN apk add --no-cache icu-dev libzip-dev oniguruma-dev zlib-dev unzip git curl wget fcgi tzdata \
     && docker-php-ext-install pdo_mysql intl opcache mbstring zip
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

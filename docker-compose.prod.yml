@@ -47,6 +47,7 @@ services:
       dockerfile: .docker/Dockerfile.fpm
     env_file: .env.production
     environment:
+      TZ: "${TZ:-Asia/Makassar}"
       CACHE_ON_START: "0"
       MIGRATE_ON_START: "0"
     depends_on:
