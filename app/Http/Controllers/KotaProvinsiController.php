@@ -30,10 +30,13 @@ class KotaProvinsiController extends Controller
                     'headers' => [
                         'Accept' => 'application/json',
                     ],
+                    'query' => [
+                        'limit' => 50,
+                    ],
                 ]);
 
                 $data = json_decode($response->getBody(), true);
-                
+
                 // Transform IDN Area API response to match rajaongkir format
                 $provinces = collect($data['data'])->map(function ($province) {
                     return (object) [
@@ -41,7 +44,7 @@ class KotaProvinsiController extends Controller
                         'province' => $province['name']
                     ];
                 })->toArray();
-                
+
             } catch (GuzzleException $e) {
                 Log::debug('Error: ' . json_encode($e->getMessage()));
 
@@ -67,11 +70,12 @@ class KotaProvinsiController extends Controller
                     ],
                     'query' => [
                         'provinceCode' => $id,
+                        'limit' => 100,
                     ],
                 ]);
 
                 $data = json_decode($response->getBody(), true);
-                
+
                 // Transform IDN Area API response to match rajaongkir format
                 $cities = collect($data['data'])->map(function ($regency) {
                     return (object) [
@@ -80,7 +84,7 @@ class KotaProvinsiController extends Controller
                         'province_id' => $regency['provinceCode']
                     ];
                 })->toArray();
-                
+
             } catch (GuzzleException $e) {
                 Log::debug('Error: ' . json_encode($e->getMessage()));
 
