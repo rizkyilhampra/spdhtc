@@ -21,15 +21,8 @@ chmod 1777 /var/www/html/bootstrap/cache || true
 if [ -f /var/www/html/artisan ]; then
   if [ "$CACHE_ON_START" = "1" ] && [ "$APP_ENV_DEFAULT" = "production" ]; then
     log "warming Laravel caches..."
-    php /var/www/html/artisan config:clear --no-ansi || true
-    php /var/www/html/artisan route:clear  --no-ansi || true
-    php /var/www/html/artisan view:clear   --no-ansi || true
-    php /var/www/html/artisan event:clear  --no-ansi || true
-
-    php /var/www/html/artisan event:cache   --no-ansi -q
-    php /var/www/html/artisan config:cache  --no-ansi -q
-    php /var/www/html/artisan route:cache   --no-ansi -q
-    php /var/www/html/artisan view:cache    --no-ansi -q
+    php /var/www/html/artisan optimize:clear --no-ansi || true
+    php /var/www/html/artisan optimize --no-ansi
     log "caches ready."
   else
     log "skipping cache warm (CACHE_ON_START=$CACHE_ON_START, APP_ENV=$APP_ENV_DEFAULT)"
