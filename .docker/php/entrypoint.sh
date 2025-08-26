@@ -23,6 +23,8 @@ if [ -f /var/www/html/artisan ]; then
     log "warming Laravel caches..."
     php /var/www/html/artisan optimize:clear --no-ansi || true
     php /var/www/html/artisan optimize --no-ansi
+    php /var/www/html/artisan cache:provinces --no-ansi
+    php /var/www/html/artisan cache:cities --no-ansi
     log "caches ready."
   else
     log "skipping cache warm (CACHE_ON_START=$CACHE_ON_START, APP_ENV=$APP_ENV_DEFAULT)"
