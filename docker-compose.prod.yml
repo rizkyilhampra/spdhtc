@@ -1,8 +1,8 @@
 secrets:
   db_password:
-    file: ./secrets/db_password.txt
+    file: ./.docker/secrets/db_password.txt
   db_root_password:
-    file: ./secrets/db_root_password.txt
+    file: ./.docker/secrets/db_root_password.txt
 
 services:
   app:
