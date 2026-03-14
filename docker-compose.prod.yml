@@ -120,6 +120,22 @@ services:
       options:
         max-size: "10m"
         max-file: "5"
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: "${CLOUDFLARE_TUNNEL_TOKEN}"
+    depends_on:
+      web:
+        condition: service_healthy
+    restart: unless-stopped
+    security_opt: [ "no-new-privileges:true" ]
+    cap_drop: [ "ALL" ]
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
 volumes:
   app_storage:
   db_data:
